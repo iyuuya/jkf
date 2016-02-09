@@ -15,7 +15,7 @@ module Jkf
 
       # InitialBoard
       rule(:initial_board) {
-        (str(' ') >> nonl.repeat.maybe >> nl).maybe >>
+        (space >> nonl.repeat.maybe >> nl).maybe >>
         (str('+') >> nonl.repeat.maybe >> nl).maybe >>
         ikkatsu_line.repeat(1).as(:lines) >>
         (str('+') >> nonl.repeat.maybe >> nl).maybe
@@ -26,7 +26,7 @@ module Jkf
         teban.as(:c) >> piece.as(:k)
       }
       rule(:teban) {
-        (str(' ') | str('+') | str('^')) |
+        (space | str('+') | str('^')) |
         (str('v') | str('V'))
       }
 
@@ -38,7 +38,7 @@ module Jkf
       rule(:first_board) { comment.repeat.maybe.as(:c) >> pointer.maybe }
       rule(:move) { line.as(:line) >> comment.repeat.maybe.as(:c) >> pointer.maybe }
       rule(:pointer) { str('&') >> nonl.repeat.maybe >> nl }
-      rule(:line) { str(' ').repeat.maybe >> te >> str(' ').repeat.maybe >> (fugou.as(:fugou) >> from.as(:from) | match('[^\r\n ]').repeat.maybe.as(:spe)).as(:move) >> str(' ').repeat.maybe >> time.maybe.as(:time) >> str('+').maybe >> nl }
+      rule(:line) { space.repeat.maybe >> te >> space.repeat.maybe >> (fugou.as(:fugou) >> from.as(:from) | match('[^\r\n ]').repeat.maybe.as(:spe)).as(:move) >> space.repeat.maybe >> time.maybe.as(:time) >> str('+').maybe >> nl }
       rule(:te) { match('[0-9]').repeat }
       rule(:fugou) { place.as(:pl) >> piece.as(:pi) >> str('成').maybe.as(:pro) }
       rule(:place) { num.as(:x) >> numkan.as(:y) | str('同　') }
@@ -49,7 +49,7 @@ module Jkf
 
       rule(:from) { str('打') | str('(') >> match('[1-9]').as(:x) >> match('[1-9]').as(:y) >> str(')') }
 
-      rule(:time) { str('(') >> str(' ').repeat.maybe >> ms.as(:now) >> str('/') >> hms.as(:total) >> str(')') }
+      rule(:time) { str('(') >> space.repeat.maybe >> ms.as(:now) >> str('/') >> hms.as(:total) >> str(')') }
       rule(:hms) { match('[0-9]').repeat.as(:h) >> str(':') >> match('[0-9]').repeat.as(:m) >> str(':') >> match('[0-9]').repeat.as(:s) }
       rule(:ms) { match('[0-9]').repeat.as(:m) >> str(':') >> match('[0-9]').repeat.as(:s) }
 
@@ -71,14 +71,15 @@ module Jkf
       }
 
       # Fork
-      rule(:fork) { str('変化：') >> str(' ').repeat.maybe >> match('[0-9]').repeat(1).as(:te) >> str('手') >> nl >> moves.as(:as) }
+      rule(:fork) { str('変化：') >> space.repeat.maybe >> match('[0-9]').repeat(1).as(:te) >> str('手') >> nl >> moves.as(:as) }
 
       # whitespace / nl / nonl
       rule(:nl) { newline.repeat(1) >> skipline.repeat.maybe }
       rule(:nonl) { match('[^\n]') }
-      rule(:whitespace) { str(' ') | str("\t") }
+      rule(:whitespace) { space | str("\t") }
       rule(:newline) { whitespace.repeat.maybe >> (str("\n") | str("\r") >> str("\n").maybe) }
       rule(:skipline) { str('#') >> nonl.repeat.maybe >> newline }
+      rule(:space) { str(' ') }
     end
   end
 end

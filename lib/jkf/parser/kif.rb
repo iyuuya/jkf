@@ -39,7 +39,7 @@ module Jkf
       rule(:move) { line.as(:line) >> comment.repeat.maybe.as(:c) >> pointer.maybe }
       rule(:pointer) { str('&') >> nonl.repeat.maybe >> nl }
       rule(:line) { spaces? >> te >> spaces? >> (fugou.as(:fugou) >> from.as(:from) | match('[^\r\n ]').repeat.maybe.as(:spe)).as(:move) >> spaces? >> time.maybe.as(:time) >> str('+').maybe >> nl }
-      rule(:te) { match('[0-9]').repeat }
+      rule(:te) { match('\d').repeat }
       rule(:fugou) { place.as(:pl) >> piece.as(:pi) >> str('成').maybe.as(:pro) }
       rule(:place) { num.as(:x) >> numkan.as(:y) | str('同　') }
       rule(:num) { match('[１２３４５６７８９]').as(:n) }
@@ -50,8 +50,8 @@ module Jkf
       rule(:from) { str('打') | str('(') >> match('[1-9]').as(:x) >> match('[1-9]').as(:y) >> str(')') }
 
       rule(:time) { str('(') >> spaces? >> ms.as(:now) >> str('/') >> hms.as(:total) >> str(')') }
-      rule(:hms) { match('[0-9]').repeat.as(:h) >> str(':') >> match('[0-9]').repeat.as(:m) >> str(':') >> match('[0-9]').repeat.as(:s) }
-      rule(:ms) { match('[0-9]').repeat.as(:m) >> str(':') >> match('[0-9]').repeat.as(:s) }
+      rule(:hms) { match('\d').repeat.as(:h) >> str(':') >> match('\d').repeat.as(:m) >> str(':') >> match('\d').repeat.as(:s) }
+      rule(:ms) { match('\d').repeat.as(:m) >> str(':') >> match('\d').repeat.as(:s) }
 
       rule(:comment) {
         str('*') >> nonl.repeat.maybe.as(:comm) >> nl |
@@ -59,7 +59,7 @@ module Jkf
       }
 
       rule(:result) {
-        str('まで') >> match('[0-9]').repeat >> str('手') >> (
+        str('まで') >> match('\d').repeat >> str('手') >> (
           str('で') >> turn.as(:win) >> str('手の') >> (str('勝ち') | str('反則') >> (str('勝ち') | str('負け')).as(:res)).as(:res) |
           str('で時間切れにより') >> turn.as(:win) >> str('手の勝ち') |
           str('で中断') |
@@ -71,7 +71,7 @@ module Jkf
       }
 
       # Fork
-      rule(:fork) { str('変化：') >> spaces? >> match('[0-9]').repeat(1).as(:te) >> str('手') >> nl >> moves.as(:as) }
+      rule(:fork) { str('変化：') >> spaces? >> match('\d').repeat(1).as(:te) >> str('手') >> nl >> moves.as(:as) }
 
       # whitespace / nl / nonl
       rule(:nl) { newline.repeat(1) >> skipline.repeat.maybe }

@@ -35,11 +35,11 @@ module Jkf
 
       # Moves
       rule(:moves) { first_board.as(:hd) >> split.maybe >> move.repeat.as(:tl) >> result.maybe }
-      rule(:first_board) { comment.repeat.as(:c) >> pointer.maybe }
-      rule(:move) { line.as(:line) >> comment.repeat.as(:c) >> pointer.maybe }
+      rule(:first_board) { comments.as(:c) >> pointer.maybe }
+      rule(:move) { line.as(:line) >> comments.as(:c) >> pointer.maybe }
       rule(:pointer) { str('&') >> nonl.repeat >> nl }
-      rule(:line) { spaces? >> te >> spaces? >> (fugou.as(:fugou) >> from.as(:from) | match('[^\r\n ]').repeat.as(:spe)).as(:move) >> spaces? >> time.maybe.as(:time) >> str('+').maybe >> nl }
-      rule(:te) { match('\d').repeat }
+      rule(:line) { spaces? >> te >> spaces? >> (fugou.as(:fugou) >> from.as(:from) | match('[^\r\n ]').repeat.as(:spe)).as(:move) >> spaces? >> time.maybe.as(:time) >> str('+').maybe >> nl.maybe }
+      rule(:te) { match('\d').repeat(1) }
       rule(:fugou) { place.as(:pl) >> piece.as(:pi) >> str('成').maybe.as(:pro) }
       rule(:place) { num.as(:x) >> numkan.as(:y) | str('同　') }
       rule(:num) { match('[１２３４５６７８９]').as(:n) }
@@ -54,8 +54,11 @@ module Jkf
       rule(:ms) { match('\d').repeat.as(:m) >> str(':') >> match('\d').repeat.as(:s) }
 
       rule(:comment) {
-        str('*') >> nonl.repeat.as(:comm) >> nl |
-        str('&') >> nonl.repeat.as(:annotation) >> nl
+        str('*') >> nonl.repeat.as(:comm) |
+        str('&') >> nonl.repeat.as(:annotation)
+      }
+      rule(:comments) {
+        (comment >> nl.maybe).repeat
       }
 
       rule(:result) {
@@ -67,7 +70,7 @@ module Jkf
           str('で千日手') |
           str('で').maybe >> str('詰') >> str('み').maybe |
           str('で不詰')
-        ).as(:res) >> nl
+        ).as(:res) >> nl.maybe
       }
 
       # Fork

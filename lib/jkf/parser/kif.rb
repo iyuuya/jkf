@@ -3,22 +3,22 @@ module Jkf
     class Kif < Parslet::Parser
       root :kifu
 
-      rule(:kifu) { skipline.repeat.maybe >> header.repeat.maybe.as(:headers) >> initial_board.maybe.as(:initial_board) >> header.repeat.maybe.as(:headers2) >> split.maybe >> moves.as(:moves) >> fork.repeat.maybe.as(:forks) >> nl.maybe }
+      rule(:kifu) { skipline.repeat >> header.repeat.as(:headers) >> initial_board.maybe.as(:initial_board) >> header.repeat.as(:headers2) >> split.maybe >> moves.as(:moves) >> fork.repeat.as(:forks) >> nl.maybe }
 
       # Header
       rule(:header) {
         str('盤面回転').as(:kaiten) >> nl |
         turn.as(:te) >> str('手番') >> nl |
-        match('[^：\r\n]').repeat.as(:key) >> str('：') >> nonl.repeat.maybe.as(:value) >> nl
+        match('[^：\r\n]').repeat.as(:key) >> str('：') >> nonl.repeat.as(:value) >> nl
       }
       rule(:turn) { match('[先後上下]') }
 
       # InitialBoard
       rule(:initial_board) {
-        (space >> nonl.repeat.maybe >> nl).maybe >>
-        (str('+') >> nonl.repeat.maybe >> nl).maybe >>
+        (space >> nonl.repeat >> nl).maybe >>
+        (str('+') >> nonl.repeat >> nl).maybe >>
         ikkatsu_line.repeat(1).as(:lines) >>
-        (str('+') >> nonl.repeat.maybe >> nl).maybe
+        (str('+') >> nonl.repeat >> nl).maybe
       }
       rule(:ikkatsu_line) { str('|') >> masu.repeat(1).as(:masu) >> str('|') >> nonl.repeat(1) >> nl }
       rule(:masu) {
@@ -34,11 +34,11 @@ module Jkf
       rule(:split) { str('手数----指手--') >> str('-------消費時間--').maybe >> nl }
 
       # Moves
-      rule(:moves) { first_board.as(:hd) >> split.maybe >> move.repeat.maybe.as(:tl) >> result.maybe }
-      rule(:first_board) { comment.repeat.maybe.as(:c) >> pointer.maybe }
-      rule(:move) { line.as(:line) >> comment.repeat.maybe.as(:c) >> pointer.maybe }
-      rule(:pointer) { str('&') >> nonl.repeat.maybe >> nl }
-      rule(:line) { spaces? >> te >> spaces? >> (fugou.as(:fugou) >> from.as(:from) | match('[^\r\n ]').repeat.maybe.as(:spe)).as(:move) >> spaces? >> time.maybe.as(:time) >> str('+').maybe >> nl }
+      rule(:moves) { first_board.as(:hd) >> split.maybe >> move.repeat.as(:tl) >> result.maybe }
+      rule(:first_board) { comment.repeat.as(:c) >> pointer.maybe }
+      rule(:move) { line.as(:line) >> comment.repeat.as(:c) >> pointer.maybe }
+      rule(:pointer) { str('&') >> nonl.repeat >> nl }
+      rule(:line) { spaces? >> te >> spaces? >> (fugou.as(:fugou) >> from.as(:from) | match('[^\r\n ]').repeat.as(:spe)).as(:move) >> spaces? >> time.maybe.as(:time) >> str('+').maybe >> nl }
       rule(:te) { match('\d').repeat }
       rule(:fugou) { place.as(:pl) >> piece.as(:pi) >> str('成').maybe.as(:pro) }
       rule(:place) { num.as(:x) >> numkan.as(:y) | str('同　') }
@@ -54,8 +54,8 @@ module Jkf
       rule(:ms) { match('\d').repeat.as(:m) >> str(':') >> match('\d').repeat.as(:s) }
 
       rule(:comment) {
-        str('*') >> nonl.repeat.maybe.as(:comm) >> nl |
-        str('&') >> nonl.repeat.maybe.as(:annotation) >> nl
+        str('*') >> nonl.repeat.as(:comm) >> nl |
+        str('&') >> nonl.repeat.as(:annotation) >> nl
       }
 
       rule(:result) {
@@ -74,11 +74,11 @@ module Jkf
       rule(:fork) { str('変化：') >> spaces? >> match('\d').repeat(1).as(:te) >> str('手') >> nl >> moves.as(:as) }
 
       # whitespace / nl / nonl
-      rule(:nl) { newline.repeat(1) >> skipline.repeat.maybe }
+      rule(:nl) { newline.repeat(1) >> skipline.repeat }
       rule(:nonl) { match('[^\n]') }
       rule(:whitespace) { space | str("\t") }
-      rule(:newline) { whitespace.repeat.maybe >> (str("\n") | str("\r") >> str("\n").maybe) }
-      rule(:skipline) { str('#') >> nonl.repeat.maybe >> newline }
+      rule(:newline) { whitespace.repeat >> (str("\n") | str("\r") >> str("\n").maybe) }
+      rule(:skipline) { str('#') >> nonl.repeat >> newline }
       rule(:space) { str(' ') }
       rule(:spaces) { space.repeat(1) }
       rule(:spaces?) { spaces.maybe }

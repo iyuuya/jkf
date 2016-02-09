@@ -3,7 +3,7 @@ module Jkf
     class Kif < Parslet::Parser
       root :kifu
 
-      rule(:kifu) { skipline.repeat.maybe >> header.repeat.maybe.as(:headers) >> initial_board.maybe.as(:initial_board) >> header.repeat.maybe.as(:headers2) }
+      rule(:kifu) { skipline.repeat.maybe >> header.repeat.maybe.as(:headers) >> initial_board.maybe.as(:initial_board) >> header.repeat.maybe.as(:headers2) >> split.maybe }
 
       # Header
       rule(:header) {
@@ -30,6 +30,10 @@ module Jkf
         (str('v') | str('V'))
       }
 
+      # Split
+      rule(:split) { str("手数----指手--") >> str("-------消費時間--").maybe >> nl }
+
+      # Common
       rule(:piece) { str("成").maybe.as(:pro) >> match('[歩香桂銀金角飛王玉と杏圭全馬竜龍]').as(:p) }
 
       # whitespace / nl / nonl

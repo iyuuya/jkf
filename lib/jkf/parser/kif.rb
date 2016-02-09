@@ -3,7 +3,7 @@ module Jkf
     class Kif < Parslet::Parser
       root :kifu
 
-      rule(:kifu) { skipline.repeat.maybe >> header.repeat.maybe.as(:headers) >> initial_board.maybe.as(:initial_board) >> header.repeat.maybe.as(:headers2) >> split.maybe }
+      rule(:kifu) { skipline.repeat.maybe >> header.repeat.maybe.as(:headers) >> initial_board.maybe.as(:initial_board) >> header.repeat.maybe.as(:headers2) >> split.maybe >> moves.as(:moves) >> nl.maybe }
 
       # Header
       rule(:header) {
@@ -33,8 +33,42 @@ module Jkf
       # Split
       rule(:split) { str("手数----指手--") >> str("-------消費時間--").maybe >> nl }
 
-      # Common
+      # Moves
+      rule(:moves) { first_board.as(:hd) >> split.maybe >> move.repeat.maybe.as(:tl) >> result.maybe }
+      rule(:first_board) { comment.repeat.maybe.as(:c) >> pointer.maybe }
+      rule(:move) { line.as(:line) >> comment.repeat.maybe.as(:c) >> pointer.maybe }
+      rule(:pointer) { str("&") >> nonl.repeat.maybe >> nl }
+      rule(:line) { str(" ").repeat.maybe >> te >> str(" ").repeat.maybe >> (fugou.as(:fugou) >> from.as(:from) | match('[^\r\n ]').repeat.maybe.as(:spe)).as(:move) >> str(" ").repeat.maybe >> time.maybe.as(:time) >> str("+").maybe >> nl }
+      rule(:te) { match('[0-9]').repeat }
+      rule(:fugou) { place.as(:pl) >> piece.as(:pi) >> str("成").maybe.as(:pro) }
+      rule(:place) { num.as(:x) >> numkan.as(:y) | str("同　") }
+      rule(:num) { match('[１２３４５６７８９]').as(:n) }
+      rule(:numkan) { match('[一二三四五六七八九]').as(:n) }
+
       rule(:piece) { str("成").maybe.as(:pro) >> match('[歩香桂銀金角飛王玉と杏圭全馬竜龍]').as(:p) }
+
+      rule(:from) { str("打") | str("(") >> match('[1-9]').as(:x) >> match('[1-9]').as(:y) >> str(")") }
+
+      rule(:time) { str("(") >> str(" ").repeat.maybe >> ms.as(:now) >> str("/") >> hms.as(:total) >> str(")") }
+      rule(:hms) { match('[0-9]').repeat.as(:h) >> str(":") >> match('[0-9]').repeat.as(:m) >> str(":") >> match('[0-9]').repeat.as(:s) }
+      rule(:ms) { match('[0-9]').repeat.as(:m) >> str(":") >> match('[0-9]').repeat.as(:s) }
+
+      rule(:comment) {
+        str("*") >> nonl.repeat.maybe.as(:comm) >> nl |
+        str("&") >> nonl.repeat.maybe.as(:annotation) >> nl
+      }
+
+      rule(:result) {
+        str("まで") >> match('[0-9]').repeat >> str("手") >> (
+          str("で") >> turn.as(:win) >> str("手の") >> (str("勝ち") | str("反則") >> (str("勝ち") | str("負け")).as(:res)).as(:res) |
+          str("で時間切れにより") >> turn.as(:win) >> str("手の勝ち") |
+          str("で中断") |
+          str("で持将棋") |
+          str("で千日手") |
+          str("で").maybe >> str("詰") >> str("み").maybe |
+          str("で不詰")
+        ).as(:res) >> nl
+      }
 
       # whitespace / nl / nonl
       rule(:nl) { newline.repeat(1) >> skipline.repeat.maybe }

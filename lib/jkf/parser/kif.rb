@@ -3,7 +3,7 @@ module Jkf
     class Kif < Parslet::Parser
       root :kifu
 
-      rule(:kifu) { skipline.repeat.maybe >> header.repeat.maybe.as(:headers) >> initial_board.maybe.as(:initial_board) >> header.repeat.maybe.as(:headers2) >> split.maybe >> moves.as(:moves) >> nl.maybe }
+      rule(:kifu) { skipline.repeat.maybe >> header.repeat.maybe.as(:headers) >> initial_board.maybe.as(:initial_board) >> header.repeat.maybe.as(:headers2) >> split.maybe >> moves.as(:moves) >> fork.repeat.maybe.as(:forks) >> nl.maybe }
 
       # Header
       rule(:header) {
@@ -69,6 +69,9 @@ module Jkf
           str("で不詰")
         ).as(:res) >> nl
       }
+
+      # Fork
+      rule(:fork) { str("変化：") >> str(" ").repeat.maybe >> match('[0-9]').repeat(1).as(:te) >> str("手") >> nl >> moves.as(:as) }
 
       # whitespace / nl / nonl
       rule(:nl) { newline.repeat(1) >> skipline.repeat.maybe }

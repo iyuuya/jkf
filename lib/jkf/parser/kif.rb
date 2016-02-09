@@ -3,7 +3,7 @@ module Jkf
     class Kif < Parslet::Parser
       root :kifu
 
-      rule(:kifu) { skipline.repeat.maybe >> header.repeat.maybe.as(:headers) }
+      rule(:kifu) { skipline.repeat.maybe >> header.repeat.maybe.as(:headers) >> initial_board.maybe.as(:initial_board) >> header.repeat.maybe.as(:headers2) }
 
       # Header
       rule(:header) {
@@ -12,6 +12,25 @@ module Jkf
         match('[^：\r\n]').repeat.as(:key) >> str("：") >> nonl.repeat.maybe.as(:value) >> nl
       }
       rule(:turn) { match('[先後上下]') }
+
+      # InitialBoard
+      rule(:initial_board) {
+        (str(" ") >> nonl.repeat.maybe >> nl).maybe >>
+        (str("+") >> nonl.repeat.maybe >> nl).maybe >>
+        ikkatsu_line.repeat(1).as(:lines) >>
+        (str("+") >> nonl.repeat.maybe >> nl).maybe
+      }
+      rule(:ikkatsu_line) { str("|") >> masu.repeat(1).as(:masu) >> str("|") >> nonl.repeat(1) >> nl }
+      rule(:masu) {
+        str(" ・").as(:empty) |
+        teban.as(:c) >> piece.as(:k)
+      }
+      rule(:teban) {
+        (str(' ') | str('+') | str('^')) |
+        (str('v') | str('V'))
+      }
+
+      rule(:piece) { str("成").maybe.as(:pro) >> match('[歩香桂銀金角飛王玉と杏圭全馬竜龍]').as(:p) }
 
       # whitespace / nl / nonl
       rule(:nl) { newline.repeat(1) >> skipline.repeat.maybe }

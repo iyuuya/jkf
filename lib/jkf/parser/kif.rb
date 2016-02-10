@@ -1,3 +1,5 @@
+# coding: utf-8
+
 module Jkf
   module Parser
     class Kif < Parslet::Parser

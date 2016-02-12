@@ -20,4 +20,21 @@ describe Jkf::Parser::Ki2 do
   fixtures(:ki2).each do |fixture|
     it_behaves_like :parse_file, fixture
   end
+
+  context 'simple' do
+    let(:str) { "▲７六歩 △３四歩 ▲２二角成 △同　銀 ▲４五角" }
+    it {
+      is_expected.to eq Hash[
+        header:{},
+        moves:[
+          {},
+          {move:{to:pos(7,6),piece:"FU"}},
+          {move:{to:pos(3,4),piece:"FU"}},
+          {move:{to:pos(2,2),piece:"KA",promote:true}},
+          {move:{same:true,piece:"GI"}},
+          {move:{to:pos(4,5),piece:"KA"}},
+        ]
+      ]
+    }
+  end
 end

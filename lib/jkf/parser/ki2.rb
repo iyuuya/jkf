@@ -955,7 +955,7 @@ module Jkf::Parser
             end
             if s4 != :failed
               s5 = parse_nl
-              if s5 != :failed
+              if s5 != :failed || @input[@current_pos].nil?
                 @reported_pos = s0
                 s0 = s1 = s4
               else

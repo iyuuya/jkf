@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'kconv'
 
 describe Jkf::Parser::Ki2 do
   let(:ki2_parser) { Jkf::Parser::Ki2.new }

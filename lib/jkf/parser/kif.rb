@@ -15,7 +15,7 @@ module Jkf::Parser
 
       @result = parse_kifu
 
-      if @result != @failded && @current_pos == @input.length
+      if @result != :failded && @current_pos == @input.length
         return @result
       else
         fail({ type: "end", description: "end of input" }) if @result != :failed && @current_pos < input.length

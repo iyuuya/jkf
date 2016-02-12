@@ -82,7 +82,7 @@ module Jkf::Parser
                           else
                             ret[:initial][:data][:color] = 0
                           end
-                          ret[:initial][:data][:hand] = [
+                          ret[:initial][:data][:hands] = [
                             make_hand(ret[:header]["先手の持駒"] || ret[:header]["下手の持駒"]),
                             make_hand(ret[:header]["後手の持駒"] || ret[:header]["上手の持駒"])
                           ]

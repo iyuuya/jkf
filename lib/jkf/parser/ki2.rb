@@ -1153,7 +1153,7 @@ module Jkf::Parser
       match_regexp(/^[^\r\n]/)
     end
 
-    private
+    protected
 
     def match_regexp(reg)
       ret = nil

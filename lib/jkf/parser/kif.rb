@@ -192,8 +192,7 @@ module Jkf::Parser
             s3 = parse_nl
             if s3 != :failed
               @reported_pos = s0
-              s1 = { k: "手番", v: s1 }
-              s0 = s1
+              s0 = s1 = { k: "手番", v: s1 }
             else
               @current_pos = s0
               s0 = :failed
@@ -245,8 +244,7 @@ module Jkf::Parser
         if s3 != :failed
           s4 = parse_nl
           if s4 != :failed
-            s2 = [s2, s3, s4]
-            s1 = s2
+            s1 = s2 = [s2, s3, s4]
           else
             @current_pos = s1
             s1 = :failed
@@ -275,8 +273,7 @@ module Jkf::Parser
           if s4 != :failed
             s5 = parse_nl
             if s5 != :failed
-              s3 = [s3, s4, s5]
-              s2 = s3
+              s2 = s3 = [s3, s4, s5]
             else
               @current_pos = s2
               s2 = :failed
@@ -314,8 +311,7 @@ module Jkf::Parser
               if s6 != :failed
                 s7 = parse_nl
                 if s7 != :failed
-                  s5 = [s5, s6, s7]
-                  s4 = s5
+                  s4 = s5 = [s5, s6, s7]
                 else
                   @current_pos = s4
                   s4 = :failed
@@ -426,8 +422,7 @@ module Jkf::Parser
         s2 = parse_piece
         if s2 != :failed
           @reported_pos = s0
-          s1 = { color: s1, kind: s2 }
-          s0 = s1
+          s0 = s1 = { color: s1, kind: s2 }
         else
           @current_pos = s0
           s0 = :failed
@@ -483,8 +478,7 @@ module Jkf::Parser
         if s2 != :failed
           s3 = parse_nl
           if s3 != :failed
-            s1 = [s1, s2, s3]
-            s0 = s1
+            s0 = s1 = [s1, s2, s3]
           else
             @current_pos = s0
             s0 = :failed
@@ -518,8 +512,7 @@ module Jkf::Parser
             s4 = nil if s4 == :failed
             if s4 != :failed
               @reported_pos = s0
-              s1 = s3.unshift(s1)
-              s0 = s1
+              s0 = s1 = s3.unshift(s1)
             else
               @current_pos = s0
               s0 = :failed
@@ -554,8 +547,7 @@ module Jkf::Parser
         end
         if s2 != :failed
           @reported_pos = s0
-          s1 = s1.length == 0 ? {} : { comments: s1 }
-          s0 = s1
+          s0 = s1 = s1.length == 0 ? {} : { comments: s1 }
         else
           @current_pos = s0
           s0 = :failed
@@ -622,8 +614,7 @@ module Jkf::Parser
         if s2 != :failed
           s3 = parse_nl
           if s3 != :failed
-            s1 = [s1, s2, s3]
-            s0 = s1
+            s0 = s1 = [s1, s2, s3]
           else
             @current_pos = s0
             s0 = :failed
@@ -691,11 +682,8 @@ module Jkf::Parser
                 s5 << s6
                 s6 = match_regexp(/^[^\r\n ]/)
               end
-              if s5 != :failed
-                @reported_pos = s4
-                s5 = s5.join
-              end
-              s4 = s5
+              @reported_pos = s4
+              s4 = s5 = s5.join
             end
             if s4 != :failed
               s5 = []
@@ -714,8 +702,7 @@ module Jkf::Parser
                     s8 = parse_nl
                     if s8 != :failed
                       @reported_pos = s0
-                      s1 = { move: s4, time: s6 }
-                      s0 = s1
+                      s0 = s1 = { move: s4, time: s6 }
                     else
                       @current_pos = s0
                       s0 = :failed
@@ -775,8 +762,7 @@ module Jkf::Parser
           s3 = nil if s3 == :failed
           if s3 != :failed
             @reported_pos = s0
-            s1 = { to: s1, piece: s2, promote: !!s3 }
-            s0 = s1
+            s0 = s1 = { to: s1, piece: s2, promote: !!s3 }
           else
             @current_pos = s0
             s0 = :failed
@@ -799,8 +785,7 @@ module Jkf::Parser
         s2 = parse_numkan
         if s2 != :failed
           @reported_pos = s0
-          s1 = { x: s1, y: s2 }
-          s0 = s1
+          s0 = s1 = { x: s1, y: s2 }
         else
           @current_pos = s0
           s0 = :failed
@@ -828,8 +813,7 @@ module Jkf::Parser
         @reported_pos = s0
         s1 = zen2n(s1)
       end
-      s0 = s1
-      s0
+      s1
     end
 
     def parse_numkan
@@ -839,8 +823,7 @@ module Jkf::Parser
         @reported_pos = s0
         s1 = kan2n(s1)
       end
-      s0 = s1
-      s0
+      s1
     end
 
     def parse_piece
@@ -851,8 +834,7 @@ module Jkf::Parser
         s2 = match_regexp(/^[歩香桂銀金角飛王玉と杏圭全馬竜龍]/)
         if s2 != :failed
           @reported_pos = s0
-          s1 = kind2csa(s1+s2)
-          s0 = s1
+          s0 = s1 = kind2csa(s1+s2)
         else
           @current_pos = s0
           s0 = :failed
@@ -883,8 +865,7 @@ module Jkf::Parser
               s4 = match_str(")")
               if s4 != :failed
                 @reported_pos = s0
-                s1 = { x: s2.to_i, y: s3.to_i }
-                s0 = s1
+                s0 = s1 = { x: s2.to_i, y: s3.to_i }
               else
                 @current_pos = s0
                 s0 = :failed
@@ -925,8 +906,7 @@ module Jkf::Parser
                 s6 = match_str(")")
                 if s6 != :failed
                   @reported_pos = s0
-                  s1 = { now: s3, total: s5 }
-                  s0 = s1
+                  s0 = s1 = { now: s3, total: s5 }
                 else
                   @current_pos = s0
                   s0 = :failed
@@ -995,8 +975,7 @@ module Jkf::Parser
               end
               if s5 != :failed
                 @reported_pos = s0
-                s1 = { h: s1.join.to_i, m: s3.join.to_i, s: s5.join.to_i }
-                s0 = s1
+                s0 = s1 = { h: s1.join.to_i, m: s3.join.to_i, s: s5.join.to_i }
               else
                 @current_pos = s0
                 s0 = :failed
@@ -1047,8 +1026,7 @@ module Jkf::Parser
           end
           if s3 != :failed
             @reported_pos = s0
-            s1 = { m: s1.join.to_i, s: s3.join.to_i }
-            s0 = s1
+            s0 = s1 = { m: s1.join.to_i, s: s3.join.to_i }
           else
             @current_pos = s0
             s0 = :failed
@@ -1107,8 +1085,7 @@ module Jkf::Parser
             s3 = parse_nl
             if s3 != :failed
               @reported_pos = s0
-              "&" + s2.join
-              s0 = s1
+              s0 = s1 = "&" + s2.join
             else
               @current_pos = s0
               s0 = :failed
@@ -1217,8 +1194,7 @@ module Jkf::Parser
                   s7 = match_str("手の勝ち")
                   if s7 != :failed
                     @reported_pos = s4
-                    s5 = "TIME_UP"
-                    s4 = s5
+                    s4 = s5 = "TIME_UP"
                   else
                     @current_pos = s4
                     s4 = :failed
@@ -1266,8 +1242,7 @@ module Jkf::Parser
                           s7 = nil if s7 == :failed
                           if s7 != :failed
                             @reported_pos = s4
-                            s5 = "TSUMI"
-                            s4 = s5
+                            s4 = s5 = "TSUMI"
                           else
                             @current_pos = s4
                             s4 = :failed
@@ -1342,8 +1317,7 @@ module Jkf::Parser
                 s6 = parse_moves
                 if s6 != :failed
                   @reported_pos = s0
-                  s1 = { te: s3.join.to_i, moves: s6[1..-1] }
-                  s0 = s1
+                  s0 = s1 = { te: s3.join.to_i, moves: s6[1..-1] }
                 else
                   @current_pos = s0
                   s0 = :failed
@@ -1391,8 +1365,7 @@ module Jkf::Parser
           s3 = parse_skipline
         end
         if s2 != :failed
-          s1 = [s1, s2]
-          s0 = s1
+          s0 = s1 = [s1, s2]
         else
           @current_pos = s0
           s0 = :failed
@@ -1418,8 +1391,7 @@ module Jkf::Parser
         if s2 != :failed
           s3 = parse_newline
           if s3 != :failed
-            s1 = [s1, s2, s3]
-            s0 = s1
+            s0 = s1 = [s1, s2, s3]
           else
             @current_pos = s0
             s0 = :failed
@@ -1436,11 +1408,7 @@ module Jkf::Parser
     end
 
     def parse_whitespace
-      s0 = match_str(" ")
-      if s0 == :failed
-        s0 = match_str("\t")
-      end
-      s0
+      match_regexp(/^[ \t]/)
     end
 
     def parse_newline
@@ -1460,8 +1428,7 @@ module Jkf::Parser
             s4 = match_str("\n")
             s4 = nil if s4 == :failed
             if s4 != :failed
-              s3 = [s3, s4]
-              s2 = s3
+              s2 = s3 = [s3, s4]
             else
               @current_pos = s2
               s2 = :failed
@@ -1472,8 +1439,7 @@ module Jkf::Parser
           end
         end
         if s2 != :failed
-          s1 = [s1, s2]
-          s0 = s1
+          s0 = s1 = [s1, s2]
         else
           @current_pos = s0
           s0 = :failed
@@ -1493,9 +1459,9 @@ module Jkf::Parser
 
     def match_regexp(reg)
       ret = nil
-      if @input[@current_pos] =~ reg
-        ret = @input[@current_pos]
-        @current_pos += 1
+      if matched = reg.match(@input[@current_pos])
+        ret = matched.to_s
+        @current_pos += ret.size
       else
         ret = :failed
         fail({ type: "class", value: reg.inspect, description: reg.inspect }) if @silent_fails == 0
@@ -1611,7 +1577,7 @@ module Jkf::Parser
     def make_hand(str)
       # Kifu for iPhoneは半角スペース区切り
       kinds = str.split(/[ 　]/)
-      ret = { FU: 0, KY: 0, KE: 0, GI: 0, KI: 0, KA: 0, HI: 0 }
+      ret = { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 }
       return ret if str.empty?
 
       kinds.each do |kind|

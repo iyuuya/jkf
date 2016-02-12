@@ -67,8 +67,8 @@ module Jkf::Parser
                       @reported_pos = s0
                       s1 = -> (headers, ini, headers2, moves, forks) {
                         ret = { header: {}, moves: moves }
-                        headers.each { |h| ret[:header][h[:k]] = h[:v] }
-                        headers2.each { |h| ret[:header][h[:k]] = h[:v] }
+                        headers.compact.each { |h| ret[:header][h[:k]] = h[:v] }
+                        headers2.compact.each { |h| ret[:header][h[:k]] = h[:v] }
                         if ini
                           ret[:initial] = ini
                         elsif ret[:header]["手合割"]

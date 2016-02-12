@@ -350,4 +350,42 @@ describe Jkf::Parser::Kif do
         ]}
     end
   end
+
+  describe "unsupported annotations" do
+    context "盤面回転" do
+      let(:str) { "盤面回転\n1 ７六歩(77)\n2 ３四歩(33)\n3 ２二角成(88)\n 4 同　銀(31)\n5 ４五角打\n" }
+
+      it {
+        is_expected.to eq Hash[
+          header:{},
+          moves:[
+            {},
+            {move:{from:pos(7,7),to:pos(7,6),piece:"FU"}},
+            {move:{from:pos(3,3),to:pos(3,4),piece:"FU"}},
+            {move:{from:pos(8,8),to:pos(2,2),piece:"KA",promote:true}},
+            {move:{from:pos(3,1),same:true,piece:"GI"}},
+            {move:{to:pos(4,5),piece:"KA"}},
+          ]
+        ]
+      }
+    end
+
+    context "&読み込み時表示" do
+      let(:str) { "1 ７六歩(77)\n2 ３四歩(33)\n&読み込み時表示\n3 ２二角成(88)\n 4 同　銀(31)\n5 ４五角打\n" }
+
+      it {
+        is_expected.to eq Hash[
+          header:{},
+          moves:[
+            {},
+            {move:{from:pos(7,7),to:pos(7,6),piece:"FU"}},
+            {move:{from:pos(3,3),to:pos(3,4),piece:"FU"},comments:["&読み込み時表示"]},
+            {move:{from:pos(8,8),to:pos(2,2),piece:"KA",promote:true}},
+            {move:{from:pos(3,1),same:true,piece:"GI"}},
+            {move:{to:pos(4,5),piece:"KA"}},
+          ]
+        ]
+      }
+    end
+  end
 end

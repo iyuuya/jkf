@@ -163,4 +163,40 @@ describe Jkf::Parser::Ki2 do
       }
     end
   end
+
+  describe 'fork' do
+    context 'normal' do
+      let(:str) { "\
+手合割：平手\n\
+▲７六歩 △３四歩 ▲２二角成 △同　銀 ▲４五角\n\
+まで5手で中断\n\
+\n\
+変化：3手\n\
+▲６六歩 △８四歩"
+      }
+
+      it {
+        is_expected.to eq Hash[
+          header:{
+            "手合割" => "平手",
+          },
+          initial: {preset: "HIRATE"},
+          moves:[
+            {},
+            {move:{to:pos(7,6),piece:"FU"}},
+            {move:{to:pos(3,4),piece:"FU"}},
+            {move:{to:pos(2,2),piece:"KA",promote:true},forks:[
+              [
+                {move:{to:pos(6,6),piece:"FU"}},
+                {move:{to:pos(8,4),piece:"FU"}},
+              ]
+            ]},
+            {move:{same:true,piece:"GI"}},
+            {move:{to:pos(4,5),piece:"KA"}},
+            {special:"CHUDAN"},
+          ]
+        ]
+      }
+    end
+  end
 end

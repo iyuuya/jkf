@@ -1,5 +1,5 @@
 # coding: utf-8
-
+require 'pry'
 module Jkf::Parser
   class Kif
     def parse(input)
@@ -577,7 +577,7 @@ module Jkf::Parser
             s1 = -> (line, c) {
               ret = {}
               ret[:comments] = c if c.length > 0
-              if line[:move]
+              if line[:move].is_a? Hash
                 ret[:move] = line[:move]
               else
                 ret[:special] = special2csa(line[:move])
@@ -1123,7 +1123,7 @@ module Jkf::Parser
             s4 = @current_pos
             s5 = match_str("で")
             if s5 != :failed
-              s6 = @parse_turn
+              s6 = parse_turn
               if s6 != :failed
                 s7 = match_str("手の")
                 if s7 != :failed

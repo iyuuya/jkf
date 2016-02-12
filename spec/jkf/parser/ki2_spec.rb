@@ -23,6 +23,7 @@ describe Jkf::Parser::Ki2 do
 
   context 'simple' do
     let(:str) { "▲７六歩 △３四歩 ▲２二角成 △同　銀 ▲４五角" }
+
     it {
       is_expected.to eq Hash[
         header:{},
@@ -33,6 +34,24 @@ describe Jkf::Parser::Ki2 do
           {move:{to:pos(2,2),piece:"KA",promote:true}},
           {move:{same:true,piece:"GI"}},
           {move:{to:pos(4,5),piece:"KA"}},
+        ]
+      ]
+    }
+  end
+
+  context 'special' do
+    let(:str) { "▲７六歩 △３四歩 ▲７八銀 △８八角成\nまで4手で後手の勝ち\n" }
+
+    it {
+      is_expected.to eq Hash[
+        header:{},
+        moves:[
+          {},
+          {move:{to:pos(7,6),piece:"FU"}},
+          {move:{to:pos(3,4),piece:"FU"}},
+          {move:{to:pos(7,8),piece:"GI"}},
+          {move:{to:pos(8,8),piece:"KA",promote:true}},
+          {special:"TORYO"},
         ]
       ]
     }

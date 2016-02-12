@@ -100,4 +100,67 @@ describe Jkf::Parser::Ki2 do
       }
     end
   end
+
+  describe 'initial' do
+    context 'simple' do
+      let(:str) { "\
+手合割：その他　\n\
+上手の持駒：銀四　桂四　\n\
+  ９ ８ ７ ６ ５ ４ ３ ２ １\n\
++---------------------------+\n\
+| ・ ・ ・ ・ ・ ・ ・v歩v玉|一\n\
+| ・ ・ ・ ・ ・ ・ ・v歩 ・|二\n\
+| ・ ・ ・ ・ ・ ・ ・v歩 ・|三\n\
+| ・ ・ ・ ・ ・ ・ ・v歩 ・|四\n\
+| ・ ・ ・ ・ ・ ・ ・v歩 ・|五\n\
+| ・ ・ ・ ・ ・ ・ ・v歩 ・|六\n\
+| ・ ・ ・ ・ ・ ・ ・v歩 ・|七\n\
+| ・ ・ ・ ・ ・ ・ ・v歩 ・|八\n\
+| ・ ・ ・ ・ ・ ・ ・v歩 ・|九\n\
++---------------------------+\n\
+下手の持駒：飛二　香四　\n\
+下手番\n\
+下手：shitate\n\
+上手：uwate\n\
+▲１三香 △１二桂 ▲同香成"
+      }
+
+      it {
+        is_expected.to eq Hash[
+          header:{
+            "手合割" => "その他　",
+            "上手" => "uwate",
+            "下手" => "shitate",
+          },
+          initial: {
+            preset:"OTHER",
+            data:{
+              board:[
+                [{color:1,kind:"OU"},{},{},{},{},{},{},{},{}],
+                [{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"}],
+                [{},{},{},{},{},{},{},{},{}],
+                [{},{},{},{},{},{},{},{},{}],
+                [{},{},{},{},{},{},{},{},{}],
+                [{},{},{},{},{},{},{},{},{}],
+                [{},{},{},{},{},{},{},{},{}],
+                [{},{},{},{},{},{},{},{},{}],
+                [{},{},{},{},{},{},{},{},{}],
+              ],
+              color: 0,
+              hands:[
+                {"FU" => 0,"KY" => 4,"KE" => 0,"GI" => 0,"KI" => 0,"KA" => 0,"HI" => 2},
+                {"FU" => 0,"KY" => 0,"KE" => 4,"GI" => 4,"KI" => 0,"KA" => 0,"HI" => 0},
+              ]
+            }
+          },
+          moves:[
+            {},
+            {move:{to:pos(1,3),piece:"KY"}},
+            {move:{to:pos(1,2),piece:"KE"}},
+            {move:{same:true,piece:"KY",promote:true}},
+          ]
+        ]
+      }
+    end
+  end
 end

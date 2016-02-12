@@ -6,3 +6,4 @@ module Jkf
 end
 
 require 'jkf/parser/kif'
+require 'jkf/parser/ki2'

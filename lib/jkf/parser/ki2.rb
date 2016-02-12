@@ -5,13 +5,13 @@ module Jkf::Parser
     def parse(input)
       @input = input.clone
 
-      @current_pos      = 0
-      @reported_pos     = 0
-      @cachedPos        = 0
-      @cachedPosDetails = { line: 1, column: 1, seenCR: false }
-      @maxFailPos       = 0
-      @maxFailExpected  = []
-      @silentFails      = 0
+      @current_pos       = 0
+      @reported_pos      = 0
+      @cachedPos         = 0
+      @cachedPosDetails  = { line: 1, column: 1, seenCR: false }
+      @max_fail_pos      = 0
+      @max_fail_expected = []
+      @silent_fails      = 0
 
       @result = parse_kifu
 
@@ -806,7 +806,7 @@ module Jkf::Parser
             if s5 != :failed
               s6 = parse_turn
               if s6 != :failed
-                match_str("手の")
+                s7 = match_str("手の")
                 if s7 != :failed
                   s8 = @current_pos
                   s9 = match_str("勝ち")
@@ -920,7 +920,7 @@ module Jkf::Parser
                       if s5 != :failed
                         s6 = match_str("詰")
                         if s6 != :failed
-                          s7 = mach_str("み")
+                          s7 = match_str("み")
                           if s7 == :failed
                             s7 = nil
                           end
@@ -1010,7 +1010,7 @@ module Jkf::Parser
                 s6 = parse_moves
                 if s6 != :failed
                   @reported_pos = s0
-                  s0 = s1 = { te: s3.join.to_i, moves: moves[1..-1] }
+                  s0 = s1 = { te: s3.join.to_i, moves: s6[1..-1] }
                 else
                   @current_pos = s0
                   s0 = :failed

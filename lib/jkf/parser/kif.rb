@@ -1,5 +1,5 @@
 # coding: utf-8
-require 'pry'
+
 module Jkf::Parser
   class Kif
     def parse(input)

@@ -1473,7 +1473,7 @@ module Jkf::Parser
         end
         if s2 != :failed
           s1 = [s1, s2]
-          so = s1
+          s0 = s1
         else
           @current_pos = s0
           s0 = :failed

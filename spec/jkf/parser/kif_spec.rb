@@ -289,4 +289,65 @@ describe Jkf::Parser::Kif do
       }
     end
   end
+
+  describe "split" do
+    context "normal" do
+      let(:str) { "\
+手合割：平手\n\
+手数----指手--\n\
+*開始コメント\n\
+1 ７六歩(77)\n\
+*初手コメント\n\
+2 ３四歩(33)\n\
+3 ２二角成(88)+\n\
+4 中断\n\
+"
+      }
+
+      it {
+        is_expected.to eq Hash[
+          header:{
+            "手合割" => "平手",
+          },
+          initial: {preset: "HIRATE"},
+          moves:[
+            {comments:["開始コメント"]},
+            {move:{from:pos(7,7),to:pos(7,6),piece:"FU"},comments:["初手コメント"]},
+            {move:{from:pos(3,3),to:pos(3,4),piece:"FU"}},
+            {move:{from:pos(8,8),to:pos(2,2),piece:"KA",promote:true}},
+            {special:"CHUDAN"},
+          ]
+        ]
+      }
+    end
+
+    context "after initial comment" do
+      let(:str) { "\
+手合割：平手\n\
+*開始コメント\n\
+手数----指手--\n\
+1 ７六歩(77)\n\
+*初手コメント\n\
+2 ３四歩(33)\n\
+3 ２二角成(88)+\n\
+4 中断\n\
+"
+      }
+
+      it {
+        is_expected.to eq Hash[
+          header:{
+            "手合割" => "平手",
+          },
+          initial: {preset: "HIRATE"},
+          moves:[
+            {comments:["開始コメント"]},
+            {move:{from:pos(7,7),to:pos(7,6),piece:"FU"},comments:["初手コメント"]},
+            {move:{from:pos(3,3),to:pos(3,4),piece:"FU"}},
+            {move:{from:pos(8,8),to:pos(2,2),piece:"KA",promote:true}},
+            {special:"CHUDAN"},
+          ]
+        ]}
+    end
+  end
 end

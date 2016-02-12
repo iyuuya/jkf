@@ -56,4 +56,48 @@ describe Jkf::Parser::Ki2 do
       ]
     }
   end
+
+  describe 'header' do
+    context '手合割 平手' do
+      let(:str) { "手合割：平手\n▲７六歩 △３四歩 ▲２二角成 △同　銀 ▲４五角" }
+
+      it {
+        is_expected.to eq Hash[
+          header:{
+            "手合割" => "平手",
+          },
+          initial: {preset: "HIRATE"},
+          moves:[
+            {},
+            {move:{to:pos(7,6),piece:"FU"}},
+            {move:{to:pos(3,4),piece:"FU"}},
+            {move:{to:pos(2,2),piece:"KA",promote:true}},
+            {move:{same:true,piece:"GI"}},
+            {move:{to:pos(4,5),piece:"KA"}},
+          ]
+        ]
+      }
+    end
+
+    context '手合割 六枚落ち' do
+      let(:str) { "手合割：六枚落ち\n△４二玉 ▲７六歩 △２二銀 ▲６六角 △８二銀" }
+
+      it {
+        is_expected.to eq Hash[
+          header:{
+            "手合割" => "六枚落ち",
+          },
+          initial: {preset: "6"},
+          moves:[
+            {},
+            {move:{to:pos(4,2),piece:"OU"}},
+            {move:{to:pos(7,6),piece:"FU"}},
+            {move:{to:pos(2,2),piece:"GI"}},
+            {move:{to:pos(6,6),piece:"KA"}},
+            {move:{to:pos(8,2),piece:"GI"}},
+          ]
+        ]
+      }
+    end
+  end
 end

@@ -4,6 +4,7 @@ module Jkf::Parser
   class Csa
     def parse(input)
       @input = input.clone
+      @input += "\n" unless @input[-1] =~ /\n|\r|,/
 
       @current_pos       = 0
       @reported_pos      = 0

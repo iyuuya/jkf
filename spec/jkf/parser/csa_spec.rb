@@ -5,6 +5,19 @@ describe Jkf::Parser::Csa do
   let(:csa_parser) { Jkf::Parser::Csa.new }
   subject { csa_parser.parse(str) }
 
+  shared_examples(:parse_file) do |filename|
+    let(:str) do
+      File.read(filename).toutf8
+    end
+    it "should be parse #{File.basename(filename)}" do
+      is_expected.not_to be_nil
+    end
+  end
+
+  fixtures(:csa).each do |fixture|
+    it_behaves_like :parse_file, fixture
+  end
+
   describe 'csa-parser V2' do
     let(:initial) {
       Hash[

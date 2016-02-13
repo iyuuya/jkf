@@ -184,5 +184,239 @@ T0\n"
         ]
       }
     end
+
+    describe '開始局面' do
+      context '平手初期局面' do
+        let(:str) { "\
+V2.2\n\
+PI82HI22KA91KY81KE21KE11KY\n\
+-\n\
+-5142OU\n\
++7776FU\n\
+-3122GI\n\
++8866KA\n\
+-7182GI\n"
+        }
+
+        it {
+          is_expected.to eq Hash[
+            header:{},
+            initial: {
+              preset: "OTHER",
+              data: {
+                board: [
+                  [{                      }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KY" },],
+                  [{                      }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, { color: 0, kind: "HI" }, { color: 0, kind: "KE" },],
+                  [{ color: 1, kind: "GI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "GI" },],
+                  [{ color: 1, kind: "KI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KI" },],
+                  [{ color: 1, kind: "OU" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "OU" },],
+                  [{ color: 1, kind: "KI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KI" },],
+                  [{ color: 1, kind: "GI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "GI" },],
+                  [{                      }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, { color: 0, kind: "KA" }, { color: 0, kind: "KE" },],
+                  [{                      }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KY" },],
+                ],
+                color: 1,
+                hands:[
+                  {"FU"=>0,"KY"=>0,"KE"=>0,"GI"=>0,"KI"=>0,"KA"=>0,"HI"=>0},
+                  {"FU"=>0,"KY"=>0,"KE"=>0,"GI"=>0,"KI"=>0,"KA"=>0,"HI"=>0},
+                ]
+              }
+            },
+            moves:[
+              {},
+              {move:{from:pos(5,1),to:pos(4,2),piece:"OU"}},
+              {move:{from:pos(7,7),to:pos(7,6),piece:"FU"}},
+              {move:{from:pos(3,1),to:pos(2,2),piece:"GI"}},
+              {move:{from:pos(8,8),to:pos(6,6),piece:"KA"}},
+              {move:{from:pos(7,1),to:pos(8,2),piece:"GI"}},
+            ]
+          ]
+      }
+    end
+
+    context '一括表現' do
+      let(:str) { "\
+V2.2\n\
+P1 *  * -GI-KI-OU-KI-GI *  * \n\
+P1 *  *  *  *  *  *  *  *  * \n\
+P3-FU-FU-FU-FU-FU-FU-FU-FU-FU\n\
+P1 *  *  *  *  *  *  *  *  * \n\
+P1 *  *  *  *  *  *  *  *  * \n\
+P1 *  *  *  *  *  *  *  *  * \n\
+P3+FU+FU+FU+FU+FU+FU+FU+FU+FU\n\
+P1 * +KA *  *  *  *  * +HI * \n\
+P9+KY+KE+GI+KI+OU+KI+GI+KE+KY\n\
+-\n\
+-5142OU\n\
++7776FU\n\
+-3122GI\n\
++8866KA\n\
+-7182GI\n"
+      }
+
+      it {
+        is_expected.to eq Hash[
+          header:{},
+          initial: {
+            preset: "OTHER",
+            data: {
+              board: [
+                [{                      }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KY" },],
+                [{                      }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, { color: 0, kind: "HI" }, { color: 0, kind: "KE" },],
+                [{ color: 1, kind: "GI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "GI" },],
+                [{ color: 1, kind: "KI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KI" },],
+                [{ color: 1, kind: "OU" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "OU" },],
+                [{ color: 1, kind: "KI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KI" },],
+                [{ color: 1, kind: "GI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "GI" },],
+                [{                      }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, { color: 0, kind: "KA" }, { color: 0, kind: "KE" },],
+                [{                      }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KY" },],
+              ],
+              color: 1,
+              hands:[
+                {"FU"=>0,"KY"=>0,"KE"=>0,"GI"=>0,"KI"=>0,"KA"=>0,"HI"=>0},
+                {"FU"=>0,"KY"=>0,"KE"=>0,"GI"=>0,"KI"=>0,"KA"=>0,"HI"=>0},
+              ]
+            }
+          },
+          moves:[
+            {},
+            {move:{from:pos(5,1),to:pos(4,2),piece:"OU"}},
+            {move:{from:pos(7,7),to:pos(7,6),piece:"FU"}},
+            {move:{from:pos(3,1),to:pos(2,2),piece:"GI"}},
+            {move:{from:pos(8,8),to:pos(6,6),piece:"KA"}},
+            {move:{from:pos(7,1),to:pos(8,2),piece:"GI"}},
+          ]
+        ]
+      }
+    end
+
+    context '駒別単独表現' do
+      let(:str) { "\
+V2.2\n\
+P-11OU21FU22FU23FU24FU25FU26FU27FU28FU29FU\n\
+P+00HI00HI00KY00KY00KY00KY\n\
+P-00GI00GI00GI00GI00KE00KE00KE00KE\n\
++\n\
++0013KY\n\
+-0012KE\n\
++1312NY\n"
+      }
+
+      it {
+        is_expected.to eq Hash[
+          header:  {},
+          initial: {
+            preset:"OTHER",
+            data:{
+              board:[
+                [{color:1,kind:"OU"},{},{},{},{},{},{},{},{}],
+                [{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"}],
+                [{},{},{},{},{},{},{},{},{}],
+                [{},{},{},{},{},{},{},{},{}],
+                [{},{},{},{},{},{},{},{},{}],
+                [{},{},{},{},{},{},{},{},{}],
+                [{},{},{},{},{},{},{},{},{}],
+                [{},{},{},{},{},{},{},{},{}],
+                [{},{},{},{},{},{},{},{},{}],
+              ],
+              color: 0,
+              hands:[
+                {"FU"=>0,"KY"=>4,"KE"=>0,"GI"=>0,"KI"=>0,"KA"=>0,"HI"=>2},
+                {"FU"=>0,"KY"=>0,"KE"=>4,"GI"=>4,"KI"=>0,"KA"=>0,"HI"=>0},
+              ]
+            }
+          },
+          moves:[
+            {},
+            {move:{to:pos(1,3),piece:"KY"}},
+            {move:{to:pos(1,2),piece:"KE"}},
+            {move:{from:pos(1,3),to:pos(1,2),piece:"NY"}},
+          ]
+        ]
+      }
+    end
+
+    context 'AL' do
+      let(:str) { "\
+V2.2\n\
+P+23FU\n\
+P-11OU21KE\n\
+P+00KI\n\
+P-00AL\n\
++\n\
++0022KI\n\
+%TSUMI\n"
+      }
+
+      it {
+        is_expected.to eq Hash[
+          header:  {},
+          initial: {
+            preset:"OTHER",
+            data:{
+              board:[
+                [{color:1,kind:"OU"},{},{},{},{},{},{},{},{}],
+                [{color:1,kind:"KE"},{},{color:0,kind:"FU"},{},{},{},{},{},{}],
+                [{},{},{},{},{},{},{},{},{}],
+                [{},{},{},{},{},{},{},{},{}],
+                [{},{},{},{},{},{},{},{},{}],
+                [{},{},{},{},{},{},{},{},{}],
+                [{},{},{},{},{},{},{},{},{}],
+                [{},{},{},{},{},{},{},{},{}],
+                [{},{},{},{},{},{},{},{},{}],
+              ],
+              color: 0,
+              hands:[
+                {"FU"=>0,"KY"=>0,"KE"=>0,"GI"=>0,"KI"=>1,"KA"=>0,"HI"=>0},
+                {"FU"=>17,"KY"=>4,"KE"=>3,"GI"=>4,"KI"=>3,"KA"=>2,"HI"=>2},
+              ]
+            }
+          },
+          moves:[
+            {},
+            {move:{to:pos(2,2),piece:"KI"}},
+            {special: "TSUMI"},
+          ]
+        ]
+      }
+    end
+  end
+
+    context 'header' do
+      let(:str) { "\
+V2.2\n\
+N+sente\n\
+N-gote\n\
+$SITE:将棋会館\n\
+$START_TIME:2015/08/04 13:00:00\n\
+PI\n\
++\n\
++7776FU\n\
+-3334FU\n\
++7978GI\n\
+-2288UM\n\
+%TORYO\n"
+      }
+
+      it {
+        is_expected.to eq Hash[
+          header:{
+            "先手": "sente",
+            "後手": "gote",
+            "場所": "将棋会館",
+            "開始日時": "2015/08/04 13:00:00",
+          },
+          initial: initial,
+          moves:[
+            {},
+            {move:{from:pos(7,7),to:pos(7,6),piece:"FU"}},
+            {move:{from:pos(3,3),to:pos(3,4),piece:"FU"}},
+            {move:{from:pos(7,9),to:pos(7,8),piece:"GI"}},
+            {move:{from:pos(2,2),to:pos(8,8),piece:"UM"}},
+            {special:"TORYO"},
+          ]
+        ]
+      }
+    end
   end
 end

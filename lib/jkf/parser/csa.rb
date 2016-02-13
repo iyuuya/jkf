@@ -562,13 +562,13 @@ module Jkf::Parser
           }
 
           lines.each do |line|
-            line.pieces.each do |piece|
+            line[:pieces].each do |piece|
               if piece[:xy][:x] == 0
                 if piece[:piece] == "AL"
                   hands[line[:teban]] = all
                   return { preset: "OTHER", data: { board: board, hands: hands } }
                 end
-                obj = hands[lines[:teban]]
+                obj = hands[line[:teban]]
                 obj[piece[:piece]] += 1
               else
                 board[piece[:xy][:x]-1][piece[:xy][:y]-1] = { color: line[:teban], kind: piece[:piece] }

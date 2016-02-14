@@ -1,30 +1,9 @@
 # coding: utf-8
 
 module Jkf::Parser
-  class Csa
-    def parse(input)
-      @input = input.clone
-      @input += "\n" unless @input[-1] =~ /\n|\r|,/
-
-      @current_pos       = 0
-      @reported_pos      = 0
-      @cachedPos         = 0
-      @cachedPosDetails  = { line: 1, column: 1, seenCR: false }
-      @max_fail_pos      = 0
-      @max_fail_expected = []
-      @silent_fails      = 0
-
-      @result = parse_kifu
-
-      if @result != :failed && @current_pos == @input.length
-        return @result
-      else
-        fail({ type: "end", description: "end of input" }) if @result != :failed && @current_pos < @input.length
-        raise ParseError
-      end
-    end
-
-    def parse_kifu
+  class Csa < Base
+    def parse_root
+      @input += "\n" unless @input[-1] =~ /\n|\r|,/ # FIXME
       s0 = parse_csa2
       s0 = parse_csa1 if s0 == :failed
       s0
@@ -975,41 +954,6 @@ module Jkf::Parser
     end
 
     protected
-
-    def match_regexp(reg)
-      ret = nil
-      if matched = reg.match(@input[@current_pos])
-        ret = matched.to_s
-        @current_pos += ret.size
-      else
-        ret = :failed
-        fail({ type: "class", value: reg.inspect, description: reg.inspect }) if @silent_fails == 0
-      end
-      ret
-    end
-
-    def match_str(str)
-      ret = nil
-      if @input[@current_pos, str.size] == str
-        ret = str
-        @current_pos += str.size
-      else
-        ret = :failed
-        fail({ type: "literal", value: str, description: "\"#{str}\"" }) if @slient_fails == 0
-      end
-      ret
-    end
-
-    def fail(expected)
-      return if @current_pos < @max_fail_pos
-
-      if @current_pos > @max_fail_pos
-        @max_fail_pos = @current_pos
-        @max_fail_expected = []
-      end
-
-      @max_fail_expected << expected
-    end
 
     def sec2time(sec)
       s = sec % 60

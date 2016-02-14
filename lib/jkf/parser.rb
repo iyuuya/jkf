@@ -2,6 +2,7 @@ require 'parslet'
 
 module Jkf
   module Parser
+    class ParseError < StandardError; end
   end
 end
 

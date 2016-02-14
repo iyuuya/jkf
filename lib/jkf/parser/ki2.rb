@@ -19,7 +19,7 @@ module Jkf::Parser
         return @result
       else
         fail({ type: "end", description: "end of input" }) if @result != :failed && @current_pos < @input.length
-        raise SyntaxError
+        raise ParseError
       end
     end
 

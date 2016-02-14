@@ -57,6 +57,5 @@ module Jkf::Parser
 
       @max_fail_expected << expected
     end
-
   end
 end

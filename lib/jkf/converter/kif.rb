@@ -13,11 +13,11 @@ module Jkf::Converter
 
     protected
 
-    # TODO: implements
     def convert_header(header)
-      result = ''
+      header.map { |(key, value)| "#{key}：#{value}\n" }.join
     end
 
+    # TODO: implements
     def convert_initial(initial)
       result = ''
     end

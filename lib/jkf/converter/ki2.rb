@@ -92,11 +92,7 @@ module Jkf::Converter
     end
 
     def convert_move(move)
-      result = if move['color'] == 0
-                 '▲'
-               else
-                 '△'
-               end
+      result = move['color'] == 0 ? '▲' : '△'
       result += if move['to']
                   n2zen(move['to']['x']) + n2kan(move['to']['y'])
                 elsif move['same']
@@ -144,11 +140,7 @@ module Jkf::Converter
       if piece == {}
         result = ' ・'
       else
-        result += if piece['color'] == 0
-                    ' '
-                  else
-                    'v'
-                  end
+        result += piece['color'] == 0 ?  ' ' : 'v'
         result += csa2kind(piece['kind'])
       end
 

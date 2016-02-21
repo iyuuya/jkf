@@ -59,11 +59,6 @@ module Jkf::Converter
       result = "\n"
       i = 0
       moves.each { |move|
-        if move['comments']
-          result += convert_comments(move['comments'])
-          i = 0
-        end
-
         if move['move']
           result_move = convert_move(move['move'])
           i += 1
@@ -73,6 +68,12 @@ module Jkf::Converter
             result_move += result_move.size == 4 ? " "*4 : " "*2
           end
           result += result_move
+        end
+
+        if move['comments']
+          result += "\n" if result[-1] != "\n"
+          result += convert_comments(move['comments'])
+          i = 0
         end
       }
       result
@@ -97,8 +98,7 @@ module Jkf::Converter
     end
 
     def convert_comments(comments)
-      # TODO: implements
-      ''
+      comments.map { |comment| "*#{comment}\n" }.join
     end
 
     def convert_board_piece(piece)

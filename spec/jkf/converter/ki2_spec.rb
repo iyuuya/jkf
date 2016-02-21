@@ -11,4 +11,10 @@ describe Jkf::Converter::Ki2 do
 
     it { is_expected.to eq JSON.parse(jkf) }
   end
+
+  describe 'fork.ki2' do
+    let(:jkf) { ki2_parser.parse(File.read(fixtures(:ki2).find { |file| file =~ /fork/ } , encoding: 'Shift_JIS').toutf8).to_json }
+
+    it { is_expected.to eq JSON.parse(jkf) }
+  end
 end

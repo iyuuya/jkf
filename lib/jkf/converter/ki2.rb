@@ -6,11 +6,16 @@ module Jkf::Converter
              else
                JSON.parse(jkf)
              end
+      @forks = []
 
       result = ''
       result += convert_header(hash['header']) if hash['header']
       result += convert_initial(hash['initial']) if hash['initial']
       result += convert_moves(hash['moves']) if hash['moves']
+      if @forks.size > 0
+        result += "\n"
+        result += @forks.join("\n")
+      end
 
       result
     end
@@ -59,7 +64,7 @@ module Jkf::Converter
       result
     end
 
-    def convert_moves(moves)
+    def convert_moves(moves, idx=0)
       result = "\n"
       i = 0
       before_split = ''
@@ -67,17 +72,17 @@ module Jkf::Converter
         if move['special']
           result += "\n"
           # first_board+speical分を引く(-2)
-          result += convert_special(move['special'], j-2) if move['special']
+          result += convert_special(move['special'], j-2+idx) if move['special']
         else
           result += before_split
           if move['move']
             result_move = convert_move(move['move'])
+            i += 1
             before_split = if i % 6 == 0
                              "\n"
                            else
                              result_move.size == 4 ? " "*4 : " "*2
                            end
-            i += 1
             result += result_move
           end
 
@@ -86,6 +91,8 @@ module Jkf::Converter
             result += convert_comments(move['comments'])
             i = 0
           end
+
+          @forks.unshift convert_forks(move['forks'], j+idx) if move['forks']
         end
       }
       result
@@ -107,9 +114,9 @@ module Jkf::Converter
 
     def convert_special(special, index)
       result = "まで#{index+1}手"
-      turn = index % 2 == 0 ? '後' : '先'
 
       if special == 'TORYO' || special =~ /ILLEGAL/
+        turn = index % 2 == 0 ? '後' : '先'
         result += "で#{turn}手の"
         result += case special
                   when "TORYO"          then "勝ち"
@@ -117,6 +124,7 @@ module Jkf::Converter
                   when "ILLEGAL_MOVE"   then "反則負け"
                   end
       else
+        turn = index % 2 == 0 ? '先' : '後'
         result += case special
                   when "TIME_UP"    then "で時間切れにより#{turn}手の勝ち"
                   when "CHUDAN"     then "で中断"
@@ -132,6 +140,15 @@ module Jkf::Converter
 
     def convert_comments(comments)
       comments.map { |comment| "*#{comment}\n" }.join
+    end
+
+    def convert_forks(forks, index)
+      result = "\n"
+      result = "変化：%4d手"%[index]
+      forks.each do |moves|
+        result += convert_moves(moves, index)
+      end
+      result
     end
 
     def convert_board_piece(piece)

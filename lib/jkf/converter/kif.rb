@@ -98,8 +98,13 @@ module Jkf::Converter
     end
 
     def convert_time(time)
-      # TODO: implements
-      '()'
+      "(%2d:%02d/%02d:%02d:%02d)"%[
+        time['now']['m'],
+        time['now']['s'],
+        time['total']['h'],
+        time['total']['m'],
+        time['total']['s'],
+      ]
     end
 
     def convert_board_piece(piece)

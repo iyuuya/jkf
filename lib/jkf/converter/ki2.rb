@@ -1,7 +1,11 @@
 module Jkf::Converter
   class Ki2
     def convert(jkf)
-      hash = JSON.parse(jkf)
+      hash = if jkf.is_a?(Hash)
+               jkf
+             else
+               JSON.parse(jkf)
+             end
 
       result = ''
       result += convert_header(hash['header']) if hash['header']
@@ -29,11 +33,11 @@ module Jkf::Converter
 
       if data['hands']
         if data['hands'][0]
-          result += '後手の持駒：'
+          result += '先手の持駒：'
           result += convert_motigoma(data['hands'][0])
         end
         if data['hands'][1]
-          result += '先手の持駒：'
+          result += '後手の持駒：'
           result += convert_motigoma(data['hands'][1])
         end
       end

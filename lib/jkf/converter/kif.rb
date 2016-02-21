@@ -72,7 +72,10 @@ module Jkf::Converter
           result_move += convert_time(move['time']) if move['time']
           result_move += "\n"
           result += result_move
-        else
+        end
+
+        if move['comments']
+          result += convert_comments(move['comments'])
         end
       }
       result
@@ -105,6 +108,10 @@ module Jkf::Converter
         time['total']['m'],
         time['total']['s'],
       ]
+    end
+
+    def convert_comments(comments)
+      comments.map { |comment| "*#{comment}\n" }.join
     end
 
     def convert_board_piece(piece)

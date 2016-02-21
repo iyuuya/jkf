@@ -66,16 +66,26 @@ module Jkf::Converter
     def convert_moves(moves)
       result = "手数----指手---------消費時間--\n"
       moves.each_with_index { |move, i|
-        if move['move']
+        if move['special']
           result_move = "%4d "%i
-          result_move += convert_move(move['move'])
+          result_move += ljust(special2kan(move['special']), 13)
           result_move += convert_time(move['time']) if move['time']
           result_move += "\n"
           result += result_move
-        end
+          # first_board+speical分を引く(-2)
+          result += convert_special(move['special'], i-2) if move['special']
+        else
+          if move['move']
+            result_move = "%4d "%i
+            result_move += convert_move(move['move'])
+            result_move += convert_time(move['time']) if move['time']
+            result_move += "\n"
+            result += result_move
+          end
 
-        if move['comments']
-          result += convert_comments(move['comments'])
+          if move['comments']
+            result += convert_comments(move['comments'])
+          end
         end
       }
       result
@@ -108,6 +118,33 @@ module Jkf::Converter
         time['total']['m'],
         time['total']['s'],
       ]
+    end
+
+    def convert_special(special, index)
+      result = "まで#{index+1}手"
+
+      if special == 'TORYO' || special =~ /ILLEGAL/
+        turn = index % 2 == 0 ? '後' : '先'
+        result += "で#{turn}手の"
+        result += case special
+                  when "TORYO"          then "勝ち"
+                  when "ILLEGAL_ACTION" then "反則勝ち"
+                  when "ILLEGAL_MOVE"   then "反則負け"
+                  end
+      else
+        turn = index % 2 == 0 ? '先' : '後'
+        result += case special
+                  when "TIME_UP"    then "で時間切れにより#{turn}手の勝ち"
+                  when "CHUDAN"     then "で中断"
+                  when "JISHOGI"    then "で持将棋"
+                  when "SENNICHITE" then "で千日手"
+                  when "TSUMI"      then "で詰み"
+                  when "FUZUMI"     then "で不詰"
+                  end
+      end
+
+      result += "\n"
+      result
     end
 
     def convert_comments(comments)
@@ -184,6 +221,20 @@ module Jkf::Converter
         "10"     => "十枚落ち",
         "OTHER"  => "その他"
       }[preset]
+    end
+
+    def special2kan(special)
+      case special
+      when "CHUDAN"         then "中断"
+      when "TORYO"          then "投了"
+      when "JISHOGI"        then "持将棋"
+      when "SENNICHITE"     then "千日手"
+      when "TSUMI"          then "詰み"
+      when "FUZUMI"         then "不詰"
+      when "TIME_UP"        then "切れ負け"
+      when "ILLEGAL_ACTION" then "反則勝ち"
+      when "ILLEGAL_MOVE"   then "反則負け"
+      end
     end
 
     def ljust(str, n)

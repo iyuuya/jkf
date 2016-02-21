@@ -6,6 +6,7 @@ module Jkf::Converter
       result = ''
       result += convert_header(hash['header']) if hash['header']
       result += convert_initial(hash['initial']) if hash['initial']
+      result += convert_moves(hash['moves']) if hash['moves']
 
       result
     end
@@ -52,6 +53,34 @@ module Jkf::Converter
       end
 
       result
+    end
+
+    def convert_moves(moves)
+      result = "\n"
+      i = 0
+      moves.each { |move|
+        if move['comments']
+          result += convert_comments(move['comments'])
+          i = 0
+        end
+
+        if move['move']
+          result += convert_move(move['move'])
+          i += 1
+          result += "\n" if i % 6 == 0
+        end
+      }
+      result
+    end
+
+    def convert_move(move)
+      # TODO: implements
+      ''
+    end
+
+    def convert_comments(comments)
+      # TODO: implements
+      ''
     end
 
     def convert_board_piece(piece)

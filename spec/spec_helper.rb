@@ -11,7 +11,7 @@ end
 
 module IncludeHelper
   def pos(x, y)
-    { x: x, y: y }
+    { 'x' => x, 'y' => y }
   end
 end
 

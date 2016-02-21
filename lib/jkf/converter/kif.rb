@@ -6,11 +6,17 @@ module Jkf::Converter
              else
                JSON.parse(jkf)
              end
+      @forks = []
 
       result = ''
       result += convert_header(hash['header']) if hash['header']
       result += convert_initial(hash['initial']) if hash['initial']
-      result += convert_moves(hash['moves']) if hash['moves']
+      result += "手数----指手---------消費時間--\n"
+      result += convert_moves(hash['moves'])
+      if @forks.size > 0
+        result += "\n"
+        result += @forks.join("\n")
+      end
 
       result
     end
@@ -63,22 +69,24 @@ module Jkf::Converter
       result
     end
 
-    def convert_moves(moves)
-      result = "手数----指手---------消費時間--\n"
+    def convert_moves(moves, idx=0)
+      result = ''
       moves.each_with_index { |move, i|
         if move['special']
-          result_move = "%4d "%i
+          result_move = "%4d "%(i+idx)
           result_move += ljust(special2kan(move['special']), 13)
           result_move += convert_time(move['time']) if move['time']
+          result_move += "+" if move['forks']
           result_move += "\n"
           result += result_move
           # first_board+speical分を引く(-2)
-          result += convert_special(move['special'], i-2) if move['special']
+          result += convert_special(move['special'], i-2+idx) if move['special']
         else
           if move['move']
-            result_move = "%4d "%i
+            result_move = "%4d "%(i+idx)
             result_move += convert_move(move['move'])
             result_move += convert_time(move['time']) if move['time']
+            result_move += "+" if move['forks']
             result_move += "\n"
             result += result_move
           end
@@ -86,6 +94,8 @@ module Jkf::Converter
           if move['comments']
             result += convert_comments(move['comments'])
           end
+
+          @forks.unshift convert_forks(move['forks'], i+idx) if move['forks']
         end
       }
       result
@@ -149,6 +159,15 @@ module Jkf::Converter
 
     def convert_comments(comments)
       comments.map { |comment| "*#{comment}\n" }.join
+    end
+
+    def convert_forks(forks, index)
+      result = "\n"
+      result = "変化：%4d手\n"%[index]
+      forks.each do |moves|
+        result += convert_moves(moves, index)
+      end
+      result
     end
 
     def convert_board_piece(piece)

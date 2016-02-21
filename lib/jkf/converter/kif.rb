@@ -64,7 +64,42 @@ module Jkf::Converter
     end
 
     def convert_moves(moves)
-      result = ''
+      result = "手数----指手---------消費時間--\n"
+      moves.each_with_index { |move, i|
+        if move['move']
+          result_move = "%4d "%i
+          result_move += convert_move(move['move'])
+          result_move += convert_time(move['time']) if move['time']
+          result_move += "\n"
+          result += result_move
+        else
+        end
+      }
+      result
+    end
+
+    def convert_move(move)
+      result = if move['to']
+                 n2zen(move['to']['x']) + n2kan(move['to']['y'])
+               elsif move['same']
+                 '同　'
+               else
+                 raise "error??"
+               end
+      result += csa2kind(move['piece'])
+      result += '成' if move['promote']
+      result += if move['from']
+                  "(#{move['from']['x']}#{move['from']['y']})"
+                else
+                  '打'
+                end
+      result = ljust(result,13)
+      result
+    end
+
+    def convert_time(time)
+      # TODO: implements
+      '()'
     end
 
     def convert_board_piece(piece)
@@ -139,18 +174,10 @@ module Jkf::Converter
       }[preset]
     end
 
-    def csa2relative(relative)
-      case relative
-      when 'L' then '左'
-      when 'C' then '直'
-      when 'R' then '右'
-      when 'U' then '上'
-      when 'M' then '寄'
-      when 'D' then '引'
-      when 'H' then '打'
-      else
-        ''
-      end
+    def ljust(str, n)
+      len = 0
+      str.each_codepoint { |codepoint| len += codepoint > 255 ? 2 : 1 }
+      str + ' '*(n-len)
     end
   end
 end

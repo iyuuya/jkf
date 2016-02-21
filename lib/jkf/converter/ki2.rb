@@ -26,39 +26,41 @@ module Jkf::Converter
 
     def convert_initial(initial)
       result = ''
-      result += "手合割：#{preset2str(initial["piece"])}\n" if initial["preset"] != "OTHER"
+      result += "手合割：#{preset2str(initial["preset"])}\n" if initial["preset"] != "OTHER"
 
       data = initial["data"]
 
-      if data['color'] == 0
-        result += "先手番\n"
-      elsif data['color'] == 1
-        result += "後手番\n"
-      end
-
-      if data['hands']
-        if data['hands'][0]
-          result += '先手の持駒：'
-          result += convert_motigoma(data['hands'][0])
+      if data
+        if data['color'] == 0
+          result += "先手番\n"
+        elsif data['color'] == 1
+          result += "後手番\n"
         end
-        if data['hands'][1]
-          result += '後手の持駒：'
-          result += convert_motigoma(data['hands'][1])
-        end
-      end
 
-      if data['board']
-        result += "  ９ ８ ７ ６ ５ ４ ３ ２ １\n"
-        result += "+---------------------------+\n"
-        9.times { |y|
-          line = "|"
-          9.times { |x|
-            line += convert_board_piece(data['board'][8-x][y])
+        if data['hands']
+          if data['hands'][0]
+            result += '先手の持駒：'
+            result += convert_motigoma(data['hands'][0])
+          end
+          if data['hands'][1]
+            result += '後手の持駒：'
+            result += convert_motigoma(data['hands'][1])
+          end
+        end
+
+        if data['board']
+          result += "  ９ ８ ７ ６ ５ ４ ３ ２ １\n"
+          result += "+---------------------------+\n"
+          9.times { |y|
+            line = "|"
+            9.times { |x|
+              line += convert_board_piece(data['board'][8-x][y])
+            }
+            line += "|#{n2kan(y+1)}\n"
+            result += line
           }
-          line += "|#{n2kan(y+1)}\n"
-          result += line
-        }
-        result += "+---------------------------+\n"
+          result += "+---------------------------+\n"
+        end
       end
 
       result
@@ -109,6 +111,7 @@ module Jkf::Converter
                 end
       result += csa2kind(move['piece'])
       result += '成' if move['promote']
+      result += csa2relative(move['relative']) if move['relative']
       result
     end
 
@@ -221,6 +224,20 @@ module Jkf::Converter
         "10"     => "十枚落ち",
         "OTHER"  => "その他"
       }[preset]
+    end
+
+    def csa2relative(relative)
+      case relative
+      when 'L' then '左'
+      when 'C' then '直'
+      when 'R' then '右'
+      when 'U' then '上'
+      when 'M' then '寄'
+      when 'D' then '引'
+      when 'H' then '打'
+      else
+        ''
+      end
     end
   end
 end

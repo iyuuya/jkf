@@ -6,15 +6,22 @@ describe Jkf::Converter::Ki2 do
 
   subject { ki2_parser.parse(ki2_converter.convert(jkf)) }
 
-  describe '9fu.ki2' do
-    let(:jkf) { ki2_parser.parse(File.read(fixtures(:ki2).find { |file| file =~ /9fu/ } , encoding: 'Shift_JIS').toutf8).to_json }
+  shared_examples(:parse_file) do |filename|
+    let(:str) do
+      if File.extname(filename) == '.ki2'
+        File.read(filename, encoding: 'Shift_JIS').toutf8
+      else
+        File.read(filename).toutf8
+      end
+    end
+    let(:jkf) { ki2_parser.parse(str).to_json }
 
-    it { is_expected.to eq JSON.parse(jkf) }
+    it "should be parse #{File.basename(filename)}" do
+      is_expected.to eq JSON.parse(jkf)
+    end
   end
 
-  describe 'fork.ki2' do
-    let(:jkf) { ki2_parser.parse(File.read(fixtures(:ki2).find { |file| file =~ /fork/ } , encoding: 'Shift_JIS').toutf8).to_json }
-
-    it { is_expected.to eq JSON.parse(jkf) }
+  fixtures(:ki2).each do |fixture|
+    it_behaves_like :parse_file, fixture
   end
 end

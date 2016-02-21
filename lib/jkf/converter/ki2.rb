@@ -65,17 +65,35 @@ module Jkf::Converter
         end
 
         if move['move']
-          result += convert_move(move['move'])
+          result_move = convert_move(move['move'])
           i += 1
-          result += "\n" if i % 6 == 0
+          if i % 6 == 0
+            result_move += "\n"
+          else
+            result_move += result_move.size == 4 ? " "*4 : " "*2
+          end
+          result += result_move
         end
       }
       result
     end
 
     def convert_move(move)
-      # TODO: implements
-      ''
+      result = if move['color'] == 0
+                 '▲'
+               else
+                 '△'
+               end
+      result += if move['to']
+                  n2zen(move['to']['x']) + n2kan(move['to']['y'])
+                elsif move['same']
+                  '同　'
+                else
+                  raise "error??"
+                end
+      result += csa2kind(move['piece'])
+      result += '成' if move['promote']
+      result
     end
 
     def convert_comments(comments)

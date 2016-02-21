@@ -29,11 +29,11 @@ describe Jkf::Parser::Ki2 do
         "header" =>{},
         "moves" =>[
           {},
-          {"move" =>{"to" =>pos(7,6),"piece" =>"FU"}},
-          {"move" =>{"to" =>pos(3,4),"piece" =>"FU"}},
-          {"move" =>{"to" =>pos(2,2),"piece" =>"KA","promote" =>true}},
-          {"move" =>{"same" =>true,"piece" =>"GI"}},
-          {"move" =>{"to" =>pos(4,5),"piece" =>"KA"}},
+          {"move" =>{"to" =>pos(7,6),"piece" =>"FU","color"=>0}},
+          {"move" =>{"to" =>pos(3,4),"piece" =>"FU","color"=>1}},
+          {"move" =>{"to" =>pos(2,2),"piece" =>"KA","color"=>0,"promote" =>true}},
+          {"move" =>{"same" =>true,"piece" =>"GI","color"=>1}},
+          {"move" =>{"to" =>pos(4,5),"piece" =>"KA","color"=>0}},
         ]
       ]
     }
@@ -47,10 +47,10 @@ describe Jkf::Parser::Ki2 do
         "header" =>{},
         "moves" =>[
           {},
-          {"move" =>{"to" =>pos(7,6),"piece" =>"FU"}},
-          {"move" =>{"to" =>pos(3,4),"piece" =>"FU"}},
-          {"move" =>{"to" =>pos(7,8),"piece" =>"GI"}},
-          {"move" =>{"to" =>pos(8,8),"piece" =>"KA","promote" =>true}},
+          {"move" =>{"to" =>pos(7,6),"piece" =>"FU","color"=>0}},
+          {"move" =>{"to" =>pos(3,4),"piece" =>"FU","color"=>1}},
+          {"move" =>{"to" =>pos(7,8),"piece" =>"GI","color"=>0}},
+          {"move" =>{"to" =>pos(8,8),"piece" =>"KA","color"=>1,"promote" =>true}},
           {"special" =>"TORYO"},
         ]
       ]
@@ -69,11 +69,11 @@ describe Jkf::Parser::Ki2 do
           "initial" => {"preset" => "HIRATE"},
           "moves" =>[
             {},
-            {"move" =>{"to" =>pos(7,6),"piece" =>"FU"}},
-            {"move" =>{"to" =>pos(3,4),"piece" =>"FU"}},
-            {"move" =>{"to" =>pos(2,2),"piece" =>"KA","promote" =>true}},
-            {"move" =>{"same" =>true,"piece" =>"GI"}},
-            {"move" =>{"to" =>pos(4,5),"piece" =>"KA"}},
+            {"move" =>{"to" =>pos(7,6),"piece" =>"FU","color"=>0}},
+            {"move" =>{"to" =>pos(3,4),"piece" =>"FU","color"=>1}},
+            {"move" =>{"to" =>pos(2,2),"piece" =>"KA","color"=>0,"promote" =>true}},
+            {"move" =>{"same" =>true,"piece" =>"GI","color"=>1}},
+            {"move" =>{"to" =>pos(4,5),"piece" =>"KA","color"=>0}},
           ]
         ]
       }
@@ -90,11 +90,11 @@ describe Jkf::Parser::Ki2 do
           "initial" => {"preset" => "6"},
           "moves" =>[
             {},
-            {"move" =>{"to" =>pos(4,2),"piece" =>"OU"}},
-            {"move" =>{"to" =>pos(7,6),"piece" =>"FU"}},
-            {"move" =>{"to" =>pos(2,2),"piece" =>"GI"}},
-            {"move" =>{"to" =>pos(6,6),"piece" =>"KA"}},
-            {"move" =>{"to" =>pos(8,2),"piece" =>"GI"}},
+            {"move" =>{"to" =>pos(4,2),"piece" =>"OU","color"=>1}},
+            {"move" =>{"to" =>pos(7,6),"piece" =>"FU","color"=>0}},
+            {"move" =>{"to" =>pos(2,2),"piece" =>"GI","color"=>1}},
+            {"move" =>{"to" =>pos(6,6),"piece" =>"KA","color"=>0}},
+            {"move" =>{"to" =>pos(8,2),"piece" =>"GI","color"=>1}},
           ]
         ]
       }
@@ -155,9 +155,9 @@ describe Jkf::Parser::Ki2 do
           },
           "moves" =>[
             {},
-            {"move" =>{"to" =>pos(1,3),"piece" =>"KY"}},
-            {"move" =>{"to" =>pos(1,2),"piece" =>"KE"}},
-            {"move" =>{"same" =>true,"piece" =>"KY","promote" =>true}},
+            {"move" =>{"to" =>pos(1,3),"piece" =>"KY","color"=>0}},
+            {"move" =>{"to" =>pos(1,2),"piece" =>"KE","color"=>1}},
+            {"move" =>{"same" =>true,"piece" =>"KY","color"=>0,"promote" =>true}},
           ]
         ]
       }
@@ -183,16 +183,16 @@ describe Jkf::Parser::Ki2 do
           "initial" => {"preset" => "HIRATE"},
           "moves" =>[
             {},
-            {"move" =>{"to" =>pos(7,6),"piece" =>"FU"}},
-            {"move" =>{"to" =>pos(3,4),"piece" =>"FU"}},
-            {"move" =>{"to" =>pos(2,2),"piece" =>"KA","promote" =>true},"forks" =>[
+            {"move" =>{"to" =>pos(7,6),"piece" =>"FU","color"=>0}},
+            {"move" =>{"to" =>pos(3,4),"piece" =>"FU","color"=>1}},
+            {"move" =>{"to" =>pos(2,2),"piece" =>"KA","color"=>0,"promote" =>true},"forks" =>[
               [
-                {"move" =>{"to" =>pos(6,6),"piece" =>"FU"}},
-                {"move" =>{"to" =>pos(8,4),"piece" =>"FU"}},
+                {"move" =>{"to" =>pos(6,6),"piece" =>"FU","color"=>0}},
+                {"move" =>{"to" =>pos(8,4),"piece" =>"FU","color"=>1}},
               ]
             ]},
-            {"move" =>{"same" =>true,"piece" =>"GI"}},
-            {"move" =>{"to" =>pos(4,5),"piece" =>"KA"}},
+            {"move" =>{"same" =>true,"piece" =>"GI","color"=>1}},
+            {"move" =>{"to" =>pos(4,5),"piece" =>"KA","color"=>0}},
             {"special" =>"CHUDAN"},
           ]
         ]

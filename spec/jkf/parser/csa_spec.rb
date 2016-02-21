@@ -21,21 +21,21 @@ describe Jkf::Parser::Csa do
   describe 'csa-parser V2' do
     let(:initial) {
       Hash[
-        preset: "OTHER",
-        data: {
-          board: [
-            [{ color: 1, kind: "KY" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KY" },],
-            [{ color: 1, kind: "KE" }, { color: 1, kind: "KA" }, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, { color: 0, kind: "HI" }, { color: 0, kind: "KE" },],
-            [{ color: 1, kind: "GI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "GI" },],
-            [{ color: 1, kind: "KI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KI" },],
-            [{ color: 1, kind: "OU" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "OU" },],
-            [{ color: 1, kind: "KI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KI" },],
-            [{ color: 1, kind: "GI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "GI" },],
-            [{ color: 1, kind: "KE" }, { color: 1, kind: "HI" }, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, { color: 0, kind: "KA" }, { color: 0, kind: "KE" },],
-            [{ color: 1, kind: "KY" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KY" },],
+        "preset" => "OTHER",
+        "data" => {
+          "board" => [
+            [{ "color" => 1, "kind" => "KY" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" },],
+            [{ "color" => 1, "kind" => "KE" }, { "color" => 1, "kind" => "KA" }, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "HI" }, { "color" => 0, "kind" => "KE" },],
+            [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "GI" },],
+            [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KI" },],
+            [{ "color" => 1, "kind" => "OU" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "OU" },],
+            [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KI" },],
+            [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "GI" },],
+            [{ "color" => 1, "kind" => "KE" }, { "color" => 1, "kind" => "HI" }, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "KA" }, { "color" => 0, "kind" => "KE" },],
+            [{ "color" => 1, "kind" => "KY" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" },],
           ],
-          color: 0,
-          hands:[
+          "color" => 0,
+          "hands" => [
             {"FU"=>0,"KY"=>0,"KE"=>0,"GI"=>0,"KI"=>0,"KA"=>0,"HI"=>0},
             {"FU"=>0,"KY"=>0,"KE"=>0,"GI"=>0,"KI"=>0,"KA"=>0,"HI"=>0},
           ]
@@ -57,15 +57,15 @@ PI\n\
 
       it {
         is_expected.to eq Hash[
-          header:{},
-          initial: initial,
-          moves:[
+          "header" => {},
+          "initial" => initial,
+          "moves" => [
             {},
-            {move:{from:pos(7,7),to:pos(7,6),piece:"FU"}},
-            {move:{from:pos(3,3),to:pos(3,4),piece:"FU"}},
-            {move:{from:pos(8,8),to:pos(2,2),piece:"UM"}},
-            {move:{from:pos(3,1),to:pos(2,2),piece:"GI"}},
-            {move:{to:pos(4,5),piece:"KA"}},
+            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"}},
+            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU"}},
+            {"move" => {"from" => pos(8,8),"to" => pos(2,2),"piece" => "UM"}},
+            {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI"}},
+            {"move" => {"to" => pos(4,5),"piece" => "KA"}},
           ]
         ]
       }
@@ -85,13 +85,13 @@ PI\n\
       }
       it {
         is_expected.to eq Hash[
-          header:{},
-          initial: initial,
-          moves:[
-            {comments:["開始時コメント"]},
-            {move:{from:pos(7,7),to:pos(7,6),piece:"FU"},comments:["初手コメント", "初手コメント2"]},
-            {move:{from:pos(3,3),to:pos(3,4),piece:"FU"}},
-            {move:{from:pos(8,8),to:pos(2,2),piece:"UM"}},
+          "header" => {},
+          "initial" => initial,
+          "moves" => [
+            {"comments" => ["開始時コメント"]},
+            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"},"comments" => ["初手コメント", "初手コメント2"]},
+            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU"}},
+            {"move" => {"from" => pos(8,8),"to" => pos(2,2),"piece" => "UM"}},
           ]
         ]
       }
@@ -111,15 +111,15 @@ PI\n\
 
       it {
         is_expected.to eq Hash[
-          header:{},
-          initial: initial,
-          moves:[
+          "header" => {},
+          "initial" => initial,
+          "moves" => [
             {},
-            {move:{from:pos(7,7),to:pos(7,6),piece:"FU"}},
-            {move:{from:pos(3,3),to:pos(3,4),piece:"FU"}},
-            {move:{from:pos(7,9),to:pos(7,8),piece:"GI"}},
-            {move:{from:pos(2,2),to:pos(8,8),piece:"UM"}},
-            {special:"TORYO"},
+            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"}},
+            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU"}},
+            {"move" => {"from" => pos(7,9),"to" => pos(7,8),"piece" => "GI"}},
+            {"move" => {"from" => pos(2,2),"to" => pos(8,8),"piece" => "UM"}},
+            {"special" => "TORYO"},
           ]
         ]
       }
@@ -138,15 +138,15 @@ PI\n\
 
       it {
         is_expected.to eq Hash[
-          header:{},
-          initial: initial,
-          moves:[
+          "header" => {},
+          "initial" => initial,
+          "moves" => [
             {},
-            {move:{from:pos(7,7),to:pos(7,6),piece:"FU"},time:{now:{m:0,s:12}}},
-            {move:{from:pos(3,3),to:pos(3,4),piece:"FU"},time:{now:{m:0,s:2}}},
-            {move:{from:pos(8,8),to:pos(2,2),piece:"UM"},time:{now:{m:1,s:40}}},
-            {move:{from:pos(3,1),to:pos(2,2),piece:"GI"},time:{now:{m:0,s:1}}},
-            {move:{to:pos(4,5),piece:"KA"},time:{now:{m:0,s:0}}},
+            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"},"time" => {"now" => {"m" => 0,"s" => 12}}},
+            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU"},"time" => {"now" => {"m" => 0,"s" => 2}}},
+            {"move" => {"from" => pos(8,8),"to" => pos(2,2),"piece" => "UM"},"time" => {"now" => {"m" => 1,"s" => 40}}},
+            {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI"},"time" => {"now" => {"m" => 0,"s" => 1}}},
+            {"move" => {"to" => pos(4,5),"piece" => "KA"},"time" => {"now" => {"m" => 0,"s" => 0}}},
           ]
         ]
       }
@@ -171,15 +171,15 @@ T0\n"
 
       it {
         is_expected.to eq Hash[
-          header:{},
-          initial: initial,
-          moves:[
+          "header" => {},
+          "initial" => initial,
+          "moves" => [
             {},
-            {move:{from:pos(7,7),to:pos(7,6),piece:"FU"},time:{now:{m:0,s:12}}},
-            {move:{from:pos(3,3),to:pos(3,4),piece:"FU"},time:{now:{m:0,s:2}}},
-            {move:{from:pos(8,8),to:pos(2,2),piece:"UM"},time:{now:{m:1,s:40}}},
-            {move:{from:pos(3,1),to:pos(2,2),piece:"GI"},time:{now:{m:0,s:1}}},
-            {move:{to:pos(4,5),piece:"KA"},time:{now:{m:0,s:0}}},
+            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"},"time" => {"now" => {"m" => 0,"s" => 12}}},
+            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU"},"time" => {"now" => {"m" => 0,"s" => 2}}},
+            {"move" => {"from" => pos(8,8),"to" => pos(2,2),"piece" => "UM"},"time" => {"now" => {"m" => 1,"s" => 40}}},
+            {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI"},"time" => {"now" => {"m" => 0,"s" => 1}}},
+            {"move" => {"to" => pos(4,5),"piece" => "KA"},"time" => {"now" => {"m" => 0,"s" => 0}}},
           ]
         ]
       }
@@ -200,35 +200,35 @@ PI82HI22KA91KY81KE21KE11KY\n\
 
         it {
           is_expected.to eq Hash[
-            header:{},
-            initial: {
-              preset: "OTHER",
-              data: {
-                board: [
-                  [{                      }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KY" },],
-                  [{                      }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, { color: 0, kind: "HI" }, { color: 0, kind: "KE" },],
-                  [{ color: 1, kind: "GI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "GI" },],
-                  [{ color: 1, kind: "KI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KI" },],
-                  [{ color: 1, kind: "OU" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "OU" },],
-                  [{ color: 1, kind: "KI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KI" },],
-                  [{ color: 1, kind: "GI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "GI" },],
-                  [{                      }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, { color: 0, kind: "KA" }, { color: 0, kind: "KE" },],
-                  [{                      }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KY" },],
+            "header" => {},
+            "initial" => {
+              "preset" => "OTHER",
+              "data" => {
+                "board" => [
+                  [{                      }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" },],
+                  [{                      }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "HI" }, { "color" => 0, "kind" => "KE" },],
+                  [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "GI" },],
+                  [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KI" },],
+                  [{ "color" => 1, "kind" => "OU" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "OU" },],
+                  [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KI" },],
+                  [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "GI" },],
+                  [{                      }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "KA" }, { "color" => 0, "kind" => "KE" },],
+                  [{                      }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" },],
                 ],
-                color: 1,
-                hands:[
+                "color" => 1,
+                "hands" => [
                   {"FU"=>0,"KY"=>0,"KE"=>0,"GI"=>0,"KI"=>0,"KA"=>0,"HI"=>0},
                   {"FU"=>0,"KY"=>0,"KE"=>0,"GI"=>0,"KI"=>0,"KA"=>0,"HI"=>0},
                 ]
               }
             },
-            moves:[
+            "moves" => [
               {},
-              {move:{from:pos(5,1),to:pos(4,2),piece:"OU"}},
-              {move:{from:pos(7,7),to:pos(7,6),piece:"FU"}},
-              {move:{from:pos(3,1),to:pos(2,2),piece:"GI"}},
-              {move:{from:pos(8,8),to:pos(6,6),piece:"KA"}},
-              {move:{from:pos(7,1),to:pos(8,2),piece:"GI"}},
+              {"move" => {"from" => pos(5,1),"to" => pos(4,2),"piece" => "OU"}},
+              {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"}},
+              {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI"}},
+              {"move" => {"from" => pos(8,8),"to" => pos(6,6),"piece" => "KA"}},
+              {"move" => {"from" => pos(7,1),"to" => pos(8,2),"piece" => "GI"}},
             ]
           ]
       }
@@ -256,35 +256,35 @@ P9+KY+KE+GI+KI+OU+KI+GI+KE+KY\n\
 
       it {
         is_expected.to eq Hash[
-          header:{},
-          initial: {
-            preset: "OTHER",
-            data: {
-              board: [
-                [{                      }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KY" },],
-                [{                      }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, { color: 0, kind: "HI" }, { color: 0, kind: "KE" },],
-                [{ color: 1, kind: "GI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "GI" },],
-                [{ color: 1, kind: "KI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KI" },],
-                [{ color: 1, kind: "OU" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "OU" },],
-                [{ color: 1, kind: "KI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KI" },],
-                [{ color: 1, kind: "GI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "GI" },],
-                [{                      }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, { color: 0, kind: "KA" }, { color: 0, kind: "KE" },],
-                [{                      }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KY" },],
+          "header" => {},
+          "initial" => {
+            "preset" => "OTHER",
+            "data" => {
+              "board" => [
+                [{                      }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" },],
+                [{                      }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "HI" }, { "color" => 0, "kind" => "KE" },],
+                [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "GI" },],
+                [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KI" },],
+                [{ "color" => 1, "kind" => "OU" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "OU" },],
+                [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KI" },],
+                [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "GI" },],
+                [{                      }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "KA" }, { "color" => 0, "kind" => "KE" },],
+                [{                      }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" },],
               ],
-              color: 1,
-              hands:[
+              "color" => 1,
+              "hands" => [
                 {"FU"=>0,"KY"=>0,"KE"=>0,"GI"=>0,"KI"=>0,"KA"=>0,"HI"=>0},
                 {"FU"=>0,"KY"=>0,"KE"=>0,"GI"=>0,"KI"=>0,"KA"=>0,"HI"=>0},
               ]
             }
           },
-          moves:[
+          "moves" => [
             {},
-            {move:{from:pos(5,1),to:pos(4,2),piece:"OU"}},
-            {move:{from:pos(7,7),to:pos(7,6),piece:"FU"}},
-            {move:{from:pos(3,1),to:pos(2,2),piece:"GI"}},
-            {move:{from:pos(8,8),to:pos(6,6),piece:"KA"}},
-            {move:{from:pos(7,1),to:pos(8,2),piece:"GI"}},
+            {"move" => {"from" => pos(5,1),"to" => pos(4,2),"piece" => "OU"}},
+            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"}},
+            {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI"}},
+            {"move" => {"from" => pos(8,8),"to" => pos(6,6),"piece" => "KA"}},
+            {"move" => {"from" => pos(7,1),"to" => pos(8,2),"piece" => "GI"}},
           ]
         ]
       }
@@ -304,13 +304,13 @@ P-00GI00GI00GI00GI00KE00KE00KE00KE\n\
 
       it {
         is_expected.to eq Hash[
-          header:  {},
-          initial: {
-            preset:"OTHER",
-            data:{
-              board:[
-                [{color:1,kind:"OU"},{},{},{},{},{},{},{},{}],
-                [{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"}],
+          "header" => {},
+          "initial" => {
+            "preset" => "OTHER",
+            "data" => {
+              "board" => [
+                [{"color" => 1,"kind" => "OU"},{},{},{},{},{},{},{},{}],
+                [{"color" => 1,"kind" => "FU"},{"color" => 1,"kind" => "FU"},{"color" => 1,"kind" => "FU"},{"color" => 1,"kind" => "FU"},{"color" => 1,"kind" => "FU"},{"color" => 1,"kind" => "FU"},{"color" => 1,"kind" => "FU"},{"color" => 1,"kind" => "FU"},{"color" => 1,"kind" => "FU"}],
                 [{},{},{},{},{},{},{},{},{}],
                 [{},{},{},{},{},{},{},{},{}],
                 [{},{},{},{},{},{},{},{},{}],
@@ -319,18 +319,18 @@ P-00GI00GI00GI00GI00KE00KE00KE00KE\n\
                 [{},{},{},{},{},{},{},{},{}],
                 [{},{},{},{},{},{},{},{},{}],
               ],
-              color: 0,
-              hands:[
+              "color" => 0,
+              "hands" => [
                 {"FU"=>0,"KY"=>4,"KE"=>0,"GI"=>0,"KI"=>0,"KA"=>0,"HI"=>2},
                 {"FU"=>0,"KY"=>0,"KE"=>4,"GI"=>4,"KI"=>0,"KA"=>0,"HI"=>0},
               ]
             }
           },
-          moves:[
+          "moves" => [
             {},
-            {move:{to:pos(1,3),piece:"KY"}},
-            {move:{to:pos(1,2),piece:"KE"}},
-            {move:{from:pos(1,3),to:pos(1,2),piece:"NY"}},
+            {"move" => {"to" => pos(1,3),"piece" => "KY"}},
+            {"move" => {"to" => pos(1,2),"piece" => "KE"}},
+            {"move" => {"from" => pos(1,3),"to" => pos(1,2),"piece" => "NY"}},
           ]
         ]
       }
@@ -350,13 +350,13 @@ P-00AL\n\
 
       it {
         is_expected.to eq Hash[
-          header:  {},
-          initial: {
-            preset:"OTHER",
-            data:{
-              board:[
-                [{color:1,kind:"OU"},{},{},{},{},{},{},{},{}],
-                [{color:1,kind:"KE"},{},{color:0,kind:"FU"},{},{},{},{},{},{}],
+          "header" => {},
+          "initial" => {
+            "preset" => "OTHER",
+            "data" => {
+              "board" => [
+                [{"color" => 1,"kind" => "OU"},{},{},{},{},{},{},{},{}],
+                [{"color" => 1,"kind" => "KE"},{},{"color" => 0,"kind" => "FU"},{},{},{},{},{},{}],
                 [{},{},{},{},{},{},{},{},{}],
                 [{},{},{},{},{},{},{},{},{}],
                 [{},{},{},{},{},{},{},{},{}],
@@ -365,17 +365,17 @@ P-00AL\n\
                 [{},{},{},{},{},{},{},{},{}],
                 [{},{},{},{},{},{},{},{},{}],
               ],
-              color: 0,
-              hands:[
+              "color" => 0,
+              "hands" => [
                 {"FU"=>0,"KY"=>0,"KE"=>0,"GI"=>0,"KI"=>1,"KA"=>0,"HI"=>0},
                 {"FU"=>17,"KY"=>4,"KE"=>3,"GI"=>4,"KI"=>3,"KA"=>2,"HI"=>2},
               ]
             }
           },
-          moves:[
+          "moves" => [
             {},
-            {move:{to:pos(2,2),piece:"KI"}},
-            {special: "TSUMI"},
+            {"move" => {"to" => pos(2,2),"piece" => "KI"}},
+            {"special" => "TSUMI"},
           ]
         ]
       }
@@ -400,20 +400,20 @@ PI\n\
 
       it {
         is_expected.to eq Hash[
-          header:{
+          "header" => {
             "先手" => "sente",
             "後手" => "gote",
             "場所" => "将棋会館",
             "開始日時" => "2015/08/04 13:00:00",
           },
-          initial: initial,
-          moves:[
+          "initial" => initial,
+          "moves" => [
             {},
-            {move:{from:pos(7,7),to:pos(7,6),piece:"FU"}},
-            {move:{from:pos(3,3),to:pos(3,4),piece:"FU"}},
-            {move:{from:pos(7,9),to:pos(7,8),piece:"GI"}},
-            {move:{from:pos(2,2),to:pos(8,8),piece:"UM"}},
-            {special:"TORYO"},
+            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"}},
+            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU"}},
+            {"move" => {"from" => pos(7,9),"to" => pos(7,8),"piece" => "GI"}},
+            {"move" => {"from" => pos(2,2),"to" => pos(8,8),"piece" => "UM"}},
+            {"special" => "TORYO"},
           ]
         ]
       }
@@ -423,21 +423,21 @@ PI\n\
   describe 'csa-parser V1' do
     let(:initial) {
       Hash[
-        preset: "OTHER",
-        data: {
-          board: [
-            [{ color: 1, kind: "KY" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KY" },],
-            [{ color: 1, kind: "KE" }, { color: 1, kind: "KA" }, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, { color: 0, kind: "HI" }, { color: 0, kind: "KE" },],
-            [{ color: 1, kind: "GI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "GI" },],
-            [{ color: 1, kind: "KI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KI" },],
-            [{ color: 1, kind: "OU" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "OU" },],
-            [{ color: 1, kind: "KI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KI" },],
-            [{ color: 1, kind: "GI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "GI" },],
-            [{ color: 1, kind: "KE" }, { color: 1, kind: "HI" }, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, { color: 0, kind: "KA" }, { color: 0, kind: "KE" },],
-            [{ color: 1, kind: "KY" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KY" },],
+        "preset" => "OTHER",
+        "data" => {
+          "board" => [
+            [{ "color" => 1, "kind" => "KY" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" },],
+            [{ "color" => 1, "kind" => "KE" }, { "color" => 1, "kind" => "KA" }, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "HI" }, { "color" => 0, "kind" => "KE" },],
+            [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "GI" },],
+            [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KI" },],
+            [{ "color" => 1, "kind" => "OU" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "OU" },],
+            [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KI" },],
+            [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "GI" },],
+            [{ "color" => 1, "kind" => "KE" }, { "color" => 1, "kind" => "HI" }, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "KA" }, { "color" => 0, "kind" => "KE" },],
+            [{ "color" => 1, "kind" => "KY" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" },],
           ],
-          color: 0,
-          hands:[
+          "color" => 0,
+          "hands" => [
             {"FU"=>0,"KY"=>0,"KE"=>0,"GI"=>0,"KI"=>0,"KA"=>0,"HI"=>0},
             {"FU"=>0,"KY"=>0,"KE"=>0,"GI"=>0,"KI"=>0,"KA"=>0,"HI"=>0},
           ]
@@ -458,15 +458,15 @@ PI\n\
 
       it {
         is_expected.to eq Hash[
-          header:{},
-          initial: initial,
-          moves:[
+          "header" => {},
+          "initial" => initial,
+          "moves" => [
             {},
-            {move:{from:pos(7,7),to:pos(7,6),piece:"FU"}},
-            {move:{from:pos(3,3),to:pos(3,4),piece:"FU"}},
-            {move:{from:pos(8,8),to:pos(2,2),piece:"UM"}},
-            {move:{from:pos(3,1),to:pos(2,2),piece:"GI"}},
-            {move:{to:pos(4,5),piece:"KA"}},
+            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"}},
+            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU"}},
+            {"move" => {"from" => pos(8,8),"to" => pos(2,2),"piece" => "UM"}},
+            {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI"}},
+            {"move" => {"to" => pos(4,5),"piece" => "KA"}},
           ]
         ]
       }
@@ -486,13 +486,13 @@ PI\n\
 
       it {
         is_expected.to eq Hash[
-          header:{},
-          initial: initial,
-          moves:[
-            {comments:["開始時コメント"]},
-            {move:{from:pos(7,7),to:pos(7,6),piece:"FU"},comments:["初手コメント", "初手コメント2"]},
-            {move:{from:pos(3,3),to:pos(3,4),piece:"FU"}},
-            {move:{from:pos(8,8),to:pos(2,2),piece:"UM"}},
+          "header" => {},
+          "initial" => initial,
+          "moves" => [
+            {"comments" => ["開始時コメント"]},
+            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"},"comments" => ["初手コメント", "初手コメント2"]},
+            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU"}},
+            {"move" => {"from" => pos(8,8),"to" => pos(2,2),"piece" => "UM"}},
           ]
         ]
       }
@@ -511,15 +511,15 @@ PI\n\
 
       it {
         is_expected.to eq Hash[
-          header:{},
-          initial: initial,
-          moves:[
+          "header" => {},
+          "initial" => initial,
+          "moves" => [
             {},
-            {move:{from:pos(7,7),to:pos(7,6),piece:"FU"}},
-            {move:{from:pos(3,3),to:pos(3,4),piece:"FU"}},
-            {move:{from:pos(7,9),to:pos(7,8),piece:"GI"}},
-            {move:{from:pos(2,2),to:pos(8,8),piece:"UM"}},
-            {special:"TORYO"},
+            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"}},
+            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU"}},
+            {"move" => {"from" => pos(7,9),"to" => pos(7,8),"piece" => "GI"}},
+            {"move" => {"from" => pos(2,2),"to" => pos(8,8),"piece" => "UM"}},
+            {"special" => "TORYO"},
           ]
         ]
       }
@@ -537,15 +537,15 @@ PI\n\
 
       it {
         is_expected.to eq Hash[
-          header:{},
-          initial: initial,
-          moves:[
+          "header" => {},
+          "initial" => initial,
+          "moves" => [
             {},
-            {move:{from:pos(7,7),to:pos(7,6),piece:"FU"},time:{now:{m:0,s:12}}},
-            {move:{from:pos(3,3),to:pos(3,4),piece:"FU"},time:{now:{m:0,s:2}}},
-            {move:{from:pos(8,8),to:pos(2,2),piece:"UM"},time:{now:{m:1,s:40}}},
-            {move:{from:pos(3,1),to:pos(2,2),piece:"GI"},time:{now:{m:0,s:1}}},
-            {move:{to:pos(4,5),piece:"KA"},time:{now:{m:0,s:0}}},
+            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"},"time" => {"now" => {"m" => 0,"s" => 12}}},
+            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU"},"time" => {"now" => {"m" => 0,"s" => 2}}},
+            {"move" => {"from" => pos(8,8),"to" => pos(2,2),"piece" => "UM"},"time" => {"now" => {"m" => 1,"s" => 40}}},
+            {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI"},"time" => {"now" => {"m" => 0,"s" => 1}}},
+            {"move" => {"to" => pos(4,5),"piece" => "KA"},"time" => {"now" => {"m" => 0,"s" => 0}}},
           ]
         ]
       }
@@ -569,15 +569,15 @@ T0\n"
 
       it {
         is_expected.to eq Hash[
-          header:{},
-          initial: initial,
-          moves:[
+          "header" => {},
+          "initial" => initial,
+          "moves" => [
             {},
-            {move:{from:pos(7,7),to:pos(7,6),piece:"FU"},time:{now:{m:0,s:12}}},
-            {move:{from:pos(3,3),to:pos(3,4),piece:"FU"},time:{now:{m:0,s:2}}},
-              {move:{from:pos(8,8),to:pos(2,2),piece:"UM"},time:{now:{m:1,s:40}}},
-              {move:{from:pos(3,1),to:pos(2,2),piece:"GI"},time:{now:{m:0,s:1}}},
-              {move:{to:pos(4,5),piece:"KA"},time:{now:{m:0,s:0}}},
+            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"},"time" => {"now" => {"m" => 0,"s" => 12}}},
+            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU"},"time" => {"now" => {"m" => 0,"s" => 2}}},
+              {"move" => {"from" => pos(8,8),"to" => pos(2,2),"piece" => "UM"},"time" => {"now" => {"m" => 1,"s" => 40}}},
+              {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI"},"time" => {"now" => {"m" => 0,"s" => 1}}},
+              {"move" => {"to" => pos(4,5),"piece" => "KA"},"time" => {"now" => {"m" => 0,"s" => 0}}},
           ]
         ]
       }
@@ -597,35 +597,35 @@ PI82HI22KA91KY81KE21KE11KY\n\
 
         it {
           is_expected.to eq Hash[
-            header:{},
-            initial: {
-              preset: "OTHER",
-              data: {
-                board: [
-                  [{                      }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KY" },],
-                  [{                      }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, { color: 0, kind: "HI" }, { color: 0, kind: "KE" },],
-                  [{ color: 1, kind: "GI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "GI" },],
-                  [{ color: 1, kind: "KI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KI" },],
-                  [{ color: 1, kind: "OU" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "OU" },],
-                  [{ color: 1, kind: "KI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KI" },],
-                  [{ color: 1, kind: "GI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "GI" },],
-                  [{                      }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, { color: 0, kind: "KA" }, { color: 0, kind: "KE" },],
-                  [{                      }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KY" },],
+            "header" => {},
+            "initial" => {
+              "preset" => "OTHER",
+              "data" => {
+                "board" => [
+                  [{                      }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" },],
+                  [{                      }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "HI" }, { "color" => 0, "kind" => "KE" },],
+                  [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "GI" },],
+                  [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KI" },],
+                  [{ "color" => 1, "kind" => "OU" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "OU" },],
+                  [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KI" },],
+                  [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "GI" },],
+                  [{                      }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "KA" }, { "color" => 0, "kind" => "KE" },],
+                  [{                      }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" },],
                 ],
-                color: 1,
-                hands:[
+                "color" => 1,
+                "hands" => [
                   {"FU"=>0,"KY"=>0,"KE"=>0,"GI"=>0,"KI"=>0,"KA"=>0,"HI"=>0},
                   {"FU"=>0,"KY"=>0,"KE"=>0,"GI"=>0,"KI"=>0,"KA"=>0,"HI"=>0},
                 ]
               }
             },
-            moves:[
+            "moves" => [
               {},
-              {move:{from:pos(5,1),to:pos(4,2),piece:"OU"}},
-              {move:{from:pos(7,7),to:pos(7,6),piece:"FU"}},
-              {move:{from:pos(3,1),to:pos(2,2),piece:"GI"}},
-              {move:{from:pos(8,8),to:pos(6,6),piece:"KA"}},
-              {move:{from:pos(7,1),to:pos(8,2),piece:"GI"}},
+              {"move" => {"from" => pos(5,1),"to" => pos(4,2),"piece" => "OU"}},
+              {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"}},
+              {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI"}},
+              {"move" => {"from" => pos(8,8),"to" => pos(6,6),"piece" => "KA"}},
+              {"move" => {"from" => pos(7,1),"to" => pos(8,2),"piece" => "GI"}},
             ]
           ]
         }
@@ -652,35 +652,35 @@ P9+KY+KE+GI+KI+OU+KI+GI+KE+KY\n\
 
         it {
           is_expected.to eq Hash[
-            header:{},
-            initial: {
-              preset: "OTHER",
-              data: {
-                board: [
-                  [{                      }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KY" },],
-                  [{                      }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, { color: 0, kind: "HI" }, { color: 0, kind: "KE" },],
-                  [{ color: 1, kind: "GI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "GI" },],
-                  [{ color: 1, kind: "KI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KI" },],
-                  [{ color: 1, kind: "OU" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "OU" },],
-                  [{ color: 1, kind: "KI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KI" },],
-                  [{ color: 1, kind: "GI" }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "GI" },],
-                  [{                      }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, { color: 0, kind: "KA" }, { color: 0, kind: "KE" },],
-                  [{                      }, {}, { color: 1, kind: "FU" }, {}, {}, {}, { color: 0, kind: "FU" }, {}, { color: 0, kind: "KY" },],
+            "header" => {},
+            "initial" => {
+              "preset" => "OTHER",
+              "data" => {
+                "board" => [
+                  [{                      }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" },],
+                  [{                      }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "HI" }, { "color" => 0, "kind" => "KE" },],
+                  [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "GI" },],
+                  [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KI" },],
+                  [{ "color" => 1, "kind" => "OU" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "OU" },],
+                  [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KI" },],
+                  [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "GI" },],
+                  [{                      }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "KA" }, { "color" => 0, "kind" => "KE" },],
+                  [{                      }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" },],
                 ],
-                color: 1,
-                hands:[
+                "color" => 1,
+                "hands" => [
                   {"FU"=>0,"KY"=>0,"KE"=>0,"GI"=>0,"KI"=>0,"KA"=>0,"HI"=>0},
                   {"FU"=>0,"KY"=>0,"KE"=>0,"GI"=>0,"KI"=>0,"KA"=>0,"HI"=>0},
                 ]
               }
             },
-            moves:[
+            "moves" => [
               {},
-              {move:{from:pos(5,1),to:pos(4,2),piece:"OU"}},
-              {move:{from:pos(7,7),to:pos(7,6),piece:"FU"}},
-              {move:{from:pos(3,1),to:pos(2,2),piece:"GI"}},
-              {move:{from:pos(8,8),to:pos(6,6),piece:"KA"}},
-              {move:{from:pos(7,1),to:pos(8,2),piece:"GI"}},
+              {"move" => {"from" => pos(5,1),"to" => pos(4,2),"piece" => "OU"}},
+              {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"}},
+              {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI"}},
+              {"move" => {"from" => pos(8,8),"to" => pos(6,6),"piece" => "KA"}},
+              {"move" => {"from" => pos(7,1),"to" => pos(8,2),"piece" => "GI"}},
             ]
           ]
         }
@@ -699,13 +699,13 @@ P-00GI00GI00GI00GI00KE00KE00KE00KE\n\
 
         it {
           is_expected.to eq Hash[
-            header:  {},
-            initial: {
-              preset:"OTHER",
-              data:{
-                board:[
-                  [{color:1,kind:"OU"},{},{},{},{},{},{},{},{}],
-                  [{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"}],
+            "header" => {},
+            "initial" => {
+              "preset" => "OTHER",
+              "data" => {
+                "board" => [
+                  [{"color" => 1,"kind" => "OU"},{},{},{},{},{},{},{},{}],
+                  [{"color" => 1,"kind" => "FU"},{"color" => 1,"kind" => "FU"},{"color" => 1,"kind" => "FU"},{"color" => 1,"kind" => "FU"},{"color" => 1,"kind" => "FU"},{"color" => 1,"kind" => "FU"},{"color" => 1,"kind" => "FU"},{"color" => 1,"kind" => "FU"},{"color" => 1,"kind" => "FU"}],
                   [{},{},{},{},{},{},{},{},{}],
                   [{},{},{},{},{},{},{},{},{}],
                   [{},{},{},{},{},{},{},{},{}],
@@ -714,18 +714,18 @@ P-00GI00GI00GI00GI00KE00KE00KE00KE\n\
                   [{},{},{},{},{},{},{},{},{}],
                   [{},{},{},{},{},{},{},{},{}],
                 ],
-                color: 0,
-                hands:[
+                "color" => 0,
+                "hands" => [
                   {"FU"=>0,"KY"=>4,"KE"=>0,"GI"=>0,"KI"=>0,"KA"=>0,"HI"=>2},
                   {"FU"=>0,"KY"=>0,"KE"=>4,"GI"=>4,"KI"=>0,"KA"=>0,"HI"=>0},
                 ]
               }
             },
-            moves:[
+            "moves" => [
               {},
-              {move:{to:pos(1,3),piece:"KY"}},
-              {move:{to:pos(1,2),piece:"KE"}},
-              {move:{from:pos(1,3),to:pos(1,2),piece:"NY"}},
+              {"move" => {"to" => pos(1,3),"piece" => "KY"}},
+              {"move" => {"to" => pos(1,2),"piece" => "KE"}},
+              {"move" => {"from" => pos(1,3),"to" => pos(1,2),"piece" => "NY"}},
             ]
           ]
         }
@@ -745,13 +745,13 @@ P-00AL\n\
 
         it {
           is_expected.to eq Hash[
-            header:  {},
-            initial: {
-              preset:"OTHER",
-              data:{
-                board:[
-                  [{color:1,kind:"OU"},{},{},{},{},{},{},{},{}],
-                  [{color:1,kind:"KE"},{},{color:0,kind:"FU"},{},{},{},{},{},{}],
+            "header" => {},
+            "initial" => {
+              "preset" => "OTHER",
+              "data" => {
+                "board" => [
+                  [{"color" => 1,"kind" => "OU"},{},{},{},{},{},{},{},{}],
+                  [{"color" => 1,"kind" => "KE"},{},{"color" => 0,"kind" => "FU"},{},{},{},{},{},{}],
                   [{},{},{},{},{},{},{},{},{}],
                   [{},{},{},{},{},{},{},{},{}],
                   [{},{},{},{},{},{},{},{},{}],
@@ -760,17 +760,17 @@ P-00AL\n\
                   [{},{},{},{},{},{},{},{},{}],
                   [{},{},{},{},{},{},{},{},{}],
                 ],
-                color: 0,
-                hands:[
+                "color" => 0,
+                "hands" => [
                   {"FU"=>0,"KY"=>0,"KE"=>0,"GI"=>0,"KI"=>1,"KA"=>0,"HI"=>0},
                   {"FU"=>17,"KY"=>4,"KE"=>3,"GI"=>4,"KI"=>3,"KA"=>2,"HI"=>2},
                 ]
               }
             },
-            moves:[
+            "moves" => [
               {},
-              {move:{to:pos(2,2),piece:"KI"}},
-              {special: "TSUMI"},
+              {"move" => {"to" => pos(2,2),"piece" => "KI"}},
+              {"special" => "TSUMI"},
             ]
           ]
         }
@@ -792,18 +792,18 @@ PI\n\
 
       it {
         is_expected.to eq Hash[
-          header:{
+          "header" => {
             "先手" => "sente",
             "後手" => "gote",
           },
-          initial: initial,
-          moves:[
+          "initial" => initial,
+          "moves" => [
             {},
-            {move:{from:pos(7,7),to:pos(7,6),piece:"FU"}},
-            {move:{from:pos(3,3),to:pos(3,4),piece:"FU"}},
-            {move:{from:pos(7,9),to:pos(7,8),piece:"GI"}},
-            {move:{from:pos(2,2),to:pos(8,8),piece:"UM"}},
-            {special:"TORYO"},
+            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"}},
+            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU"}},
+            {"move" => {"from" => pos(7,9),"to" => pos(7,8),"piece" => "GI"}},
+            {"move" => {"from" => pos(2,2),"to" => pos(8,8),"piece" => "UM"}},
+            {"special" => "TORYO"},
           ]
         ]
       }

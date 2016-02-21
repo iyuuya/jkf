@@ -63,11 +63,11 @@ module Jkf::Converter
       result = "\n"
       i = 0
       before_split = ''
-      moves.each_with_index { |move, i|
+      moves.each_with_index { |move, j|
         if move['special']
           result += "\n"
           # first_board+speical分を引く(-2)
-          result += convert_special(move['special'], i-2) if move['special']
+          result += convert_special(move['special'], j-2) if move['special']
         else
           result += before_split
           if move['move']

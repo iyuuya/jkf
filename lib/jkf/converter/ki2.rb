@@ -170,7 +170,13 @@ module Jkf::Converter
     def convert_motigoma(pieces)
       pieces.map do |piece, num|
         if num > 0
-          csa2kind(piece) + n2kan(num)
+          str = csa2kind(piece)
+          if num > 1
+            str += n2kan(num/10) if num / 10 > 0
+            num %= 10
+            str += n2kan(num)
+          end
+          str
         else
           nil
         end

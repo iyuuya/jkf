@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'pry'
 
 describe Jkf::Parser::Csa do
   let(:csa_parser) { Jkf::Parser::Csa.new }

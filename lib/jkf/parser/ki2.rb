@@ -553,6 +553,11 @@ module Jkf::Parser
       s0 = @current_pos
       s1 = match_regexp(/^[▲△]/)
       if s1 != :failed
+        s1 = if s1 == '▲'
+               { 'color' => 0 }
+             else
+               { 'color' => 1 }
+             end
         s2 = parse_fugou
         if s2 != :failed
           s3 = []
@@ -565,7 +570,7 @@ module Jkf::Parser
           end
           if s3 != :failed
             @reported_pos = s0
-            s0 = s1 = s2
+            s0 = s1 = s2.merge(s1)
           else
             @current_pos = s0
             s0 = :failed

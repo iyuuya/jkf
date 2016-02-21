@@ -26,14 +26,14 @@ describe Jkf::Parser::Ki2 do
 
     it {
       is_expected.to eq Hash[
-        header:{},
-        moves:[
+        "header" =>{},
+        "moves" =>[
           {},
-          {move:{to:pos(7,6),piece:"FU"}},
-          {move:{to:pos(3,4),piece:"FU"}},
-          {move:{to:pos(2,2),piece:"KA",promote:true}},
-          {move:{same:true,piece:"GI"}},
-          {move:{to:pos(4,5),piece:"KA"}},
+          {"move" =>{"to" =>pos(7,6),"piece" =>"FU"}},
+          {"move" =>{"to" =>pos(3,4),"piece" =>"FU"}},
+          {"move" =>{"to" =>pos(2,2),"piece" =>"KA","promote" =>true}},
+          {"move" =>{"same" =>true,"piece" =>"GI"}},
+          {"move" =>{"to" =>pos(4,5),"piece" =>"KA"}},
         ]
       ]
     }
@@ -44,14 +44,14 @@ describe Jkf::Parser::Ki2 do
 
     it {
       is_expected.to eq Hash[
-        header:{},
-        moves:[
+        "header" =>{},
+        "moves" =>[
           {},
-          {move:{to:pos(7,6),piece:"FU"}},
-          {move:{to:pos(3,4),piece:"FU"}},
-          {move:{to:pos(7,8),piece:"GI"}},
-          {move:{to:pos(8,8),piece:"KA",promote:true}},
-          {special:"TORYO"},
+          {"move" =>{"to" =>pos(7,6),"piece" =>"FU"}},
+          {"move" =>{"to" =>pos(3,4),"piece" =>"FU"}},
+          {"move" =>{"to" =>pos(7,8),"piece" =>"GI"}},
+          {"move" =>{"to" =>pos(8,8),"piece" =>"KA","promote" =>true}},
+          {"special" =>"TORYO"},
         ]
       ]
     }
@@ -63,17 +63,17 @@ describe Jkf::Parser::Ki2 do
 
       it {
         is_expected.to eq Hash[
-          header:{
+          "header" =>{
             "手合割" => "平手",
           },
-          initial: {preset: "HIRATE"},
-          moves:[
+          "initial" => {"preset" => "HIRATE"},
+          "moves" =>[
             {},
-            {move:{to:pos(7,6),piece:"FU"}},
-            {move:{to:pos(3,4),piece:"FU"}},
-            {move:{to:pos(2,2),piece:"KA",promote:true}},
-            {move:{same:true,piece:"GI"}},
-            {move:{to:pos(4,5),piece:"KA"}},
+            {"move" =>{"to" =>pos(7,6),"piece" =>"FU"}},
+            {"move" =>{"to" =>pos(3,4),"piece" =>"FU"}},
+            {"move" =>{"to" =>pos(2,2),"piece" =>"KA","promote" =>true}},
+            {"move" =>{"same" =>true,"piece" =>"GI"}},
+            {"move" =>{"to" =>pos(4,5),"piece" =>"KA"}},
           ]
         ]
       }
@@ -84,17 +84,17 @@ describe Jkf::Parser::Ki2 do
 
       it {
         is_expected.to eq Hash[
-          header:{
+          "header" =>{
             "手合割" => "六枚落ち",
           },
-          initial: {preset: "6"},
-          moves:[
+          "initial" => {"preset" => "6"},
+          "moves" =>[
             {},
-            {move:{to:pos(4,2),piece:"OU"}},
-            {move:{to:pos(7,6),piece:"FU"}},
-            {move:{to:pos(2,2),piece:"GI"}},
-            {move:{to:pos(6,6),piece:"KA"}},
-            {move:{to:pos(8,2),piece:"GI"}},
+            {"move" =>{"to" =>pos(4,2),"piece" =>"OU"}},
+            {"move" =>{"to" =>pos(7,6),"piece" =>"FU"}},
+            {"move" =>{"to" =>pos(2,2),"piece" =>"GI"}},
+            {"move" =>{"to" =>pos(6,6),"piece" =>"KA"}},
+            {"move" =>{"to" =>pos(8,2),"piece" =>"GI"}},
           ]
         ]
       }
@@ -127,17 +127,17 @@ describe Jkf::Parser::Ki2 do
 
       it {
         is_expected.to eq Hash[
-          header:{
+          "header" =>{
             "手合割" => "その他　",
             "上手" => "uwate",
             "下手" => "shitate",
           },
-          initial: {
-            preset:"OTHER",
-            data:{
-              board:[
-                [{color:1,kind:"OU"},{},{},{},{},{},{},{},{}],
-                [{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"}],
+          "initial" => {
+            "preset" =>"OTHER",
+            "data" =>{
+              "board" =>[
+                [{"color" =>1,"kind" =>"OU"},{},{},{},{},{},{},{},{}],
+                [{"color" =>1,"kind" =>"FU"},{"color" =>1,"kind" =>"FU"},{"color" =>1,"kind" =>"FU"},{"color" =>1,"kind" =>"FU"},{"color" =>1,"kind" =>"FU"},{"color" =>1,"kind" =>"FU"},{"color" =>1,"kind" =>"FU"},{"color" =>1,"kind" =>"FU"},{"color" =>1,"kind" =>"FU"}],
                 [{},{},{},{},{},{},{},{},{}],
                 [{},{},{},{},{},{},{},{},{}],
                 [{},{},{},{},{},{},{},{},{}],
@@ -146,18 +146,18 @@ describe Jkf::Parser::Ki2 do
                 [{},{},{},{},{},{},{},{},{}],
                 [{},{},{},{},{},{},{},{},{}],
               ],
-              color: 0,
-              hands:[
+              "color" => 0,
+              "hands" =>[
                 {"FU" => 0,"KY" => 4,"KE" => 0,"GI" => 0,"KI" => 0,"KA" => 0,"HI" => 2},
                 {"FU" => 0,"KY" => 0,"KE" => 4,"GI" => 4,"KI" => 0,"KA" => 0,"HI" => 0},
               ]
             }
           },
-          moves:[
+          "moves" =>[
             {},
-            {move:{to:pos(1,3),piece:"KY"}},
-            {move:{to:pos(1,2),piece:"KE"}},
-            {move:{same:true,piece:"KY",promote:true}},
+            {"move" =>{"to" =>pos(1,3),"piece" =>"KY"}},
+            {"move" =>{"to" =>pos(1,2),"piece" =>"KE"}},
+            {"move" =>{"same" =>true,"piece" =>"KY","promote" =>true}},
           ]
         ]
       }
@@ -177,23 +177,23 @@ describe Jkf::Parser::Ki2 do
 
       it {
         is_expected.to eq Hash[
-          header:{
+          "header" =>{
             "手合割" => "平手",
           },
-          initial: {preset: "HIRATE"},
-          moves:[
+          "initial" => {"preset" => "HIRATE"},
+          "moves" =>[
             {},
-            {move:{to:pos(7,6),piece:"FU"}},
-            {move:{to:pos(3,4),piece:"FU"}},
-            {move:{to:pos(2,2),piece:"KA",promote:true},forks:[
+            {"move" =>{"to" =>pos(7,6),"piece" =>"FU"}},
+            {"move" =>{"to" =>pos(3,4),"piece" =>"FU"}},
+            {"move" =>{"to" =>pos(2,2),"piece" =>"KA","promote" =>true},"forks" =>[
               [
-                {move:{to:pos(6,6),piece:"FU"}},
-                {move:{to:pos(8,4),piece:"FU"}},
+                {"move" =>{"to" =>pos(6,6),"piece" =>"FU"}},
+                {"move" =>{"to" =>pos(8,4),"piece" =>"FU"}},
               ]
             ]},
-            {move:{same:true,piece:"GI"}},
-            {move:{to:pos(4,5),piece:"KA"}},
-            {special:"CHUDAN"},
+            {"move" =>{"same" =>true,"piece" =>"GI"}},
+            {"move" =>{"to" =>pos(4,5),"piece" =>"KA"}},
+            {"special" =>"CHUDAN"},
           ]
         ]
       }

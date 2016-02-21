@@ -15,14 +15,14 @@ describe Jkf::Parser::Kif do
     let(:str) { "1 ７六歩(77)\n2 ３四歩(33)\n3 ２二角成(88)\n 4 同　銀(31)\n5 ４五角打\n" }
     it {
       is_expected.to eq Hash[
-        header: {},
-        moves: [
+        "header" => {},
+        "moves" => [
           {},
-          {move:{from:pos(7,7),to:pos(7,6),piece:"FU"}},
-          {move:{from:pos(3,3),to:pos(3,4),piece:"FU"}},
-          {move:{from:pos(8,8),to:pos(2,2),piece:"KA",promote:true}},
-          {move:{from:pos(3,1),same:true,piece:"GI"}},
-          {move:{to:pos(4,5),piece:"KA"}},
+          {"move" =>{"from" =>pos(7,7),"to" =>pos(7,6),"piece" =>"FU"}},
+          {"move" =>{"from" =>pos(3,3),"to" =>pos(3,4),"piece" =>"FU"}},
+          {"move" =>{"from" =>pos(8,8),"to" =>pos(2,2),"piece" =>"KA","promote" =>true}},
+          {"move" =>{"from" =>pos(3,1),"same" =>true,"piece" =>"GI"}},
+          {"move" =>{"to" =>pos(4,5),"piece" =>"KA"}},
         ]
       ]
     }
@@ -32,12 +32,12 @@ describe Jkf::Parser::Kif do
     let(:str) { "*開始時コメント\n1 ７六歩(77)\n*初手コメント\n*初手コメント2\n2 ３四歩(33)\n3 ２二角成(88)\n" }
     it {
       is_expected.to eq Hash[
-        header:{},
-        moves:[
-          {comments:["開始時コメント"]},
-          {move:{from:pos(7,7),to:pos(7,6),piece:"FU"},comments:["初手コメント", "初手コメント2"]},
-          {move:{from:pos(3,3),to:pos(3,4),piece:"FU"}},
-          {move:{from:pos(8,8),to:pos(2,2),piece:"KA",promote:true}},
+        "header" =>{},
+        "moves" =>[
+          {"comments" =>["開始時コメント"]},
+          {"move" =>{"from" =>pos(7,7),"to" =>pos(7,6),"piece" =>"FU"},"comments" =>["初手コメント", "初手コメント2"]},
+          {"move" =>{"from" =>pos(3,3),"to" =>pos(3,4),"piece" =>"FU"}},
+          {"move" =>{"from" =>pos(8,8),"to" =>pos(2,2),"piece" =>"KA","promote" =>true}},
         ]
       ]
     }
@@ -47,14 +47,14 @@ describe Jkf::Parser::Kif do
     let(:str) { "1 ７六歩(77) (0:01/00:00:01)\n2 ３四歩(33) (0:02/00:00:02)\n3 ２二角成(88) (0:20/00:00:21)\n 4 同　銀(31) (0:03/00:00:05)\n5 ４五角打 (0:39/00:01:00)\n" }
     it {
       is_expected.to eq Hash[
-        header:{},
-        moves:[
+        "header" =>{},
+        "moves" =>[
           {},
-          {move:{from:pos(7,7),to:pos(7,6),piece:"FU"},time:{now:{m:0,s:1},total:{h:0,m:0,s:1}}},
-          {move:{from:pos(3,3),to:pos(3,4),piece:"FU"},time:{now:{m:0,s:2},total:{h:0,m:0,s:2}}},
-          {move:{from:pos(8,8),to:pos(2,2),piece:"KA",promote:true},time:{now:{m:0,s:20},total:{h:0,m:0,s:21}}},
-          {move:{from:pos(3,1),same:true,piece:"GI"},time:{now:{m:0,s:3},total:{h:0,m:0,s:5}}},
-          {move:{to:pos(4,5),piece:"KA"},time:{now:{m:0,s:39},total:{h:0,m:1,s:0}}},
+          {"move" =>{"from" =>pos(7,7),"to" =>pos(7,6),"piece" =>"FU"},"time" =>{"now" =>{"m" =>0,"s" =>1},"total" =>{"h" =>0,"m" =>0,"s" =>1}}},
+          {"move" =>{"from" =>pos(3,3),"to" =>pos(3,4),"piece" =>"FU"},"time" =>{"now" =>{"m" =>0,"s" =>2},"total" =>{"h" =>0,"m" =>0,"s" =>2}}},
+          {"move" =>{"from" =>pos(8,8),"to" =>pos(2,2),"piece" =>"KA","promote" =>true},"time" =>{"now" =>{"m" =>0,"s" =>20},"total" =>{"h" =>0,"m" =>0,"s" =>21}}},
+          {"move" =>{"from" =>pos(3,1),"same" =>true,"piece" =>"GI"},"time" =>{"now" =>{"m" =>0,"s" =>3},"total" =>{"h" =>0,"m" =>0,"s" =>5}}},
+          {"move" =>{"to" =>pos(4,5),"piece" =>"KA"},"time" =>{"now" =>{"m" =>0,"s" =>39},"total" =>{"h" =>0,"m" =>1,"s" =>0}}},
         ]
       ]
     }
@@ -64,14 +64,14 @@ describe Jkf::Parser::Kif do
     let(:str) { "1 ７六歩(77)\n2 ３四歩(33)\n3 ７八銀(79)\n 4 ８八角成(22)\n5 投了\nまで4手で後手の勝ち\n" }
     it {
       is_expected.to eq Hash[
-        header:{},
-        moves:[
+        "header" =>{},
+        "moves" =>[
           {},
-          {move:{from:pos(7,7),to:pos(7,6),piece:"FU"}},
-          {move:{from:pos(3,3),to:pos(3,4),piece:"FU"}},
-          {move:{from:pos(7,9),to:pos(7,8),piece:"GI"}},
-          {move:{from:pos(2,2),to:pos(8,8),piece:"KA",promote:true}},
-          {special:"TORYO"},
+          {"move" =>{"from" =>pos(7,7),"to" =>pos(7,6),"piece" =>"FU"}},
+          {"move" =>{"from" =>pos(3,3),"to" =>pos(3,4),"piece" =>"FU"}},
+          {"move" =>{"from" =>pos(7,9),"to" =>pos(7,8),"piece" =>"GI"}},
+          {"move" =>{"from" =>pos(2,2),"to" =>pos(8,8),"piece" =>"KA","promote" =>true}},
+          {"special" =>"TORYO"},
         ]
       ]
     }
@@ -82,17 +82,17 @@ describe Jkf::Parser::Kif do
       let(:str) { "手合割：平手\n1 ７六歩(77)\n2 ３四歩(33)\n3 ２二角成(88)\n 4 同　銀(31)\n5 ４五角打\n" }
       it {
         is_expected.to eq Hash[
-          header:{
+          "header" =>{
             '手合割' => '平手',
           },
-          initial: {preset: 'HIRATE'},
-          moves:[
+          "initial" => {"preset" => 'HIRATE'},
+          "moves" =>[
             {},
-            {move:{from:pos(7,7),to:pos(7,6),piece:'FU'}},
-            {move:{from:pos(3,3),to:pos(3,4),piece:'FU'}},
-            {move:{from:pos(8,8),to:pos(2,2),piece:'KA',promote:true}},
-            {move:{from:pos(3,1),same:true,piece:'GI'}},
-            {move:{to:pos(4,5),piece:'KA'}},
+            {"move" =>{"from" =>pos(7,7),"to" =>pos(7,6),"piece" =>'FU'}},
+            {"move" =>{"from" =>pos(3,3),"to" =>pos(3,4),"piece" =>'FU'}},
+            {"move" =>{"from" =>pos(8,8),"to" =>pos(2,2),"piece" =>'KA',"promote" =>true}},
+            {"move" =>{"from" =>pos(3,1),"same" =>true,"piece" =>'GI'}},
+            {"move" =>{"to" =>pos(4,5),"piece" =>'KA'}},
           ]
         ]
       }
@@ -103,17 +103,17 @@ describe Jkf::Parser::Kif do
 
       it {
         is_expected.to eq Hash[
-          header:{
+          "header" =>{
             '手合割' => '六枚落ち',
           },
-          initial: {preset: '6'},
-          moves:[
+          "initial" => {"preset" => '6'},
+          "moves" =>[
             {},
-            {move:{from:pos(5,1),to:pos(4,2),piece:'OU'}},
-            {move:{from:pos(7,7),to:pos(7,6),piece:'FU'}},
-            {move:{from:pos(3,1),to:pos(2,2),piece:'GI'}},
-            {move:{from:pos(8,8),to:pos(6,6),piece:'KA'}},
-            {move:{from:pos(7,1),to:pos(8,2),piece:'GI'}},
+            {"move" =>{"from" =>pos(5,1),"to" =>pos(4,2),"piece" =>'OU'}},
+            {"move" =>{"from" =>pos(7,7),"to" =>pos(7,6),"piece" =>'FU'}},
+            {"move" =>{"from" =>pos(3,1),"to" =>pos(2,2),"piece" =>'GI'}},
+            {"move" =>{"from" =>pos(8,8),"to" =>pos(6,6),"piece" =>'KA'}},
+            {"move" =>{"from" =>pos(7,1),"to" =>pos(8,2),"piece" =>'GI'}},
           ]
         ]
       }
@@ -145,17 +145,17 @@ describe Jkf::Parser::Kif do
 
       it {
         is_expected.to eq Hash[
-          header:{
+          "header" =>{
             '手合割' => 'その他　',
             '上手' => 'uwate',
             '下手' => 'shitate',
           },
-          initial: {
-            preset:'OTHER',
-            data:{
-              board:[
-                [{color:1,kind:'OU'},{},{},{},{},{},{},{},{}],
-                [{color:1,kind:'FU'},{color:1,kind:'FU'},{color:1,kind:'FU'},{color:1,kind:'FU'},{color:1,kind:'FU'},{color:1,kind:'FU'},{color:1,kind:'FU'},{color:1,kind:'FU'},{color:1,kind:'FU'}],
+          "initial" => {
+            "preset" =>'OTHER',
+            "data" =>{
+              "board" =>[
+                [{"color" =>1,"kind" =>'OU'},{},{},{},{},{},{},{},{}],
+                [{"color" =>1,"kind" =>'FU'},{"color" =>1,"kind" =>'FU'},{"color" =>1,"kind" =>'FU'},{"color" =>1,"kind" =>'FU'},{"color" =>1,"kind" =>'FU'},{"color" =>1,"kind" =>'FU'},{"color" =>1,"kind" =>'FU'},{"color" =>1,"kind" =>'FU'},{"color" =>1,"kind" =>'FU'}],
                 [{},{},{},{},{},{},{},{},{}],
                 [{},{},{},{},{},{},{},{},{}],
                 [{},{},{},{},{},{},{},{},{}],
@@ -164,18 +164,18 @@ describe Jkf::Parser::Kif do
                 [{},{},{},{},{},{},{},{},{}],
                 [{},{},{},{},{},{},{},{},{}],
               ],
-              color: 0,
-              hands:[
+              "color" => 0,
+              "hands" =>[
                 {"FU"=>0,"KY"=>4,"KE"=>0,"GI"=>0,"KI"=>0,"KA"=>0,"HI"=>2},
                 {"FU"=>0,"KY"=>0,"KE"=>4,"GI"=>4,"KI"=>0,"KA"=>0,"HI"=>0},
               ]
             }
           },
-          moves:[
+          "moves" =>[
             {},
-            {move:{to:pos(1,3),piece:'KY'}},
-            {move:{to:pos(1,2),piece:'KE'}},
-            {move:{from:pos(1,3),same:true,piece:'KY',promote:true}},
+            {"move" =>{"to" =>pos(1,3),"piece" =>'KY'}},
+            {"move" =>{"to" =>pos(1,2),"piece" =>'KE'}},
+            {"move" =>{"from" =>pos(1,3),"same" =>true,"piece" =>'KY',"promote" =>true}},
           ]
         ]
       }
@@ -206,17 +206,17 @@ describe Jkf::Parser::Kif do
 
       it {
         is_expected.to eq Hash[
-          header:{
+          "header" =>{
             "手合割"=>"平手",
             "下手"=>"shitate",
             "上手"=>"uwate",
           },
-          initial: {
-            preset:"OTHER",
-            data:{
-              board:[
-                [{color:1,kind:"OU"},{},{},{},{},{},{},{},{}],
-                [{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"},{color:1,kind:"FU"}],
+          "initial" => {
+            "preset" =>"OTHER",
+            "data" =>{
+              "board" =>[
+                [{"color" =>1,"kind" =>"OU"},{},{},{},{},{},{},{},{}],
+                [{"color" =>1,"kind" =>"FU"},{"color" =>1,"kind" =>"FU"},{"color" =>1,"kind" =>"FU"},{"color" =>1,"kind" =>"FU"},{"color" =>1,"kind" =>"FU"},{"color" =>1,"kind" =>"FU"},{"color" =>1,"kind" =>"FU"},{"color" =>1,"kind" =>"FU"},{"color" =>1,"kind" =>"FU"}],
                 [{},{},{},{},{},{},{},{},{}],
                 [{},{},{},{},{},{},{},{},{}],
                 [{},{},{},{},{},{},{},{},{}],
@@ -225,18 +225,18 @@ describe Jkf::Parser::Kif do
                 [{},{},{},{},{},{},{},{},{}],
                 [{},{},{},{},{},{},{},{},{}],
               ],
-              color: 0,
-              hands:[
+              "color" => 0,
+              "hands" =>[
                 {"FU"=>0,"KY"=>4,"KE"=>0,"GI"=>0,"KI"=>0,"KA"=>0,"HI"=>2},
                 {"FU"=>0,"KY"=>0,"KE"=>4,"GI"=>4,"KI"=>0,"KA"=>0,"HI"=>0},
               ]
             }
           },
-          moves:[
+          "moves" =>[
             {},
-            {move:{to:pos(1,3),piece:"KY"}},
-            {move:{to:pos(1,2),piece:"KE"}},
-            {move:{from:pos(1,3),same:true,piece:"KY",promote:true}},
+            {"move" =>{"to" =>pos(1,3),"piece" =>"KY"}},
+            {"move" =>{"to" =>pos(1,2),"piece" =>"KE"}},
+            {"move" =>{"from" =>pos(1,3),"same" =>true,"piece" =>"KY","promote" =>true}},
           ]
         ]
       }
@@ -262,23 +262,23 @@ describe Jkf::Parser::Kif do
 
       it {
         is_expected.to eq Hash[
-          header:{
+          "header" =>{
             "手合割" => "平手",
           },
-          initial: {preset: "HIRATE"},
-          moves:[
+          "initial" => {"preset" => "HIRATE"},
+          "moves" =>[
             {},
-            {move:{from:pos(7,7),to:pos(7,6),piece:"FU"}},
-            {move:{from:pos(3,3),to:pos(3,4),piece:"FU"}},
-            {move:{from:pos(8,8),to:pos(2,2),piece:"KA",promote:true},forks:[
+            {"move" =>{"from" =>pos(7,7),"to" =>pos(7,6),"piece" =>"FU"}},
+            {"move" =>{"from" =>pos(3,3),"to" =>pos(3,4),"piece" =>"FU"}},
+            {"move" =>{"from" =>pos(8,8),"to" =>pos(2,2),"piece" =>"KA","promote" =>true},"forks" =>[
               [
-                {move:{from:pos(6,7),to:pos(6,6),piece:"FU"}},
-                {move:{from:pos(8,3),to:pos(8,4),piece:"FU"}},
+                {"move" =>{"from" =>pos(6,7),"to" =>pos(6,6),"piece" =>"FU"}},
+                {"move" =>{"from" =>pos(8,3),"to" =>pos(8,4),"piece" =>"FU"}},
               ]
             ]},
-            {move:{from:pos(3,1),same:true,piece:"GI"}},
-            {move:{to:pos(4,5),piece:"KA"}},
-            {special:"CHUDAN"},
+            {"move" =>{"from" =>pos(3,1),"same" =>true,"piece" =>"GI"}},
+            {"move" =>{"to" =>pos(4,5),"piece" =>"KA"}},
+            {"special" =>"CHUDAN"},
           ]
         ]
       }
@@ -301,16 +301,16 @@ describe Jkf::Parser::Kif do
 
       it {
         is_expected.to eq Hash[
-          header:{
+          "header" =>{
             "手合割" => "平手",
           },
-          initial: {preset: "HIRATE"},
-          moves:[
-            {comments:["開始コメント"]},
-            {move:{from:pos(7,7),to:pos(7,6),piece:"FU"},comments:["初手コメント"]},
-            {move:{from:pos(3,3),to:pos(3,4),piece:"FU"}},
-            {move:{from:pos(8,8),to:pos(2,2),piece:"KA",promote:true}},
-            {special:"CHUDAN"},
+          "initial" => {"preset" => "HIRATE"},
+          "moves" =>[
+            {"comments" =>["開始コメント"]},
+            {"move" =>{"from" =>pos(7,7),"to" =>pos(7,6),"piece" =>"FU"},"comments" =>["初手コメント"]},
+            {"move" =>{"from" =>pos(3,3),"to" =>pos(3,4),"piece" =>"FU"}},
+            {"move" =>{"from" =>pos(8,8),"to" =>pos(2,2),"piece" =>"KA","promote" =>true}},
+            {"special" =>"CHUDAN"},
           ]
         ]
       }
@@ -331,16 +331,16 @@ describe Jkf::Parser::Kif do
 
       it {
         is_expected.to eq Hash[
-          header:{
+          "header" =>{
             "手合割" => "平手",
           },
-          initial: {preset: "HIRATE"},
-          moves:[
-            {comments:["開始コメント"]},
-            {move:{from:pos(7,7),to:pos(7,6),piece:"FU"},comments:["初手コメント"]},
-            {move:{from:pos(3,3),to:pos(3,4),piece:"FU"}},
-            {move:{from:pos(8,8),to:pos(2,2),piece:"KA",promote:true}},
-            {special:"CHUDAN"},
+          "initial" => {"preset" => "HIRATE"},
+          "moves" =>[
+            {"comments" =>["開始コメント"]},
+            {"move" =>{"from" =>pos(7,7),"to" =>pos(7,6),"piece" =>"FU"},"comments" =>["初手コメント"]},
+            {"move" =>{"from" =>pos(3,3),"to" =>pos(3,4),"piece" =>"FU"}},
+            {"move" =>{"from" =>pos(8,8),"to" =>pos(2,2),"piece" =>"KA","promote" =>true}},
+            {"special" =>"CHUDAN"},
           ]
         ]}
     end
@@ -352,14 +352,14 @@ describe Jkf::Parser::Kif do
 
       it {
         is_expected.to eq Hash[
-          header:{},
-          moves:[
+          "header" =>{},
+          "moves" =>[
             {},
-            {move:{from:pos(7,7),to:pos(7,6),piece:"FU"}},
-            {move:{from:pos(3,3),to:pos(3,4),piece:"FU"}},
-            {move:{from:pos(8,8),to:pos(2,2),piece:"KA",promote:true}},
-            {move:{from:pos(3,1),same:true,piece:"GI"}},
-            {move:{to:pos(4,5),piece:"KA"}},
+            {"move" =>{"from" =>pos(7,7),"to" =>pos(7,6),"piece" =>"FU"}},
+            {"move" =>{"from" =>pos(3,3),"to" =>pos(3,4),"piece" =>"FU"}},
+            {"move" =>{"from" =>pos(8,8),"to" =>pos(2,2),"piece" =>"KA","promote" =>true}},
+            {"move" =>{"from" =>pos(3,1),"same" =>true,"piece" =>"GI"}},
+            {"move" =>{"to" =>pos(4,5),"piece" =>"KA"}},
           ]
         ]
       }
@@ -370,14 +370,14 @@ describe Jkf::Parser::Kif do
 
       it {
         is_expected.to eq Hash[
-          header:{},
-          moves:[
+          "header" =>{},
+          "moves" =>[
             {},
-            {move:{from:pos(7,7),to:pos(7,6),piece:"FU"}},
-            {move:{from:pos(3,3),to:pos(3,4),piece:"FU"},comments:["&読み込み時表示"]},
-            {move:{from:pos(8,8),to:pos(2,2),piece:"KA",promote:true}},
-            {move:{from:pos(3,1),same:true,piece:"GI"}},
-            {move:{to:pos(4,5),piece:"KA"}},
+            {"move" =>{"from" =>pos(7,7),"to" =>pos(7,6),"piece" =>"FU"}},
+            {"move" =>{"from" =>pos(3,3),"to" =>pos(3,4),"piece" =>"FU"},"comments" =>["&読み込み時表示"]},
+            {"move" =>{"from" =>pos(8,8),"to" =>pos(2,2),"piece" =>"KA","promote" =>true}},
+            {"move" =>{"from" =>pos(3,1),"same" =>true,"piece" =>"GI"}},
+            {"move" =>{"to" =>pos(4,5),"piece" =>"KA"}},
           ]
         ]
       }

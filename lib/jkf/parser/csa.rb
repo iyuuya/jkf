@@ -1,30 +1,9 @@
 # coding: utf-8
 
 module Jkf::Parser
-  class Csa
-    def parse(input)
-      @input = input.clone
-      @input += "\n" unless @input[-1] =~ /\n|\r|,/
-
-      @current_pos       = 0
-      @reported_pos      = 0
-      @cachedPos         = 0
-      @cachedPosDetails  = { line: 1, column: 1, seenCR: false }
-      @max_fail_pos      = 0
-      @max_fail_expected = []
-      @silent_fails      = 0
-
-      @result = parse_kifu
-
-      if @result != :failed && @current_pos == @input.length
-        return @result
-      else
-        fail({ type: "end", description: "end of input" }) if @result != :failed && @current_pos < @input.length
-        raise SyntaxError
-      end
-    end
-
-    def parse_kifu
+  class Csa < Base
+    def parse_root
+      @input += "\n" unless @input[-1] =~ /\n|\r|,/ # FIXME
       s0 = parse_csa2
       s0 = parse_csa1 if s0 == :failed
       s0
@@ -44,10 +23,10 @@ module Jkf::Parser
             if s4 != :failed
               @reported_pos = s0
               s0 = s1 = -> (info, ini, ms) {
-                ret = { header: info[:header], initial: ini, moves: ms }
-                if info && info[:players]
-                  ret[:header]["先手"] = info[:players][0] if info[:players][0]
-                  ret[:header]["後手"] = info[:players][1] if info[:players][1]
+                ret = { "header" => info["header"], "initial" => ini, "moves" => ms }
+                if info && info["players"]
+                  ret["header"]["先手"] = info["players"][0] if info["players"][0]
+                  ret["header"]["後手"] = info["players"][1] if info["players"][1]
                 end
                 ret
               }.call(s2, s3, s4)
@@ -107,7 +86,7 @@ module Jkf::Parser
         s2 = parse_headers
         if s2 != :failed
           @reported_pos = s0
-          s0 = s1 = { players: s1, header: s2 }
+          s0 = s1 = { "players" => s1, "header" => s2 }
         else
           @current_pos = s0
           s0 = :failed
@@ -132,7 +111,7 @@ module Jkf::Parser
         s1 = -> (header) {
           ret = {}
           header.each do |data|
-            ret[normalize_header_key(data[:k])] = data[:v]
+            ret[normalize_header_key(data["k"])] = data["v"]
           end
           ret
         }.call(s1)
@@ -175,7 +154,7 @@ module Jkf::Parser
                 s6 = parse_nl
                 if s6 != :failed
                   @reported_pos = s0
-                  s0 = s1 = { k: s3.join, v: s5.join }
+                  s0 = s1 = { "k" => s3.join, "v" => s5.join }
                 else
                   @current_pos = s0
                   s0 = :failed
@@ -215,10 +194,10 @@ module Jkf::Parser
           if s3 != :failed
             @reported_pos = s0
             s0 = s1 = -> (ply, ini, ms) {
-              ret = { header: {}, initial: ini, moves: ms }
+              ret = { "header" => {}, "initial" => ini, "moves" => ms }
               if ply
-                ret[:header]["先手"] = ply[0] if ply[0]
-                ret[:header]["後手"] = ply[1] if ply[1]
+                ret["header"]["先手"] = ply[0] if ply[0]
+                ret["header"]["後手"] = ply[1] if ply[1]
               end
               ret
             }.call(s1, s2, s3)
@@ -371,9 +350,9 @@ module Jkf::Parser
                     if data == "NO"
                       data = koma
                     else
-                      data[:data][:hands] = koma[:data][:hands]
+                      data["data"]["hands"] = koma["data"]["hands"]
                     end
-                    data[:data][:color] = teban
+                    data["data"]["color"] = teban
                     data
                   }.call(s2, s3, s5)
                 else
@@ -418,9 +397,9 @@ module Jkf::Parser
           if s3 != :failed
             @reported_pos = s0
             s0 = s1 = -> (ps) {
-              ret = { preset: "OTHER", data: { board: get_hirate } }
+              ret = { "preset" => "OTHER", "data" => { "board" => get_hirate } }
               ps.each do |piece|
-                ret[:data][:board][piece[:xy][:x]-1][piece[:xy][:y]-1] = {}
+                ret["data"]["board"][piece["xy"]["x"]-1][piece["xy"]["y"]-1] = {}
               end
               ret
             }.call(s2)
@@ -462,7 +441,7 @@ module Jkf::Parser
             }
             board << line
           }
-          { preset: "OTHER", data: { board: board } }
+          { "preset" => "OTHER", "data" => { "board" => board } }
         }.call(s1)
       end
       s0 = s1
@@ -516,7 +495,7 @@ module Jkf::Parser
         s2 = parse_piece
         if s2 != :failed
           @reported_pos = s0
-          s0 = s1 = { color: s1, kind: s2 }
+          s0 = s1 = { "color" => s1, "kind" => s2 }
         else
           @current_pos = s0
           s0 = :failed
@@ -563,22 +542,22 @@ module Jkf::Parser
           }
 
           lines.each do |line|
-            line[:pieces].each do |piece|
-              if piece[:xy][:x] == 0
-                if piece[:piece] == "AL"
-                  hands[line[:teban]] = all
-                  return { preset: "OTHER", data: { board: board, hands: hands } }
+            line["pieces"].each do |piece|
+              if piece["xy"]["x"] == 0
+                if piece["piece"] == "AL"
+                  hands[line["teban"]] = all
+                  return { "preset" => "OTHER", "data" => { "board" => board, "hands" => hands } }
                 end
-                obj = hands[line[:teban]]
-                obj[piece[:piece]] += 1
+                obj = hands[line["teban"]]
+                obj[piece["piece"]] += 1
               else
-                board[piece[:xy][:x]-1][piece[:xy][:y]-1] = { color: line[:teban], kind: piece[:piece] }
+                board[piece["xy"]["x"]-1][piece["xy"]["y"]-1] = { "color" => line["teban"], "kind" => piece["piece"] }
               end
-              all[piece[:piece]] -= 1 if piece[:piece] != "OU"
+              all[piece["piece"]] -= 1 if piece["piece"] != "OU"
             end
           end
 
-          { preset: "OTHER", data: { board: board, hands: hands } }
+          { "preset" => "OTHER", "data" => { "board" => board, "hands" => hands } }
         }.call(s1)
       end
       s0 = s1
@@ -605,7 +584,7 @@ module Jkf::Parser
             s4 = parse_nl
             if s4 != :failed
               @reported_pos = s0
-              s0 = s1 = { teban: s2, pieces: s3 }
+              s0 = s1 = { "teban" => s2, "pieces" => s3 }
             else
               @current_pos = s0
               s0 = :failed
@@ -670,7 +649,7 @@ module Jkf::Parser
       end
       if s1 != :failed
         @reported_pos = s0
-        s1 = s1.length > 0 ? { comments: s1 } : {}
+        s1 = s1.length > 0 ? { "comments" => s1 } : {}
       end
       s0 = s1
       s0
@@ -694,12 +673,12 @@ module Jkf::Parser
             @reported_pos = s0
             s0 = s1 = -> (move, time, comments) {
               ret = {}
-              ret[:comments] = comments if comments.length > 0
-              ret[:time] = time if time
-              if move[:special]
-                ret[:special] = move[:special]
+              ret["comments"] = comments if comments.length > 0
+              ret["time"] = time if time
+              if move["special"]
+                ret["special"] = move["special"]
               else
-                ret[:move] = move
+                ret["move"] = move
               end
               ret
             }.call(s1, s2, s3)
@@ -732,8 +711,8 @@ module Jkf::Parser
               if s5 != :failed
                 @reported_pos = s0
                 s0 = s1 = -> (from, to, piece) {
-                  ret = { to: to, piece: piece }
-                  ret[:from] = from if from[:x] != 0
+                  ret = { "to" => to, "piece" => piece }
+                  ret["from"] = from if from["x"] != 0
                   ret
                 }.call(s2, s3, s4)
               else
@@ -777,7 +756,7 @@ module Jkf::Parser
           s3 = parse_nl
           if s3 != :failed
             @reported_pos = s0
-            s0 = s1 = { special: s2.join }
+            s0 = s1 = { "special" => s2.join }
           else
             @current_pos = s0
             s0 = :failed
@@ -857,7 +836,7 @@ module Jkf::Parser
           s3 = parse_nl
           if s3 != :failed
             @reported_pos = s0
-            s0 = s1 = { now: sec2time(s2.join.to_i) }
+            s0 = s1 = { "now" => sec2time(s2.join.to_i) }
           else
             @current_pos = s0
             s0 = :failed
@@ -880,7 +859,7 @@ module Jkf::Parser
         s2 = match_regexp(/^[0-9]/)
         if s2 != :failed
           @reported_pos = s0
-          s0 = s1 = { x: s1.to_i, y: s2.to_i }
+          s0 = s1 = { "x" => s1.to_i, "y" => s2.to_i }
         else
           @current_pos = s0
           s0 = :failed
@@ -918,7 +897,7 @@ module Jkf::Parser
         s2 = parse_piece
         if s2 != :failed
           @reported_pos = s0
-          s0 = s1 = { xy: s1, piece: s2 }
+          s0 = s1 = { "xy" => s1, "piece" => s2 }
         else
           @current_pos = s0
           s0 = :failed
@@ -976,58 +955,23 @@ module Jkf::Parser
 
     protected
 
-    def match_regexp(reg)
-      ret = nil
-      if matched = reg.match(@input[@current_pos])
-        ret = matched.to_s
-        @current_pos += ret.size
-      else
-        ret = :failed
-        fail({ type: "class", value: reg.inspect, description: reg.inspect }) if @silent_fails == 0
-      end
-      ret
-    end
-
-    def match_str(str)
-      ret = nil
-      if @input[@current_pos, str.size] == str
-        ret = str
-        @current_pos += str.size
-      else
-        ret = :failed
-        fail({ type: "literal", value: str, description: "\"#{str}\"" }) if @slient_fails == 0
-      end
-      ret
-    end
-
-    def fail(expected)
-      return if @current_pos < @max_fail_pos
-
-      if @current_pos > @max_fail_pos
-        @max_fail_pos = @current_pos
-        @max_fail_expected = []
-      end
-
-      @max_fail_expected << expected
-    end
-
     def sec2time(sec)
       s = sec % 60
       m = (sec-s) / 60
-      { m: m, s: s }
+      { "m" => m, "s" => s }
     end
 
     def get_hirate
       [
-        [{color:1,kind:"KY"},{                 },{color:1,kind:"FU"},{},{},{},{color:0,kind:"FU"},{                 },{color:0,kind:"KY"},],
-        [{color:1,kind:"KE"},{color:1,kind:"KA"},{color:1,kind:"FU"},{},{},{},{color:0,kind:"FU"},{color:0,kind:"HI"},{color:0,kind:"KE"},],
-        [{color:1,kind:"GI"},{                 },{color:1,kind:"FU"},{},{},{},{color:0,kind:"FU"},{                 },{color:0,kind:"GI"},],
-        [{color:1,kind:"KI"},{                 },{color:1,kind:"FU"},{},{},{},{color:0,kind:"FU"},{                 },{color:0,kind:"KI"},],
-        [{color:1,kind:"OU"},{                 },{color:1,kind:"FU"},{},{},{},{color:0,kind:"FU"},{                 },{color:0,kind:"OU"},],
-        [{color:1,kind:"KI"},{                 },{color:1,kind:"FU"},{},{},{},{color:0,kind:"FU"},{                 },{color:0,kind:"KI"},],
-        [{color:1,kind:"GI"},{                 },{color:1,kind:"FU"},{},{},{},{color:0,kind:"FU"},{                 },{color:0,kind:"GI"},],
-        [{color:1,kind:"KE"},{color:1,kind:"HI"},{color:1,kind:"FU"},{},{},{},{color:0,kind:"FU"},{color:0,kind:"KA"},{color:0,kind:"KE"},],
-        [{color:1,kind:"KY"},{                 },{color:1,kind:"FU"},{},{},{},{color:0,kind:"FU"},{                 },{color:0,kind:"KY"},],
+        [{"color" => 1,"kind" => "KY"},{                 },{"color" => 1,"kind" => "FU"},{},{},{},{"color" => 0,"kind" => "FU"},{                 },{"color" => 0,"kind" => "KY"},],
+        [{"color" => 1,"kind" => "KE"},{"color" => 1,"kind" => "KA"},{"color" => 1,"kind" => "FU"},{},{},{},{"color" => 0,"kind" => "FU"},{"color" => 0,"kind" => "HI"},{"color" => 0,"kind" => "KE"},],
+        [{"color" => 1,"kind" => "GI"},{                 },{"color" => 1,"kind" => "FU"},{},{},{},{"color" => 0,"kind" => "FU"},{                 },{"color" => 0,"kind" => "GI"},],
+        [{"color" => 1,"kind" => "KI"},{                 },{"color" => 1,"kind" => "FU"},{},{},{},{"color" => 0,"kind" => "FU"},{                 },{"color" => 0,"kind" => "KI"},],
+        [{"color" => 1,"kind" => "OU"},{                 },{"color" => 1,"kind" => "FU"},{},{},{},{"color" => 0,"kind" => "FU"},{                 },{"color" => 0,"kind" => "OU"},],
+        [{"color" => 1,"kind" => "KI"},{                 },{"color" => 1,"kind" => "FU"},{},{},{},{"color" => 0,"kind" => "FU"},{                 },{"color" => 0,"kind" => "KI"},],
+        [{"color" => 1,"kind" => "GI"},{                 },{"color" => 1,"kind" => "FU"},{},{},{},{"color" => 0,"kind" => "FU"},{                 },{"color" => 0,"kind" => "GI"},],
+        [{"color" => 1,"kind" => "KE"},{"color" => 1,"kind" => "HI"},{"color" => 1,"kind" => "FU"},{},{},{},{"color" => 0,"kind" => "FU"},{"color" => 0,"kind" => "KA"},{"color" => 0,"kind" => "KE"},],
+        [{"color" => 1,"kind" => "KY"},{                 },{"color" => 1,"kind" => "FU"},{},{},{},{"color" => 0,"kind" => "FU"},{                 },{"color" => 0,"kind" => "KY"},],
       ]
     end
 

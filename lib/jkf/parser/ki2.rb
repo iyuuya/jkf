@@ -1,29 +1,8 @@
 # coding: utf-8
 
 module Jkf::Parser
-  class Ki2
-    def parse(input)
-      @input = input.clone
-
-      @current_pos       = 0
-      @reported_pos      = 0
-      @cachedPos         = 0
-      @cachedPosDetails  = { line: 1, column: 1, seenCR: false }
-      @max_fail_pos      = 0
-      @max_fail_expected = []
-      @silent_fails      = 0
-
-      @result = parse_kifu
-
-      if @result != :failed && @current_pos == @input.length
-        return @result
-      else
-        fail({ type: "end", description: "end of input" }) if @result != :failed && @current_pos < @input.length
-        raise SyntaxError
-      end
-    end
-
-    def parse_kifu
+  class Ki2 < Base
+    def parse_root
       s0 = @current_pos
       s1 = []
       s2 = parse_header
@@ -53,38 +32,38 @@ module Jkf::Parser
               if s5 != :failed
                 @reported_pos = s0
                 s1 = -> (headers, ini, headers2, moves, forks) {
-                  ret = { header: {}, moves: moves }
-                  headers.compact.each { |h| ret[:header][h[:k]] = h[:v] }
-                  headers2.compact.each { |h| ret[:header][h[:k]] = h[:v] }
+                  ret = { "header" => {}, "moves" => moves }
+                  headers.compact.each { |h| ret["header"][h["k"]] = h["v"] }
+                  headers2.compact.each { |h| ret["header"][h["k"]] = h["v"] }
                   if ini
-                    ret[:initial] = ini
-                  elsif ret[:header]["手合割"]
-                    preset = preset2str(ret[:header]["手合割"])
-                    ret[:initial] = { preset: preset } if preset != "OTHER"
+                    ret["initial"] = ini
+                  elsif ret["header"]["手合割"]
+                    preset = preset2str(ret["header"]["手合割"])
+                    ret["initial"] = { "preset" => preset } if preset != "OTHER"
                   end
-                  if ret[:initial] && ret[:initial][:data]
-                    if ret[:header]["手番"]
-                      ret[:initial][:data][:color] = ("下先".index(ret[:header]["手番"]) >= 0 ? 0 : 1)
-                      ret[:header].delete("手番")
+                  if ret["initial"] && ret["initial"]["data"]
+                    if ret["header"]["手番"]
+                      ret["initial"]["data"]["color"] = ("下先".index(ret["header"]["手番"]) >= 0 ? 0 : 1)
+                      ret["header"].delete("手番")
                     else
-                      ret[:initial][:data][:color] = 0
+                      ret["initial"]["data"]["color"] = 0
                     end
-                    ret[:initial][:data][:hands] = [
-                      make_hand(ret[:header]["先手の持駒"] || ret[:header]["下手の持駒"]),
-                      make_hand(ret[:header]["後手の持駒"] || ret[:header]["上手の持駒"])
+                    ret["initial"]["data"]["hands"] = [
+                      make_hand(ret["header"]["先手の持駒"] || ret["header"]["下手の持駒"]),
+                      make_hand(ret["header"]["後手の持駒"] || ret["header"]["上手の持駒"])
                     ]
                     %w(先手の持駒 下手の持駒 後手の持駒 上手の持駒).each do |key|
-                      ret[:header].delete(key)
+                      ret["header"].delete(key)
                     end
                   end
-                  fork_stack = [{ te: 0, moves: moves }]
+                  fork_stack = [{ "te" => 0, "moves" => moves }]
                   forks.each do |f|
                     now_fork = f
                     _fork = fork_stack.pop
-                    _fork = fork_stack.pop while _fork[:te] > now_fork[:te]
-                    move = _fork[:moves][now_fork[:te] - _fork[:te]]
-                    move[:forks] ||= []
-                    move[:forks] << now_fork[:moves]
+                    _fork = fork_stack.pop while _fork["te"] > now_fork["te"]
+                    move = _fork["moves"][now_fork["te"] - _fork["te"]]
+                    move["forks"] ||= []
+                    move["forks"] << now_fork["moves"]
                     fork_stack << _fork
                     fork_stack << now_fork
                   end
@@ -148,7 +127,7 @@ module Jkf::Parser
             end
             if s4 != :failed
               @reported_pos = s0
-              s0 = s1 = { k: s1.join, v: s3.join }
+              s0 = s1 = { "k" => s1.join, "v" => s3.join }
             else
               @current_pos = s0
               s0 = :failed
@@ -174,7 +153,7 @@ module Jkf::Parser
             s3 = parse_nl
             if s3 != :failed
               @reported_pos = s0
-              s0 = s1 = { k: "手番", v: s1 }
+              s0 = s1 = { "k" => "手番", "v" => s1 }
             else
               @current_pos = s0
               s0 = :failed
@@ -294,7 +273,7 @@ module Jkf::Parser
                   }
                   board << line
                 }
-                { preset: "OTHER", data: { board: board } }
+                { "preset" => "OTHER", "data" => { "board" => board } }
               }.call(s3)
               s0 = s1
             else
@@ -380,7 +359,7 @@ module Jkf::Parser
         s2 = parse_piece
         if s2 != :failed
           @reported_pos = s0
-          s1 = { color: s1, kind: s2 }
+          s1 = { "color" => s1, "kind" => s2 }
           s0 = s1
         else
           @current_pos = s0
@@ -443,7 +422,7 @@ module Jkf::Parser
             @reported_pos = s0
             s1 = -> (hd, tl, res) {
               tl.unshift(hd)
-              tl << { special: res } if res && !tl[tl.length-1][:special]
+              tl << { "special" => res } if res && !tl[tl.length-1]["special"]
               tl
             }.call(s1, s2, s3)
             s0 = s1
@@ -477,7 +456,7 @@ module Jkf::Parser
         end
         if s2 != :failed
           @reported_pos = s0
-          s0 = s1 = (s1.length == 0 ? {} : {comments:s1})
+          s0 = s1 = (s1.length == 0 ? {} : {"comments" =>s1})
         else
           @current_pos = s0
           s0 = :failed
@@ -516,8 +495,8 @@ module Jkf::Parser
             if s4 != :failed
               @reported_pos = s0
               s1 = -> (line, c) {
-                ret = { move: line }
-                ret[:comments] = c if c.length > 0
+                ret = { "move" => line }
+                ret["comments"] = c if c.length > 0
                 ret
               }.call(s1, s2)
               s0 = s1
@@ -623,18 +602,18 @@ module Jkf::Parser
                 if s6 != :failed
                   @reported_pos = s0
                   s1 = -> (pl, pi, sou, dou, pro, da) {
-                    ret = { piece: pi }
-                    if pl[:same]
-                      ret[:same] = true
+                    ret = { "piece" => pi }
+                    if pl["same"]
+                      ret["same"] = true
                     else
-                      ret[:to] = pl
+                      ret["to"] = pl
                     end
-                    ret[:promote] = (pro == "成") if pro
+                    ret["promote"] = (pro == "成") if pro
                     if da
-                      ret[:relative] = "H"
+                      ret["relative"] = "H"
                     else
                       rel = soutai2relative(sou) + dousa2relative(dou)
-                      ret[:relative] = rel unless rel.empty? !=""
+                      ret["relative"] = rel unless rel.empty? !=""
                     end
                     ret
                   }.call(s1, s2, s3, s4, s5, s6)
@@ -673,7 +652,7 @@ module Jkf::Parser
         s2 = parse_numkan
         if s2 != :failed
           @reported_pos = s0
-          s0 = s1 = { x: s1, y: s2 }
+          s0 = s1 = { "x" => s1, "y" => s2 }
         else
           @current_pos = s0
           s0 = :failed
@@ -690,7 +669,7 @@ module Jkf::Parser
           s2 = nil if s2 == :failed
           if s2 != :failed
             @reported_pos = s0
-            s0 = s1 = { same: true }
+            s0 = s1 = { "same" => true }
           else
             @current_pos = s0
             s0 = :failed
@@ -1010,7 +989,7 @@ module Jkf::Parser
                 s6 = parse_moves
                 if s6 != :failed
                   @reported_pos = s0
-                  s0 = s1 = { te: s3.join.to_i, moves: s6[1..-1] }
+                  s0 = s1 = { "te" => s3.join.to_i, "moves" => s6[1..-1] }
                 else
                   @current_pos = s0
                   s0 = :failed
@@ -1154,41 +1133,6 @@ module Jkf::Parser
     end
 
     protected
-
-    def match_regexp(reg)
-      ret = nil
-      if matched = reg.match(@input[@current_pos])
-        ret = matched.to_s
-        @current_pos += ret.size
-      else
-        ret = :failed
-        fail({ type: "class", value: reg.inspect, description: reg.inspect }) if @silent_fails == 0
-      end
-      ret
-    end
-
-    def match_str(str)
-      ret = nil
-      if @input[@current_pos, str.size] == str
-        ret = str
-        @current_pos += str.size
-      else
-        ret = :failed
-        fail({ type: "literal", value: str, description: "\"#{str}\"" }) if @slient_fails == 0
-      end
-      ret
-    end
-
-    def fail(expected)
-      return if @current_pos < @max_fail_pos
-
-      if @current_pos > @max_fail_pos
-        @max_fail_pos = @current_pos
-        @max_fail_expected = []
-      end
-
-      @max_fail_expected << expected
-    end
 
     def zen2n(s)
       "０１２３４５６７８９".index(s)

@@ -58,22 +58,30 @@ module Jkf::Converter
     def convert_moves(moves)
       result = "\n"
       i = 0
-      moves.each { |move|
-        if move['move']
-          result_move = convert_move(move['move'])
-          i += 1
-          if i % 6 == 0
-            result_move += "\n"
-          else
-            result_move += result_move.size == 4 ? " "*4 : " "*2
+      before_split = ''
+      moves.each_with_index { |move, i|
+        if move['special']
+          result += "\n"
+          # first_board+speical分を引く(-2)
+          result += convert_special(move['special'], i-2) if move['special']
+        else
+          result += before_split
+          if move['move']
+            result_move = convert_move(move['move'])
+            before_split = if i % 6 == 0
+                             "\n"
+                           else
+                             result_move.size == 4 ? " "*4 : " "*2
+                           end
+            i += 1
+            result += result_move
           end
-          result += result_move
-        end
 
-        if move['comments']
-          result += "\n" if result[-1] != "\n"
-          result += convert_comments(move['comments'])
-          i = 0
+          if move['comments']
+            result += "\n" if result[-1] != "\n"
+            result += convert_comments(move['comments'])
+            i = 0
+          end
         end
       }
       result
@@ -94,6 +102,31 @@ module Jkf::Converter
                 end
       result += csa2kind(move['piece'])
       result += '成' if move['promote']
+      result
+    end
+
+    def convert_special(special, index)
+      result = "まで#{index+1}手"
+      turn = index % 2 == 0 ? '後' : '先'
+
+      if special == 'TORYO' || special =~ /ILLEGAL/
+        result += "で#{turn}手の"
+        result += case special
+                  when "TORYO"          then "勝ち"
+                  when "ILLEGAL_ACTION" then "反則勝ち"
+                  when "ILLEGAL_MOVE"   then "反則負け"
+                  end
+      else
+        result += case special
+                  when "TIME_UP"    then "で時間切れにより#{turn}手の勝ち"
+                  when "CHUDAN"     then "で中断"
+                  when "JISHOGI"    then "で持将棋"
+                  when "SENNICHITE" then "で千日手"
+                  when "TSUMI"      then "で詰み"
+                  when "FUZUMI"     then "で不詰"
+                  end
+      end
+      result += "\n"
       result
     end
 

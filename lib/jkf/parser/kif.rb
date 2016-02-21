@@ -3,6 +3,7 @@
 module Jkf::Parser
   class Kif < Base
     def parse_root
+      @input += "\n" if @input[-1] != "\n"
       s0 = @current_pos
       s1 = []
       s2 = parse_skipline

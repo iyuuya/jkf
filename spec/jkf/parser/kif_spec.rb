@@ -4,11 +4,21 @@ describe Jkf::Parser::Kif do
   let(:kif_parser) { Jkf::Parser::Kif.new }
   subject { kif_parser.parse(str) }
 
-  fixtures(:kif).each do |fixture|
-    let(:str) { File.read(fixture).toutf8 }
-    it "should be parse #{File.basename(fixture)}" do
+  shared_examples(:parse_file) do |filename|
+    let(:str) do
+      if File.extname(filename) == '.kif'
+        File.read(filename, encoding: 'Shift_JIS').toutf8
+      else
+        File.read(filename).toutf8
+      end
+    end
+    it "should be parse #{File.basename(filename)}" do
       is_expected.not_to be_nil
     end
+  end
+
+  fixtures(:kif).each do |fixture|
+    it_behaves_like :parse_file, fixture
   end
 
   context 'simple' do

@@ -1,5 +1,5 @@
 module Jkf::Converter
-  class Ki2
+  class Kif
     def convert(jkf)
       hash = if jkf.is_a?(Hash)
                jkf
@@ -11,7 +11,8 @@ module Jkf::Converter
       result = ''
       result += convert_header(hash['header']) if hash['header']
       result += convert_initial(hash['initial']) if hash['initial']
-      result += convert_moves(hash['moves']) if hash['moves']
+      result += "手数----指手---------消費時間--\n"
+      result += convert_moves(hash['moves'])
       if @forks.size > 0
         result += "\n"
         result += @forks.join("\n")
@@ -19,6 +20,8 @@ module Jkf::Converter
 
       result
     end
+
+    protected
 
     def convert_header(header)
       header.map { |(key, value)| "#{key}：#{value}\n" }.join
@@ -67,52 +70,64 @@ module Jkf::Converter
     end
 
     def convert_moves(moves, idx=0)
-      result = "\n"
-      i = 0
-      before_split = ''
-      moves.each_with_index { |move, j|
+      result = ''
+      moves.each_with_index { |move, i|
         if move['special']
-          result += "\n"
+          result_move = "%4d "%(i+idx)
+          result_move += ljust(special2kan(move['special']), 13)
+          result_move += convert_time(move['time']) if move['time']
+          result_move += "+" if move['forks']
+          result_move += "\n"
+          result += result_move
           # first_board+speical分を引く(-2)
-          result += convert_special(move['special'], j-2+idx) if move['special']
+          result += convert_special(move['special'], i-2+idx) if move['special']
         else
-          result += before_split
           if move['move']
-            result_move = convert_move(move['move'])
-            i += 1
-            before_split = if i % 6 == 0
-                             "\n"
-                           else
-                             result_move.size == 4 ? " "*4 : " "*2
-                           end
+            result_move = "%4d "%(i+idx)
+            result_move += convert_move(move['move'])
+            result_move += convert_time(move['time']) if move['time']
+            result_move += "+" if move['forks']
+            result_move += "\n"
             result += result_move
           end
 
           if move['comments']
-            result += "\n" if result[-1] != "\n"
             result += convert_comments(move['comments'])
-            i = 0
           end
 
-          @forks.unshift convert_forks(move['forks'], j+idx) if move['forks']
+          @forks.unshift convert_forks(move['forks'], i+idx) if move['forks']
         end
       }
       result
     end
 
     def convert_move(move)
-      result = move['color'] == 0 ? '▲' : '△'
-      result += if move['to']
-                  n2zen(move['to']['x']) + n2kan(move['to']['y'])
-                elsif move['same']
-                  '同　'
-                else
-                  raise "error??"
-                end
+      result = if move['to']
+                 n2zen(move['to']['x']) + n2kan(move['to']['y'])
+               elsif move['same']
+                 '同　'
+               else
+                 raise "error??"
+               end
       result += csa2kind(move['piece'])
       result += '成' if move['promote']
-      result += csa2relative(move['relative']) if move['relative']
+      result += if move['from']
+                  "(#{move['from']['x']}#{move['from']['y']})"
+                else
+                  '打'
+                end
+      result = ljust(result,13)
       result
+    end
+
+    def convert_time(time)
+      "(%2d:%02d/%02d:%02d:%02d)"%[
+        time['now']['m'],
+        time['now']['s'],
+        time['total']['h'],
+        time['total']['m'],
+        time['total']['s'],
+      ]
     end
 
     def convert_special(special, index)
@@ -137,6 +152,7 @@ module Jkf::Converter
                   when "FUZUMI"     then "で不詰"
                   end
       end
+
       result += "\n"
       result
     end
@@ -147,7 +163,7 @@ module Jkf::Converter
 
     def convert_forks(forks, index)
       result = "\n"
-      result = "変化：%4d手"%[index]
+      result = "変化：%4d手\n"%[index]
       forks.each do |moves|
         result += convert_moves(moves, index)
       end
@@ -232,18 +248,24 @@ module Jkf::Converter
       }[preset]
     end
 
-    def csa2relative(relative)
-      case relative
-      when 'L' then '左'
-      when 'C' then '直'
-      when 'R' then '右'
-      when 'U' then '上'
-      when 'M' then '寄'
-      when 'D' then '引'
-      when 'H' then '打'
-      else
-        ''
+    def special2kan(special)
+      case special
+      when "CHUDAN"         then "中断"
+      when "TORYO"          then "投了"
+      when "JISHOGI"        then "持将棋"
+      when "SENNICHITE"     then "千日手"
+      when "TSUMI"          then "詰み"
+      when "FUZUMI"         then "不詰"
+      when "TIME_UP"        then "切れ負け"
+      when "ILLEGAL_ACTION" then "反則勝ち"
+      when "ILLEGAL_MOVE"   then "反則負け"
       end
+    end
+
+    def ljust(str, n)
+      len = 0
+      str.each_codepoint { |codepoint| len += codepoint > 255 ? 2 : 1 }
+      str + ' '*(n-len)
     end
   end
 end

@@ -97,6 +97,8 @@ module Jkf::Converter
       result = ''
       moves.each do |move|
         result += convert_move(move['move']) if move['move']
+        result += "," + convert_time(move['time']) if move['time']
+        result += "\n"
       end
       result
     end
@@ -110,8 +112,12 @@ module Jkf::Converter
                 end
       result += "#{move['to']['x']}#{move['to']['y']}"
       result += move['piece']
-      result += "\n"
       result
+    end
+
+    def convert_time(time)
+      sec = time['now']['m'] * 60 + time['now']['s']
+      "T#{sec}"
     end
 
     protected

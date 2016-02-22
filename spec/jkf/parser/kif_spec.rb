@@ -132,6 +132,23 @@ EOS
     }
   end
 
+  context 'total-time-ms' do
+    let(:str) { "1 ７六歩(77) (0:01/00:01)\n2 ３四歩(33) (0:02/00:02)\n3 ２二角成(88) (0:20/00:21)\n 4 同　銀(31) (0:03/00:05)\n5 ４五角打 (0:39/01:00)\n" }
+    it {
+      is_expected.to eq Hash[
+        "header" =>{},
+        "moves" =>[
+          {},
+          {"move" =>{"from" =>pos(7,7),"to" =>pos(7,6),"piece" =>"FU","color"=>0},"time" =>{"now" =>{"m" =>0,"s" =>1},"total" =>{"h" =>0,"m" =>0,"s" =>1}}},
+          {"move" =>{"from" =>pos(3,3),"to" =>pos(3,4),"piece" =>"FU","color"=>1},"time" =>{"now" =>{"m" =>0,"s" =>2},"total" =>{"h" =>0,"m" =>0,"s" =>2}}},
+          {"move" =>{"from" =>pos(8,8),"to" =>pos(2,2),"piece" =>"KA","color"=>0,"promote" =>true},"time" =>{"now" =>{"m" =>0,"s" =>20},"total" =>{"h" =>0,"m" =>0,"s" =>21}}},
+          {"move" =>{"from" =>pos(3,1),"same" =>true,"piece" =>"GI","color"=>1},"time" =>{"now" =>{"m" =>0,"s" =>3},"total" =>{"h" =>0,"m" =>0,"s" =>5}}},
+          {"move" =>{"to" =>pos(4,5),"piece" =>"KA","color"=>0},"time" =>{"now" =>{"m" =>0,"s" =>39},"total" =>{"h" =>0,"m" =>1,"s" =>0}}},
+        ]
+      ]
+    }
+  end
+
   context 'special' do
     let(:str) { "1 ７六歩(77)\n2 ３四歩(33)\n3 ７八銀(79)\n 4 ８八角成(22)\n5 投了\nまで4手で後手の勝ち\n" }
     it {

@@ -38,6 +38,68 @@ describe Jkf::Parser::Kif do
     }
   end
 
+  context 'gote' do
+    let(:str) { <<-EOS
+手合割：その他
+上手番
+上手の持駒：
+  ９ ８ ７ ６ ５ ４ ３ ２ １
++---------------------------+
+|v香v桂v銀v金v玉v金v銀v桂v香|一
+| ・v飛 ・ ・ ・ ・ ・v角 ・|二
+|v歩 ・v歩v歩v歩v歩v歩v歩v歩|三
+| ・v歩 ・ ・ ・ ・ ・ ・ ・|四
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|五
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|六
+| 歩 歩 歩 歩 歩 歩 歩 歩 歩|七
+| ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
+| 香 桂 銀 金 玉 金 銀 桂 香|九
++---------------------------+
+下手の持駒：
+手数----指手---------消費時間--
+   1 ３四歩(33)
+   2 ７六歩(77)
+   3 ８八角成(22)
+   4 中断
+まで3手で中断
+EOS
+    }
+
+    it {
+      is_expected.to eq Hash[
+        "header" => { "手合割"=>"その他" },
+        "initial" => {
+          "preset"=>"OTHER",
+          "data"=>{
+            "board"=>[
+              [{"color"=>1, "kind"=>"KY"}, {}, {"color"=>1, "kind"=>"FU"}, {}, {}, {}, {"color"=>0, "kind"=>"FU"}, {}, {"color"=>0, "kind"=>"KY"}],
+              [{"color"=>1, "kind"=>"KE"}, {"color"=>1, "kind"=>"KA"}, {"color"=>1, "kind"=>"FU"}, {}, {}, {}, {"color"=>0, "kind"=>"FU"}, {"color"=>0, "kind"=>"HI"}, {"color"=>0, "kind"=>"KE"}],
+              [{"color"=>1, "kind"=>"GI"}, {}, {"color"=>1, "kind"=>"FU"}, {}, {}, {}, {"color"=>0, "kind"=>"FU"}, {}, {"color"=>0, "kind"=>"GI"}],
+              [{"color"=>1, "kind"=>"KI"}, {}, {"color"=>1, "kind"=>"FU"}, {}, {}, {}, {"color"=>0, "kind"=>"FU"}, {}, {"color"=>0, "kind"=>"KI"}],
+              [{"color"=>1, "kind"=>"OU"}, {}, {"color"=>1, "kind"=>"FU"}, {}, {}, {}, {"color"=>0, "kind"=>"FU"}, {}, {"color"=>0, "kind"=>"OU"}],
+              [{"color"=>1, "kind"=>"KI"}, {}, {"color"=>1, "kind"=>"FU"}, {}, {}, {}, {"color"=>0, "kind"=>"FU"}, {}, {"color"=>0, "kind"=>"KI"}],
+              [{"color"=>1, "kind"=>"GI"}, {}, {"color"=>1, "kind"=>"FU"}, {}, {}, {}, {"color"=>0, "kind"=>"FU"}, {}, {"color"=>0, "kind"=>"GI"}],
+              [{"color"=>1, "kind"=>"KE"}, {"color"=>1, "kind"=>"HI"}, {}, {"color"=>1, "kind"=>"FU"}, {}, {}, {"color"=>0, "kind"=>"FU"}, {"color"=>0, "kind"=>"KA"}, {"color"=>0, "kind"=>"KE"}],
+              [{"color"=>1, "kind"=>"KY"}, {}, {"color"=>1, "kind"=>"FU"}, {}, {}, {}, {"color"=>0, "kind"=>"FU"}, {}, {"color"=>0, "kind"=>"KY"}]
+            ],
+            "color"=>1,
+            "hands"=>[
+              {"FU"=>0, "KY"=>0, "KE"=>0, "GI"=>0, "KI"=>0, "KA"=>0, "HI"=>0},
+              {"FU"=>0, "KY"=>0, "KE"=>0, "GI"=>0, "KI"=>0, "KA"=>0, "HI"=>0}
+            ]
+          }
+        },
+        "moves" => [
+          {},
+          {"move" =>{"from" =>pos(3,3),"to" =>pos(3,4),"piece" =>"FU","color"=>1}},
+          {"move" =>{"from" =>pos(7,7),"to" =>pos(7,6),"piece" =>"FU","color"=>0}},
+          {"move" =>{"from" =>pos(2,2),"to" =>pos(8,8),"piece" =>"KA","color"=>1,"promote" =>true}},
+          {"special" => "CHUDAN"}
+        ]
+      ]
+    }
+  end
+
   context 'comment' do
     let(:str) { "*開始時コメント\n1 ７六歩(77)\n*初手コメント\n*初手コメント2\n2 ３四歩(33)\n3 ２二角成(88)\n" }
     it {
@@ -289,6 +351,78 @@ describe Jkf::Parser::Kif do
             {"move" =>{"from" =>pos(3,1),"same" =>true,"piece" =>"GI","color"=>1}},
             {"move" =>{"to" =>pos(4,5),"piece" =>"KA","color"=>0}},
             {"special" =>"CHUDAN"},
+          ]
+        ]
+      }
+    end
+
+    context 'gote' do
+      let(:str) { <<-EOS
+手合割：その他
+上手番
+上手の持駒：
+  ９ ８ ７ ６ ５ ４ ３ ２ １
++---------------------------+
+|v香v桂v銀v金v玉v金v銀v桂v香|一
+| ・v飛 ・ ・ ・ ・ ・v角 ・|二
+|v歩 ・v歩v歩v歩v歩v歩v歩v歩|三
+| ・v歩 ・ ・ ・ ・ ・ ・ ・|四
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|五
+| ・ ・ ・ ・ ・ ・ ・ ・ ・|六
+| 歩 歩 歩 歩 歩 歩 歩 歩 歩|七
+| ・ 角 ・ ・ ・ ・ ・ 飛 ・|八
+| 香 桂 銀 金 玉 金 銀 桂 香|九
++---------------------------+
+下手の持駒：
+手数----指手---------消費時間--
+   1 ３四歩(33)
+   2 ７六歩(77)
+   3 ８八角成(22)
+   4 中断
+まで3手で中断
+
+変化：3手
+3 ４四歩(43)
+4 ２六歩(27)
+EOS
+      }
+
+      it {
+        is_expected.to eq Hash[
+          "header" => { "手合割"=>"その他" },
+          "initial" => {
+            "preset"=>"OTHER",
+            "data"=>{
+              "board"=>[
+                [{"color"=>1, "kind"=>"KY"}, {}, {"color"=>1, "kind"=>"FU"}, {}, {}, {}, {"color"=>0, "kind"=>"FU"}, {}, {"color"=>0, "kind"=>"KY"}],
+                [{"color"=>1, "kind"=>"KE"}, {"color"=>1, "kind"=>"KA"}, {"color"=>1, "kind"=>"FU"}, {}, {}, {}, {"color"=>0, "kind"=>"FU"}, {"color"=>0, "kind"=>"HI"}, {"color"=>0, "kind"=>"KE"}],
+                [{"color"=>1, "kind"=>"GI"}, {}, {"color"=>1, "kind"=>"FU"}, {}, {}, {}, {"color"=>0, "kind"=>"FU"}, {}, {"color"=>0, "kind"=>"GI"}],
+                [{"color"=>1, "kind"=>"KI"}, {}, {"color"=>1, "kind"=>"FU"}, {}, {}, {}, {"color"=>0, "kind"=>"FU"}, {}, {"color"=>0, "kind"=>"KI"}],
+                [{"color"=>1, "kind"=>"OU"}, {}, {"color"=>1, "kind"=>"FU"}, {}, {}, {}, {"color"=>0, "kind"=>"FU"}, {}, {"color"=>0, "kind"=>"OU"}],
+                [{"color"=>1, "kind"=>"KI"}, {}, {"color"=>1, "kind"=>"FU"}, {}, {}, {}, {"color"=>0, "kind"=>"FU"}, {}, {"color"=>0, "kind"=>"KI"}],
+                [{"color"=>1, "kind"=>"GI"}, {}, {"color"=>1, "kind"=>"FU"}, {}, {}, {}, {"color"=>0, "kind"=>"FU"}, {}, {"color"=>0, "kind"=>"GI"}],
+                [{"color"=>1, "kind"=>"KE"}, {"color"=>1, "kind"=>"HI"}, {}, {"color"=>1, "kind"=>"FU"}, {}, {}, {"color"=>0, "kind"=>"FU"}, {"color"=>0, "kind"=>"KA"}, {"color"=>0, "kind"=>"KE"}],
+                [{"color"=>1, "kind"=>"KY"}, {}, {"color"=>1, "kind"=>"FU"}, {}, {}, {}, {"color"=>0, "kind"=>"FU"}, {}, {"color"=>0, "kind"=>"KY"}]
+              ],
+              "color"=>1,
+              "hands"=>[
+                {"FU"=>0, "KY"=>0, "KE"=>0, "GI"=>0, "KI"=>0, "KA"=>0, "HI"=>0},
+                {"FU"=>0, "KY"=>0, "KE"=>0, "GI"=>0, "KI"=>0, "KA"=>0, "HI"=>0}
+              ]
+            }
+          },
+          "moves" => [
+            {},
+            {"move" =>{"from" =>pos(3,3),"to" =>pos(3,4),"piece" =>"FU","color"=>1}},
+            {"move" =>{"from" =>pos(7,7),"to" =>pos(7,6),"piece" =>"FU","color"=>0}},
+            {
+              "move" =>{"from" =>pos(2,2),"to" =>pos(8,8),"piece" =>"KA","color"=>1,"promote" =>true},
+              "forks"=>[[
+                {"move"=>{"from"=>pos(4,3),"to"=>pos(4,4),"piece"=>"FU","color"=>1}},
+                {"move"=>{"from"=>pos(2,7),"to"=>pos(2,6),"piece"=>"FU","color"=>0}}
+              ]]
+            },
+            {"special" => "CHUDAN"}
           ]
         ]
       }

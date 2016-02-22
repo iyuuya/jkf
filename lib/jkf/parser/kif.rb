@@ -57,7 +57,7 @@ module Jkf::Parser
                         end
                         if ret["initial"] && ret["initial"]["data"]
                           if ret["header"]["手番"]
-                            ret["initial"]["data"]["color"] = ("下先".index(ret["header"]["手番"]) >= 0 ? 0 : 1)
+                            ret["initial"]["data"]["color"] = ("下先".include?(ret["header"]["手番"]) ? 0 : 1)
                             ret["header"].delete("手番")
                           else
                             ret["initial"]["data"]["color"] = 0
@@ -81,6 +81,7 @@ module Jkf::Parser
                           fork_stack << _fork
                           fork_stack << now_fork
                         end
+                        reverse_color(ret['moves']) if ret["initial"] && ret["initial"]["data"] && ret["initial"]["data"]["color"] == 1
                         ret
                       }.call(s2, s3, s4, s6, s7)
                       s0 = s1
@@ -1536,6 +1537,13 @@ module Jkf::Parser
       end
 
       ret
+    end
+
+    def reverse_color(moves)
+      moves.each do |move|
+        move['move']['color'] = (move['move']['color'] + 1) % 2 if move['move'] && move['move']['color']
+        move['forks'].each { |_fork| reverse_color(_fork) } if move['forks']
+      end
     end
   end
 end

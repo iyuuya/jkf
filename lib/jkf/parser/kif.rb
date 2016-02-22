@@ -1506,7 +1506,7 @@ module Jkf::Parser
         "切れ負け" => "TIME_UP",
         "反則勝ち" => "ILLEGAL_ACTION", # 直前の手が反則(先頭に+か-で反則した側の情報を含める必要が有る)
         "反則負け" => "ILLEGAL_MOVE" # ここで手番側が反則，反則の内容はコメントで表現
-      }[str]
+      }[str] || (raise ParseError)
     end
 
     def preset2str(preset)

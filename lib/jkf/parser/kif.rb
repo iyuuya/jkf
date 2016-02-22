@@ -883,6 +883,7 @@ module Jkf::Parser
             s4 = match_str("/")
             if s4 != :failed
               s5 = parse_hms
+              s5 = parse_ms(with_hour: true) if s5 == :failed
               if s5 != :failed
                 s6 = match_str(")")
                 if s6 != :failed
@@ -980,7 +981,7 @@ module Jkf::Parser
       s0
     end
 
-    def parse_ms
+    def parse_ms(with_hour: false)
       s0 = @current_pos
       s1 = []
       s2 = match_regexp(/^[0-9]/)
@@ -1007,7 +1008,15 @@ module Jkf::Parser
           end
           if s3 != :failed
             @reported_pos = s0
-            s0 = s1 = { "m" => s1.join.to_i, "s" => s3.join.to_i }
+            m = s1.join.to_i
+            s = s3.join.to_i
+            if with_hour
+              h = m / 60
+              m = m % 60
+              s0 = s1 = { "h" => h, "m" => m, "s" => s }
+            else
+              s0 = s1 = { "m" => m, "s" => s }
+            end
           else
             @current_pos = s0
             s0 = :failed

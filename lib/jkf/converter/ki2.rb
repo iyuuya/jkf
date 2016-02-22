@@ -8,6 +8,14 @@ module Jkf::Converter
              end
       @forks = []
 
+      players_flag = :sengo
+      hash['header'] && hash['header'].keys.find { |key| key =~ /[上下]手/ } && players_flag = :uwasimo
+      @players =  if players_flag == :uwasimo
+                    ['下', '上']
+                  else
+                    ['先', '後']
+                  end
+
       result = ''
       result += convert_header(hash['header']) if hash['header']
       result += convert_initial(hash['initial']) if hash['initial']
@@ -32,18 +40,18 @@ module Jkf::Converter
 
       if data
         if data['color'] == 0
-          result += "先手番\n"
+          result += "#{@players[0]}手番\n"
         elsif data['color'] == 1
-          result += "後手番\n"
+          result += "#{@players[1]}手番\n"
         end
 
         if data['hands']
           if data['hands'][0]
-            result += '先手の持駒：'
+            result += "#{@players[0]}手の持駒："
             result += convert_motigoma(data['hands'][0])
           end
           if data['hands'][1]
-            result += '後手の持駒：'
+            result += "#{@players[1]}手の持駒："
             result += convert_motigoma(data['hands'][1])
           end
         end
@@ -119,7 +127,7 @@ module Jkf::Converter
       result = "まで#{index+1}手"
 
       if special == 'TORYO' || special =~ /ILLEGAL/
-        turn = index % 2 == 0 ? '後' : '先'
+        turn = @players[index % 2]
         result += "で#{turn}手の"
         result += case special
                   when "TORYO"          then "勝ち"
@@ -127,7 +135,7 @@ module Jkf::Converter
                   when "ILLEGAL_MOVE"   then "反則負け"
                   end
       else
-        turn = index % 2 == 0 ? '先' : '後'
+        turn = @players[(index+1) % 2]
         result += case special
                   when "TIME_UP"    then "で時間切れにより#{turn}手の勝ち"
                   when "CHUDAN"     then "で中断"

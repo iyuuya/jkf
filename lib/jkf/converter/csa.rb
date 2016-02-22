@@ -96,7 +96,9 @@ module Jkf::Converter
     def convert_moves(moves)
       result = ''
       moves.each do |move|
+        next if move == {}
         result += convert_move(move['move']) if move['move']
+        result += convert_special(move['special'], move['color']) if move['special']
         result += "," + convert_time(move['time']) if move['time']
         result += "\n"
       end
@@ -112,6 +114,13 @@ module Jkf::Converter
                 end
       result += "#{move['to']['x']}#{move['to']['y']}"
       result += move['piece']
+      result
+    end
+
+    def convert_special(special, color=nil)
+      result = "%"
+      result += csa_color(color) if color
+      result += special
       result
     end
 

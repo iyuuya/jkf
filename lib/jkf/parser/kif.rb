@@ -634,8 +634,8 @@ module Jkf::Parser
               s6 = parse_from
               if s6 != :failed
                 @reported_pos = s4
-                s5 = -> (fugou, from) {
-                  ret = { "piece" => fugou["piece"] }
+                s5 = -> (teban, fugou, from) {
+                  ret = { "color" => teban2color(teban.join), "piece" => fugou["piece"] }
                   if fugou["to"]
                     ret["to"] = fugou["to"]
                   else
@@ -644,7 +644,7 @@ module Jkf::Parser
                   ret["promote"] = true if fugou["promote"]
                   ret["from"] = from if from
                   ret
-                }.call(s5, s6)
+                }.call(s2, s5, s6)
                 s4 = s5
               else
                 @current_pos = s4
@@ -1517,6 +1517,11 @@ module Jkf::Parser
         "十枚落ち" => "10",
         "その他" => "OTHER",
       }[preset.gsub(/\s/, "")]
+    end
+
+    def teban2color(teban)
+      teban = teban.to_i unless teban.is_a? Fixnum
+      (teban+1) % 2
     end
 
     def make_hand(str)

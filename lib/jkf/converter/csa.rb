@@ -11,6 +11,7 @@ module Jkf::Converter
 
       result = version
       result += convert_information(hash['header']) if hash['header']
+      result += convert_initial(hash['initial']) if hash['initial']
       result
     end
 
@@ -22,7 +23,87 @@ module Jkf::Converter
       result
     end
 
+    def convert_initial(initial)
+      result = ''
+      data = initial['data']
+      if initial['preset'] == 'OTHER'
+        9.times { |y|
+          line = "P#{y+1}"
+          9.times { |x|
+            piece = data['board'][8-x][y]
+            line += if piece == {}
+                       " * "
+                     else
+                       csa_color(piece['color']) + piece['kind']
+                     end
+          }
+          result += line + "\n"
+        }
+      else
+        result += 'PI'
+        case initial['preset']
+        when 'HIRATE'
+        when 'KY' # 香落ち
+          result += '11KY'
+        when 'KY_R' # 右香落ち
+          result += '91KY'
+        when 'KA' # 角落ち
+          result += '22KA'
+        when 'HI' # 飛車落ち
+          result += '82HI'
+        when 'HIKY' # 飛香落ち
+          result += '22HI11KY91KY'
+        when '2' # 二枚落ち
+          result += '82HI22KA'
+        when '3' # 三枚落ち
+          result += '82HI22KA91KY'
+        when '4' # 四枚落ち
+          result += '82HI22KA11KY91KY'
+        when '5' # 五枚落ち
+          result += '82HI22KA81KE11KY91KY'
+        when '5_L' # 左五枚落ち
+          result += '82HI22KA21KE11KY91KY'
+        when '6' # 六枚落ち
+          result += '82HI22KA21KE81KE11KY91KY'
+        when '8' # 八枚落ち
+          result += '82HI22KA31GI71GI21KE81KE11KY91KY'
+        when '10' # 十枚落ち
+          result += '82HI22KA41KI61KI31GI71GI21KE81KE11KY91KY'
+        end
+      end
+      # 持駒
+      if data['hands']
+        sum = 0
+        data['hands'][0].each_value { |n| sum += n }
+        if sum > 0
+          result += 'P+'
+          data['hands'][0].to_a.reverse.each { |(k, v)| v.times { result += "00#{k}" } }
+          result += "\n"
+        end
+        sum = 0
+        data['hands'][1].each_value { |n| sum += n }
+        if sum > 0
+          result += 'P-'
+          data['hands'][1].to_a.reverse.each { |(k, v)| v.times { result += "00#{k}" } }
+          result += "\n"
+        end
+      end
+      result += csa_color(data['color']) + "\n" if data['color']
+      result
+    end
+
+    def convert_moves(moves)
+      result = ''
+      moves.each do |move|
+        result += convert_move(move['move']) if move['move']
+      end
+      result
+    end
     protected
+
+    def csa_color(color)
+      color == 0 ? '+' : '-'
+    end
 
     def version
       "V#{VERSION}\n"

@@ -12,6 +12,7 @@ module Jkf::Converter
       result = version
       result += convert_information(hash['header']) if hash['header']
       result += convert_initial(hash['initial']) if hash['initial']
+      result += convert_moves(hash['moves']) if hash['moves']
       result
     end
 
@@ -99,6 +100,20 @@ module Jkf::Converter
       end
       result
     end
+
+    def convert_move(move)
+      result = csa_color(move['color'])
+      result += if move['from']
+                  "#{move['from']['x']}#{move['from']['y']}"
+                else
+                  "00"
+                end
+      result += "#{move['to']['x']}#{move['to']['y']}"
+      result += move['piece']
+      result += "\n"
+      result
+    end
+
     protected
 
     def csa_color(color)

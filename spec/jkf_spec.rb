@@ -32,4 +32,38 @@ describe Jkf do
       it { is_expected.to be_a Hash }
     end
   end
+
+  describe '.parse(str)' do
+    subject { Jkf.parse(str) }
+
+    context 'with kif str' do
+      let(:str) { File.read(fixtures(:kif).first, encoding: 'Shift_JIS').toutf8 }
+
+      it { is_expected.to be_a Hash }
+    end
+
+    context 'with ki2 str' do
+      let(:str) { File.read(fixtures(:ki2).first, encoding: 'Shift_JIS').toutf8 }
+
+      it { is_expected.to be_a Hash }
+    end
+
+    context 'with csa str' do
+      let(:str) { File.read(fixtures(:csa).first, encoding: 'Shift_JIS').toutf8 }
+
+      it { is_expected.to be_a Hash }
+    end
+
+    context 'with jkf str' do
+      let(:str) { File.read(fixtures(:jkf).first, encoding: 'Shift_JIS').toutf8 }
+
+      it { is_expected.to be_a Hash }
+    end
+
+    context 'with csv str' do
+      let(:str) { File.read(fixtures(:csv).first, encoding: 'Shift_JIS').toutf8 }
+
+      it { expect{subject}.to raise_error(Jkf::FileTypeError) }
+    end
+  end
 end

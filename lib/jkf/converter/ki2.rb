@@ -15,10 +15,12 @@ module Jkf::Converter
                   else
                     ['先', '後']
                   end
+      @header2 = []
 
       result = ''
       result += convert_header(hash['header']) if hash['header']
       result += convert_initial(hash['initial']) if hash['initial']
+      result += @header2.join
       result += convert_moves(hash['moves']) if hash['moves']
       if @forks.size > 0
         result += "\n"
@@ -29,32 +31,44 @@ module Jkf::Converter
     end
 
     def convert_header(header)
-      header.map { |(key, value)| "#{key}：#{value}\n" }.join
+      header.map { |(key, value)|
+        result = "#{key}：#{value}\n"
+        if key =~ /\A[先後上下]手\Z/
+          if key =~ /[先下]/
+            @header2.unshift result
+          else
+            @header2 << result
+          end
+          nil
+        else
+          result
+        end
+      }.compact.join
     end
+
 
     def convert_initial(initial)
       result = ''
       result += "手合割：#{preset2str(initial["preset"])}\n" if initial["preset"] != "OTHER"
+      footer = ''
 
       data = initial["data"]
 
       if data
-        if data['color'] == 0
-          result += "#{@players[0]}手番\n"
-        elsif data['color'] == 1
-          result += "#{@players[1]}手番\n"
-        end
+        result += "#{@players[1]}手番\n" if data['color'] == 1
 
         if data['hands']
-          if data['hands'][0]
-            result += "#{@players[0]}手の持駒："
-            result += convert_motigoma(data['hands'][0])
-          end
           if data['hands'][1]
             result += "#{@players[1]}手の持駒："
             result += convert_motigoma(data['hands'][1])
           end
+          if data['hands'][0]
+            footer += "#{@players[0]}手の持駒："
+            footer += convert_motigoma(data['hands'][0])
+          end
         end
+
+        footer += "#{@players[0]}手番\n" if data['color'] == 0
 
         if data['board']
           result += "  ９ ８ ７ ６ ５ ４ ３ ２ １\n"
@@ -70,6 +84,8 @@ module Jkf::Converter
           result += "+---------------------------+\n"
         end
       end
+
+      result += footer
 
       result
     end

@@ -8,9 +8,19 @@ module Jkf::Converter
              end
       @forks = []
 
+      players_flag = :sengo
+      hash['header'] && hash['header'].keys.find { |key| key =~ /[上下]手/ } && players_flag = :uwasimo
+      @players =  if players_flag == :uwasimo
+                    ['下', '上']
+                  else
+                    ['先', '後']
+                  end
+      @header2 = []
+
       result = ''
       result += convert_header(hash['header']) if hash['header']
       result += convert_initial(hash['initial']) if hash['initial']
+      result += @header2.join
       result += convert_moves(hash['moves']) if hash['moves']
       if @forks.size > 0
         result += "\n"
@@ -21,32 +31,44 @@ module Jkf::Converter
     end
 
     def convert_header(header)
-      header.map { |(key, value)| "#{key}：#{value}\n" }.join
+      header.map { |(key, value)|
+        result = "#{key}：#{value}\n"
+        if key =~ /\A[先後上下]手\Z/
+          if key =~ /[先下]/
+            @header2.unshift result
+          else
+            @header2 << result
+          end
+          nil
+        else
+          result
+        end
+      }.compact.join
     end
+
 
     def convert_initial(initial)
       result = ''
       result += "手合割：#{preset2str(initial["preset"])}\n" if initial["preset"] != "OTHER"
+      footer = ''
 
       data = initial["data"]
 
       if data
-        if data['color'] == 0
-          result += "先手番\n"
-        elsif data['color'] == 1
-          result += "後手番\n"
-        end
+        result += "#{@players[1]}手番\n" if data['color'] == 1
 
         if data['hands']
-          if data['hands'][0]
-            result += '先手の持駒：'
-            result += convert_motigoma(data['hands'][0])
-          end
           if data['hands'][1]
-            result += '後手の持駒：'
+            result += "#{@players[1]}手の持駒："
             result += convert_motigoma(data['hands'][1])
           end
+          if data['hands'][0]
+            footer += "#{@players[0]}手の持駒："
+            footer += convert_motigoma(data['hands'][0])
+          end
         end
+
+        footer += "#{@players[0]}手番\n" if data['color'] == 0
 
         if data['board']
           result += "  ９ ８ ７ ６ ５ ４ ３ ２ １\n"
@@ -62,6 +84,8 @@ module Jkf::Converter
           result += "+---------------------------+\n"
         end
       end
+
+      result += footer
 
       result
     end
@@ -119,7 +143,7 @@ module Jkf::Converter
       result = "まで#{index+1}手"
 
       if special == 'TORYO' || special =~ /ILLEGAL/
-        turn = index % 2 == 0 ? '後' : '先'
+        turn = @players[index % 2]
         result += "で#{turn}手の"
         result += case special
                   when "TORYO"          then "勝ち"
@@ -127,7 +151,7 @@ module Jkf::Converter
                   when "ILLEGAL_MOVE"   then "反則負け"
                   end
       else
-        turn = index % 2 == 0 ? '先' : '後'
+        turn = @players[(index+1) % 2]
         result += case special
                   when "TIME_UP"    then "で時間切れにより#{turn}手の勝ち"
                   when "CHUDAN"     then "で中断"

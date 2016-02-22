@@ -60,11 +60,11 @@ PI\n\
           "initial" => initial,
           "moves" => [
             {},
-            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"}},
-            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU"}},
-            {"move" => {"from" => pos(8,8),"to" => pos(2,2),"piece" => "UM"}},
-            {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI"}},
-            {"move" => {"to" => pos(4,5),"piece" => "KA"}},
+            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU", "color" => 0}},
+            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU", "color" => 1}},
+            {"move" => {"from" => pos(8,8),"to" => pos(2,2),"piece" => "UM", "color" => 0}},
+            {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI", "color" => 1}},
+            {"move" => {"to" => pos(4,5),"piece" => "KA", "color" => 0}},
           ]
         ]
       }
@@ -88,9 +88,9 @@ PI\n\
           "initial" => initial,
           "moves" => [
             {"comments" => ["開始時コメント"]},
-            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"},"comments" => ["初手コメント", "初手コメント2"]},
-            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU"}},
-            {"move" => {"from" => pos(8,8),"to" => pos(2,2),"piece" => "UM"}},
+            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU", "color" => 0},"comments" => ["初手コメント", "初手コメント2"]},
+            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU", "color" => 1}},
+            {"move" => {"from" => pos(8,8),"to" => pos(2,2),"piece" => "UM", "color" => 0}},
           ]
         ]
       }
@@ -114,10 +114,10 @@ PI\n\
           "initial" => initial,
           "moves" => [
             {},
-            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"}},
-            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU"}},
-            {"move" => {"from" => pos(7,9),"to" => pos(7,8),"piece" => "GI"}},
-            {"move" => {"from" => pos(2,2),"to" => pos(8,8),"piece" => "UM"}},
+            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU", "color" => 0}},
+            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU", "color" => 1}},
+            {"move" => {"from" => pos(7,9),"to" => pos(7,8),"piece" => "GI", "color" => 0}},
+            {"move" => {"from" => pos(2,2),"to" => pos(8,8),"piece" => "UM", "color" => 1}},
             {"special" => "TORYO"},
           ]
         ]
@@ -141,11 +141,11 @@ PI\n\
           "initial" => initial,
           "moves" => [
             {},
-            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"},"time" => {"now" => {"m" => 0,"s" => 12}}},
-            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU"},"time" => {"now" => {"m" => 0,"s" => 2}}},
-            {"move" => {"from" => pos(8,8),"to" => pos(2,2),"piece" => "UM"},"time" => {"now" => {"m" => 1,"s" => 40}}},
-            {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI"},"time" => {"now" => {"m" => 0,"s" => 1}}},
-            {"move" => {"to" => pos(4,5),"piece" => "KA"},"time" => {"now" => {"m" => 0,"s" => 0}}},
+            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU", "color" => 0},"time" => {"now" => {"m" => 0,"s" => 12}}},
+            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU", "color" => 1},"time" => {"now" => {"m" => 0,"s" => 2}}},
+            {"move" => {"from" => pos(8,8),"to" => pos(2,2),"piece" => "UM", "color" => 0},"time" => {"now" => {"m" => 1,"s" => 40}}},
+            {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI", "color" => 1},"time" => {"now" => {"m" => 0,"s" => 1}}},
+            {"move" => {"to" => pos(4,5),"piece" => "KA", "color" => 0},"time" => {"now" => {"m" => 0,"s" => 0}}},
           ]
         ]
       }
@@ -174,11 +174,11 @@ T0\n"
           "initial" => initial,
           "moves" => [
             {},
-            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"},"time" => {"now" => {"m" => 0,"s" => 12}}},
-            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU"},"time" => {"now" => {"m" => 0,"s" => 2}}},
-            {"move" => {"from" => pos(8,8),"to" => pos(2,2),"piece" => "UM"},"time" => {"now" => {"m" => 1,"s" => 40}}},
-            {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI"},"time" => {"now" => {"m" => 0,"s" => 1}}},
-            {"move" => {"to" => pos(4,5),"piece" => "KA"},"time" => {"now" => {"m" => 0,"s" => 0}}},
+            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU", "color" => 0},"time" => {"now" => {"m" => 0,"s" => 12}}},
+            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU", "color" => 1},"time" => {"now" => {"m" => 0,"s" => 2}}},
+            {"move" => {"from" => pos(8,8),"to" => pos(2,2),"piece" => "UM", "color" => 0},"time" => {"now" => {"m" => 1,"s" => 40}}},
+            {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI", "color" => 1},"time" => {"now" => {"m" => 0,"s" => 1}}},
+            {"move" => {"to" => pos(4,5),"piece" => "KA", "color" => 0},"time" => {"now" => {"m" => 0,"s" => 0}}},
           ]
         ]
       }
@@ -223,11 +223,11 @@ PI82HI22KA91KY81KE21KE11KY\n\
             },
             "moves" => [
               {},
-              {"move" => {"from" => pos(5,1),"to" => pos(4,2),"piece" => "OU"}},
-              {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"}},
-              {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI"}},
-              {"move" => {"from" => pos(8,8),"to" => pos(6,6),"piece" => "KA"}},
-              {"move" => {"from" => pos(7,1),"to" => pos(8,2),"piece" => "GI"}},
+              {"move" => {"from" => pos(5,1),"to" => pos(4,2),"piece" => "OU", "color" => 1}},
+              {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU", "color" => 0}},
+              {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI", "color" => 1}},
+              {"move" => {"from" => pos(8,8),"to" => pos(6,6),"piece" => "KA", "color" => 0}},
+              {"move" => {"from" => pos(7,1),"to" => pos(8,2),"piece" => "GI", "color" => 1}},
             ]
           ]
       }
@@ -279,11 +279,11 @@ P9+KY+KE+GI+KI+OU+KI+GI+KE+KY\n\
           },
           "moves" => [
             {},
-            {"move" => {"from" => pos(5,1),"to" => pos(4,2),"piece" => "OU"}},
-            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"}},
-            {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI"}},
-            {"move" => {"from" => pos(8,8),"to" => pos(6,6),"piece" => "KA"}},
-            {"move" => {"from" => pos(7,1),"to" => pos(8,2),"piece" => "GI"}},
+            {"move" => {"from" => pos(5,1),"to" => pos(4,2),"piece" => "OU", "color" => 1}},
+            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU", "color" => 0}},
+            {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI", "color" => 1}},
+            {"move" => {"from" => pos(8,8),"to" => pos(6,6),"piece" => "KA", "color" => 0}},
+            {"move" => {"from" => pos(7,1),"to" => pos(8,2),"piece" => "GI", "color" => 1}},
           ]
         ]
       }
@@ -327,9 +327,9 @@ P-00GI00GI00GI00GI00KE00KE00KE00KE\n\
           },
           "moves" => [
             {},
-            {"move" => {"to" => pos(1,3),"piece" => "KY"}},
-            {"move" => {"to" => pos(1,2),"piece" => "KE"}},
-            {"move" => {"from" => pos(1,3),"to" => pos(1,2),"piece" => "NY"}},
+            {"move" => {"to" => pos(1,3),"piece" => "KY", "color" => 0}},
+            {"move" => {"to" => pos(1,2),"piece" => "KE", "color" => 1}},
+            {"move" => {"from" => pos(1,3),"to" => pos(1,2),"piece" => "NY", "color" => 0}},
           ]
         ]
       }
@@ -373,7 +373,7 @@ P-00AL\n\
           },
           "moves" => [
             {},
-            {"move" => {"to" => pos(2,2),"piece" => "KI"}},
+            {"move" => {"to" => pos(2,2),"piece" => "KI", "color" => 0}},
             {"special" => "TSUMI"},
           ]
         ]
@@ -408,10 +408,10 @@ PI\n\
           "initial" => initial,
           "moves" => [
             {},
-            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"}},
-            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU"}},
-            {"move" => {"from" => pos(7,9),"to" => pos(7,8),"piece" => "GI"}},
-            {"move" => {"from" => pos(2,2),"to" => pos(8,8),"piece" => "UM"}},
+            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU", "color" => 0}},
+            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU", "color" => 1}},
+            {"move" => {"from" => pos(7,9),"to" => pos(7,8),"piece" => "GI", "color" => 0}},
+            {"move" => {"from" => pos(2,2),"to" => pos(8,8),"piece" => "UM", "color" => 1}},
             {"special" => "TORYO"},
           ]
         ]
@@ -461,11 +461,11 @@ PI\n\
           "initial" => initial,
           "moves" => [
             {},
-            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"}},
-            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU"}},
-            {"move" => {"from" => pos(8,8),"to" => pos(2,2),"piece" => "UM"}},
-            {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI"}},
-            {"move" => {"to" => pos(4,5),"piece" => "KA"}},
+            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU", "color" => 0}},
+            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU", "color" => 1}},
+            {"move" => {"from" => pos(8,8),"to" => pos(2,2),"piece" => "UM", "color" => 0}},
+            {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI", "color" => 1}},
+            {"move" => {"to" => pos(4,5),"piece" => "KA", "color" => 0}},
           ]
         ]
       }
@@ -489,9 +489,9 @@ PI\n\
           "initial" => initial,
           "moves" => [
             {"comments" => ["開始時コメント"]},
-            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"},"comments" => ["初手コメント", "初手コメント2"]},
-            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU"}},
-            {"move" => {"from" => pos(8,8),"to" => pos(2,2),"piece" => "UM"}},
+            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU", "color" => 0},"comments" => ["初手コメント", "初手コメント2"]},
+            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU", "color" => 1}},
+            {"move" => {"from" => pos(8,8),"to" => pos(2,2),"piece" => "UM", "color" => 0}},
           ]
         ]
       }
@@ -514,10 +514,10 @@ PI\n\
           "initial" => initial,
           "moves" => [
             {},
-            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"}},
-            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU"}},
-            {"move" => {"from" => pos(7,9),"to" => pos(7,8),"piece" => "GI"}},
-            {"move" => {"from" => pos(2,2),"to" => pos(8,8),"piece" => "UM"}},
+            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU", "color" => 0}},
+            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU", "color" => 1}},
+            {"move" => {"from" => pos(7,9),"to" => pos(7,8),"piece" => "GI", "color" => 0}},
+            {"move" => {"from" => pos(2,2),"to" => pos(8,8),"piece" => "UM", "color" => 1}},
             {"special" => "TORYO"},
           ]
         ]
@@ -540,11 +540,11 @@ PI\n\
           "initial" => initial,
           "moves" => [
             {},
-            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"},"time" => {"now" => {"m" => 0,"s" => 12}}},
-            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU"},"time" => {"now" => {"m" => 0,"s" => 2}}},
-            {"move" => {"from" => pos(8,8),"to" => pos(2,2),"piece" => "UM"},"time" => {"now" => {"m" => 1,"s" => 40}}},
-            {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI"},"time" => {"now" => {"m" => 0,"s" => 1}}},
-            {"move" => {"to" => pos(4,5),"piece" => "KA"},"time" => {"now" => {"m" => 0,"s" => 0}}},
+            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU", "color" => 0},"time" => {"now" => {"m" => 0,"s" => 12}}},
+            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU", "color" => 1},"time" => {"now" => {"m" => 0,"s" => 2}}},
+            {"move" => {"from" => pos(8,8),"to" => pos(2,2),"piece" => "UM", "color" => 0},"time" => {"now" => {"m" => 1,"s" => 40}}},
+            {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI", "color" => 1},"time" => {"now" => {"m" => 0,"s" => 1}}},
+            {"move" => {"to" => pos(4,5),"piece" => "KA", "color" => 0},"time" => {"now" => {"m" => 0,"s" => 0}}},
           ]
         ]
       }
@@ -572,11 +572,11 @@ T0\n"
           "initial" => initial,
           "moves" => [
             {},
-            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"},"time" => {"now" => {"m" => 0,"s" => 12}}},
-            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU"},"time" => {"now" => {"m" => 0,"s" => 2}}},
-              {"move" => {"from" => pos(8,8),"to" => pos(2,2),"piece" => "UM"},"time" => {"now" => {"m" => 1,"s" => 40}}},
-              {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI"},"time" => {"now" => {"m" => 0,"s" => 1}}},
-              {"move" => {"to" => pos(4,5),"piece" => "KA"},"time" => {"now" => {"m" => 0,"s" => 0}}},
+            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU", "color" => 0},"time" => {"now" => {"m" => 0,"s" => 12}}},
+            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU", "color" => 1},"time" => {"now" => {"m" => 0,"s" => 2}}},
+            {"move" => {"from" => pos(8,8),"to" => pos(2,2),"piece" => "UM", "color" => 0},"time" => {"now" => {"m" => 1,"s" => 40}}},
+            {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI", "color" => 1},"time" => {"now" => {"m" => 0,"s" => 1}}},
+            {"move" => {"to" => pos(4,5),"piece" => "KA", "color" => 0},"time" => {"now" => {"m" => 0,"s" => 0}}},
           ]
         ]
       }
@@ -620,11 +620,11 @@ PI82HI22KA91KY81KE21KE11KY\n\
             },
             "moves" => [
               {},
-              {"move" => {"from" => pos(5,1),"to" => pos(4,2),"piece" => "OU"}},
-              {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"}},
-              {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI"}},
-              {"move" => {"from" => pos(8,8),"to" => pos(6,6),"piece" => "KA"}},
-              {"move" => {"from" => pos(7,1),"to" => pos(8,2),"piece" => "GI"}},
+              {"move" => {"from" => pos(5,1),"to" => pos(4,2),"piece" => "OU", "color" => 1}},
+              {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU", "color" => 0}},
+              {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI", "color" => 1}},
+              {"move" => {"from" => pos(8,8),"to" => pos(6,6),"piece" => "KA", "color" => 0}},
+              {"move" => {"from" => pos(7,1),"to" => pos(8,2),"piece" => "GI", "color" => 1}},
             ]
           ]
         }
@@ -675,11 +675,11 @@ P9+KY+KE+GI+KI+OU+KI+GI+KE+KY\n\
             },
             "moves" => [
               {},
-              {"move" => {"from" => pos(5,1),"to" => pos(4,2),"piece" => "OU"}},
-              {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"}},
-              {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI"}},
-              {"move" => {"from" => pos(8,8),"to" => pos(6,6),"piece" => "KA"}},
-              {"move" => {"from" => pos(7,1),"to" => pos(8,2),"piece" => "GI"}},
+              {"move" => {"from" => pos(5,1),"to" => pos(4,2),"piece" => "OU", "color" => 1}},
+              {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU", "color" => 0}},
+              {"move" => {"from" => pos(3,1),"to" => pos(2,2),"piece" => "GI", "color" => 1}},
+              {"move" => {"from" => pos(8,8),"to" => pos(6,6),"piece" => "KA", "color" => 0}},
+              {"move" => {"from" => pos(7,1),"to" => pos(8,2),"piece" => "GI", "color" => 1}},
             ]
           ]
         }
@@ -722,9 +722,9 @@ P-00GI00GI00GI00GI00KE00KE00KE00KE\n\
             },
             "moves" => [
               {},
-              {"move" => {"to" => pos(1,3),"piece" => "KY"}},
-              {"move" => {"to" => pos(1,2),"piece" => "KE"}},
-              {"move" => {"from" => pos(1,3),"to" => pos(1,2),"piece" => "NY"}},
+              {"move" => {"to" => pos(1,3),"piece" => "KY", "color" => 0}},
+              {"move" => {"to" => pos(1,2),"piece" => "KE", "color" => 1}},
+              {"move" => {"from" => pos(1,3),"to" => pos(1,2),"piece" => "NY", "color" => 0}},
             ]
           ]
         }
@@ -768,7 +768,7 @@ P-00AL\n\
             },
             "moves" => [
               {},
-              {"move" => {"to" => pos(2,2),"piece" => "KI"}},
+              {"move" => {"to" => pos(2,2),"piece" => "KI", "color" => 0}},
               {"special" => "TSUMI"},
             ]
           ]
@@ -798,10 +798,10 @@ PI\n\
           "initial" => initial,
           "moves" => [
             {},
-            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU"}},
-            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU"}},
-            {"move" => {"from" => pos(7,9),"to" => pos(7,8),"piece" => "GI"}},
-            {"move" => {"from" => pos(2,2),"to" => pos(8,8),"piece" => "UM"}},
+            {"move" => {"from" => pos(7,7),"to" => pos(7,6),"piece" => "FU", "color" => 0}},
+            {"move" => {"from" => pos(3,3),"to" => pos(3,4),"piece" => "FU", "color" => 1}},
+            {"move" => {"from" => pos(7,9),"to" => pos(7,8),"piece" => "GI", "color" => 0}},
+            {"move" => {"from" => pos(2,2),"to" => pos(8,8),"piece" => "UM", "color" => 1}},
             {"special" => "TORYO"},
           ]
         ]

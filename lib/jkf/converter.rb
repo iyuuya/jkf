@@ -5,5 +5,6 @@ module Jkf
 end
 
 require 'json'
-require 'jkf/converter/ki2'
 require 'jkf/converter/kif'
+require 'jkf/converter/ki2'
+require 'jkf/converter/csa'

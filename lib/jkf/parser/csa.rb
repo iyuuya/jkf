@@ -710,11 +710,11 @@ module Jkf::Parser
               s5 = parse_nl
               if s5 != :failed
                 @reported_pos = s0
-                s0 = s1 = -> (from, to, piece) {
-                  ret = { "to" => to, "piece" => piece }
+                s0 = s1 = -> (color, from, to, piece) {
+                  ret = { "color" => color, "to" => to, "piece" => piece }
                   ret["from"] = from if from["x"] != 0
                   ret
-                }.call(s2, s3, s4)
+                }.call(s1, s2, s3, s4)
               else
                 @current_pos = s0
                 s0 = :failed

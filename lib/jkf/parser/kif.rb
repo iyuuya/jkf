@@ -57,7 +57,7 @@ module Jkf::Parser
                         end
                         if ret["initial"] && ret["initial"]["data"]
                           if ret["header"]["手番"]
-                            ret["initial"]["data"]["color"] = ("下先".index(ret["header"]["手番"]) >= 0 ? 0 : 1)
+                            ret["initial"]["data"]["color"] = ("下先".include?(ret["header"]["手番"]) ? 0 : 1)
                             ret["header"].delete("手番")
                           else
                             ret["initial"]["data"]["color"] = 0
@@ -81,6 +81,7 @@ module Jkf::Parser
                           fork_stack << _fork
                           fork_stack << now_fork
                         end
+                        reverse_color(ret['moves']) if ret["initial"] && ret["initial"]["data"] && ret["initial"]["data"]["color"] == 1
                         ret
                       }.call(s2, s3, s4, s6, s7)
                       s0 = s1
@@ -634,8 +635,8 @@ module Jkf::Parser
               s6 = parse_from
               if s6 != :failed
                 @reported_pos = s4
-                s5 = -> (fugou, from) {
-                  ret = { "piece" => fugou["piece"] }
+                s5 = -> (teban, fugou, from) {
+                  ret = { "color" => teban2color(teban.join), "piece" => fugou["piece"] }
                   if fugou["to"]
                     ret["to"] = fugou["to"]
                   else
@@ -644,7 +645,7 @@ module Jkf::Parser
                   ret["promote"] = true if fugou["promote"]
                   ret["from"] = from if from
                   ret
-                }.call(s5, s6)
+                }.call(s2, s5, s6)
                 s4 = s5
               else
                 @current_pos = s4
@@ -1519,6 +1520,11 @@ module Jkf::Parser
       }[preset.gsub(/\s/, "")]
     end
 
+    def teban2color(teban)
+      teban = teban.to_i unless teban.is_a? Fixnum
+      (teban+1) % 2
+    end
+
     def make_hand(str)
       # Kifu for iPhoneは半角スペース区切り
       kinds = str.split(/[ 　]/)
@@ -1531,6 +1537,13 @@ module Jkf::Parser
       end
 
       ret
+    end
+
+    def reverse_color(moves)
+      moves.each do |move|
+        move['move']['color'] = (move['move']['color'] + 1) % 2 if move['move'] && move['move']['color']
+        move['forks'].each { |_fork| reverse_color(_fork) } if move['forks']
+      end
     end
   end
 end

@@ -168,7 +168,7 @@ module Jkf::Converter
     end
 
     def convert_motigoma(pieces)
-      pieces.map do |piece, num|
+      pieces.to_a.reverse.map do |(piece, num)|
         if num > 0
           str = csa2kind(piece)
           if num > 1

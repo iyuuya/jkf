@@ -18,8 +18,8 @@ module Jkf::Converter
 
     def convert_information(header)
       result = ''
-      result += 'N+' + (header.delete('先手') || header.delete('下手') || '') + "\n"
-      result += 'N-' + (header.delete('後手') || header.delete('上手') || '') + "\n"
+      result += 'N+' + (header.delete('先手') || header.delete('下手') || '') + "\n" if header['先手'] || header['下手']
+      result += 'N-' + (header.delete('後手') || header.delete('上手') || '') + "\n" if header['後手'] || header['上手']
       header.each { |(k,v)| result += "$#{csa_header_key(k)}:#{v}\n" }
       result
     end
@@ -99,8 +99,12 @@ module Jkf::Converter
         next if move == {}
         result += convert_move(move['move']) if move['move']
         result += convert_special(move['special'], move['color']) if move['special']
-        result += "," + convert_time(move['time']) if move['time']
-        result += "\n"
+        if move['time']
+          result += "," + convert_time(move['time'])
+        elsif move['move'] || move['special']
+          result += "\n"
+        end
+        result += convert_comments(move['comments']) if move['comments']
       end
       result
     end
@@ -126,7 +130,11 @@ module Jkf::Converter
 
     def convert_time(time)
       sec = time['now']['m'] * 60 + time['now']['s']
-      "T#{sec}"
+      "T#{sec}\n"
+    end
+
+    def convert_comments(comments)
+      comments.map { |comment| "'#{comment}" }.join("\n") + "\n"
     end
 
     protected

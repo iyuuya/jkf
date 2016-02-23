@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Jkf::Converter::Csa do
   let(:csa_converter) { Jkf::Converter::Csa.new }
@@ -8,8 +8,8 @@ describe Jkf::Converter::Csa do
 
   shared_examples(:parse_file) do |filename|
     let(:str) do
-      if File.extname(filename) == '.csa'
-        File.read(filename, encoding: 'Shift_JIS').toutf8
+      if File.extname(filename) == ".csa"
+        File.read(filename, encoding: "Shift_JIS").toutf8
       else
         File.read(filename).toutf8
       end

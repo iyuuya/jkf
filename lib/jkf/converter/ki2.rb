@@ -13,7 +13,7 @@ module Jkf::Converter
       result += convert_initial(jkf["initial"]) if jkf["initial"]
       result += @header2.join + "\n"
       result += convert_moves(jkf["moves"]) if jkf["moves"]
-      if @forks.size > 0
+      if !@forks.empty?
         result += "\n"
         result += @forks.join("\n")
       end

@@ -42,12 +42,12 @@ describe Jkf::Parser::Csa do
              { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" },
              { "color" => 0, "kind" => "KA" }, { "color" => 0, "kind" => "KE" }],
             [{ "color" => 1, "kind" => "KY" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
-             { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }],
+             { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }]
           ],
           "color" => 0,
           "hands" => [
             { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 },
-            { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 },
+            { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 }
           ]
         }
       ]
@@ -77,7 +77,7 @@ EOS
             { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
             { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "UM", "color" => 0 } },
             { "move" => { "from" => pos(3, 1), "to" => pos(2, 2), "piece" => "GI", "color" => 1 } },
-            { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 } },
+            { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 } }
           ]
         ]
       end
@@ -107,7 +107,7 @@ EOS
             { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 },
               "comments" => ["初手コメント", "初手コメント2"] },
             { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
-            { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "UM", "color" => 0 } },
+            { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "UM", "color" => 0 } }
           ]
         ]
       end
@@ -137,7 +137,7 @@ EOS
             { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
             { "move" => { "from" => pos(7, 9), "to" => pos(7, 8), "piece" => "GI", "color" => 0 } },
             { "move" => { "from" => pos(2, 2), "to" => pos(8, 8), "piece" => "UM", "color" => 1 } },
-            { "special" => "TORYO" },
+            { "special" => "TORYO" }
           ]
         ]
       end
@@ -171,7 +171,7 @@ EOS
             { "move" => { "from" => pos(3, 1), "to" => pos(2, 2), "piece" => "GI", "color" => 1 },
               "time" => { "now" => { "m" => 0, "s" => 1 } } },
             { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 },
-              "time" => { "now" => { "m" => 0, "s" => 0 } } },
+              "time" => { "now" => { "m" => 0, "s" => 0 } } }
           ]
         ]
       end
@@ -211,7 +211,7 @@ EOS
             { "move" => { "from" => pos(3, 1), "to" => pos(2, 2), "piece" => "GI", "color" => 1 },
               "time" => { "now" => { "m" => 0, "s" => 1 } } },
             { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 },
-              "time" => { "now" => { "m" => 0, "s" => 0 } } },
+              "time" => { "now" => { "m" => 0, "s" => 0 } } }
           ]
         ]
       end
@@ -258,12 +258,12 @@ EOS
                    { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "KA" },
                    { "color" => 0, "kind" => "KE" }],
                   [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
-                   { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }],
+                   { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }]
                 ],
                 "color" => 1,
                 "hands" => [
                   { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 },
-                  { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 },
+                  { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 }
                 ]
               }
             },
@@ -278,7 +278,7 @@ EOS
               { "move" => { "from" => pos(8, 8), "to" => pos(6, 6),
                             "piece" => "KA", "color" => 0 } },
               { "move" => { "from" => pos(7, 1), "to" => pos(8, 2),
-                            "piece" => "GI", "color" => 1 } },
+                            "piece" => "GI", "color" => 1 } }
             ]
           ]
         end
@@ -332,12 +332,12 @@ EOS
                    { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "KA" },
                    { "color" => 0, "kind" => "KE" }],
                   [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
-                   { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }],
+                   { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }]
                 ],
                 "color" => 1,
                 "hands" => [
                   { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 },
-                  { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 },
+                  { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 }
                 ]
               }
             },
@@ -352,7 +352,7 @@ EOS
               { "move" => { "from" => pos(8, 8), "to" => pos(6, 6),
                             "piece" => "KA", "color" => 0 } },
               { "move" => { "from" => pos(7, 1), "to" => pos(8, 2),
-                            "piece" => "GI", "color" => 1 } },
+                            "piece" => "GI", "color" => 1 } }
             ]
           ]
         end
@@ -391,12 +391,12 @@ EOS
                   [{}, {}, {}, {}, {}, {}, {}, {}, {}],
                   [{}, {}, {}, {}, {}, {}, {}, {}, {}],
                   [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                  [{}, {}, {}, {}, {}, {}, {}, {}, {}]
                 ],
                 "color" => 0,
                 "hands" => [
                   { "FU" => 0, "KY" => 4, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 2 },
-                  { "FU" => 0, "KY" => 0, "KE" => 4, "GI" => 4, "KI" => 0, "KA" => 0, "HI" => 0 },
+                  { "FU" => 0, "KY" => 0, "KE" => 4, "GI" => 4, "KI" => 0, "KA" => 0, "HI" => 0 }
                 ]
               }
             },
@@ -405,7 +405,7 @@ EOS
               { "move" => { "to" => pos(1, 3), "piece" => "KY", "color" => 0 } },
               { "move" => { "to" => pos(1, 2), "piece" => "KE", "color" => 1 } },
               { "move" => { "from" => pos(1, 3), "to" => pos(1, 2),
-                            "piece" => "NY", "color" => 0 } },
+                            "piece" => "NY", "color" => 0 } }
             ]
           ]
         end
@@ -441,19 +441,19 @@ EOS
                   [{}, {}, {}, {}, {}, {}, {}, {}, {}],
                   [{}, {}, {}, {}, {}, {}, {}, {}, {}],
                   [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                  [{}, {}, {}, {}, {}, {}, {}, {}, {}]
                 ],
                 "color" => 0,
                 "hands" => [
                   { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 1, "KA" => 0, "HI" => 0 },
-                  { "FU" => 17, "KY" => 4, "KE" => 3, "GI" => 4, "KI" => 3, "KA" => 2, "HI" => 2 },
+                  { "FU" => 17, "KY" => 4, "KE" => 3, "GI" => 4, "KI" => 3, "KA" => 2, "HI" => 2 }
                 ]
               }
             },
             "moves" => [
               {},
               { "move" => { "to" => pos(2, 2), "piece" => "KI", "color" => 0 } },
-              { "special" => "TSUMI" },
+              { "special" => "TSUMI" }
             ]
           ]
         end
@@ -484,7 +484,7 @@ EOS
             "先手" => "sente",
             "後手" => "gote",
             "場所" => "将棋会館",
-            "開始日時" => "2015/08/04 13:00:00",
+            "開始日時" => "2015/08/04 13:00:00"
           },
           "initial" => initial,
           "moves" => [
@@ -493,7 +493,7 @@ EOS
             { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
             { "move" => { "from" => pos(7, 9), "to" => pos(7, 8), "piece" => "GI", "color" => 0 } },
             { "move" => { "from" => pos(2, 2), "to" => pos(8, 8), "piece" => "UM", "color" => 1 } },
-            { "special" => "TORYO" },
+            { "special" => "TORYO" }
           ]
         ]
       end
@@ -525,12 +525,12 @@ EOS
              { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" },
              { "color" => 0, "kind" => "KA" }, { "color" => 0, "kind" => "KE" }],
             [{ "color" => 1, "kind" => "KY" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
-             { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }],
+             { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }]
           ],
           "color" => 0,
           "hands" => [
             { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 },
-            { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 },
+            { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 }
           ]
         }
       ]
@@ -559,7 +559,7 @@ EOS
             { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
             { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "UM", "color" => 0 } },
             { "move" => { "from" => pos(3, 1), "to" => pos(2, 2), "piece" => "GI", "color" => 1 } },
-            { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 } },
+            { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 } }
           ]
         ]
       end
@@ -588,7 +588,7 @@ EOS
             { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 },
               "comments" => ["初手コメント", "初手コメント2"] },
             { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
-            { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "UM", "color" => 0 } },
+            { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "UM", "color" => 0 } }
           ]
         ]
       end
@@ -617,7 +617,7 @@ EOS
             { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
             { "move" => { "from" => pos(7, 9), "to" => pos(7, 8), "piece" => "GI", "color" => 0 } },
             { "move" => { "from" => pos(2, 2), "to" => pos(8, 8), "piece" => "UM", "color" => 1 } },
-            { "special" => "TORYO" },
+            { "special" => "TORYO" }
           ]
         ]
       end
@@ -650,7 +650,7 @@ EOS
             { "move" => { "from" => pos(3, 1), "to" => pos(2, 2), "piece" => "GI", "color" => 1 },
               "time" => { "now" => { "m" => 0, "s" => 1 } } },
             { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 },
-              "time" => { "now" => { "m" => 0, "s" => 0 } } },
+              "time" => { "now" => { "m" => 0, "s" => 0 } } }
           ]
         ]
       end
@@ -689,7 +689,7 @@ EOS
             { "move" => { "from" => pos(3, 1), "to" => pos(2, 2), "piece" => "GI", "color" => 1 },
               "time" => { "now" => { "m" => 0, "s" => 1 } } },
             { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 },
-              "time" => { "now" => { "m" => 0, "s" => 0 } } },
+              "time" => { "now" => { "m" => 0, "s" => 0 } } }
           ]
         ]
       end
@@ -735,12 +735,12 @@ EOS
                    {}, {}, {}, { "color" => 0, "kind" => "FU" },
                    { "color" => 0, "kind" => "KA" }, { "color" => 0, "kind" => "KE" }],
                   [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
-                   { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }],
+                   { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }]
                 ],
                 "color" => 1,
                 "hands" => [
                   { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 },
-                  { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 },
+                  { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 }
                 ]
               }
             },
@@ -755,7 +755,7 @@ EOS
               { "move" => { "from" => pos(8, 8), "to" => pos(6, 6),
                             "piece" => "KA", "color" => 0 } },
               { "move" => { "from" => pos(7, 1), "to" => pos(8, 2),
-                            "piece" => "GI", "color" => 1 } },
+                            "piece" => "GI", "color" => 1 } }
             ]
           ]
         end
@@ -813,12 +813,12 @@ EOS
                    { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "KA" },
                    { "color" => 0, "kind" => "KE" }],
                   [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
-                   { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }],
+                   { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }]
                 ],
                 "color" => 1,
                 "hands" => [
                   { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 },
-                  { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 },
+                  { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 }
                 ]
               }
             },
@@ -833,7 +833,7 @@ EOS
               { "move" => { "from" => pos(8, 8), "to" => pos(6, 6),
                             "piece" => "KA", "color" => 0 } },
               { "move" => { "from" => pos(7, 1), "to" => pos(8, 2),
-                            "piece" => "GI", "color" => 1 } },
+                            "piece" => "GI", "color" => 1 } }
             ]
           ]
         end
@@ -871,12 +871,12 @@ EOS
                   [{}, {}, {}, {}, {}, {}, {}, {}, {}],
                   [{}, {}, {}, {}, {}, {}, {}, {}, {}],
                   [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                  [{}, {}, {}, {}, {}, {}, {}, {}, {}]
                 ],
                 "color" => 0,
                 "hands" => [
                   { "FU" => 0, "KY" => 4, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 2 },
-                  { "FU" => 0, "KY" => 0, "KE" => 4, "GI" => 4, "KI" => 0, "KA" => 0, "HI" => 0 },
+                  { "FU" => 0, "KY" => 0, "KE" => 4, "GI" => 4, "KI" => 0, "KA" => 0, "HI" => 0 }
                 ]
               }
             },
@@ -885,7 +885,7 @@ EOS
               { "move" => { "to" => pos(1, 3), "piece" => "KY", "color" => 0 } },
               { "move" => { "to" => pos(1, 2), "piece" => "KE", "color" => 1 } },
               { "move" => { "from" => pos(1, 3), "to" => pos(1, 2),
-                            "piece" => "NY", "color" => 0 } },
+                            "piece" => "NY", "color" => 0 } }
             ]
           ]
         end
@@ -921,19 +921,19 @@ EOS
                   [{}, {}, {}, {}, {}, {}, {}, {}, {}],
                   [{}, {}, {}, {}, {}, {}, {}, {}, {}],
                   [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                  [{}, {}, {}, {}, {}, {}, {}, {}, {}]
                 ],
                 "color" => 0,
                 "hands" => [
                   { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 1, "KA" => 0, "HI" => 0 },
-                  { "FU" => 17, "KY" => 4, "KE" => 3, "GI" => 4, "KI" => 3, "KA" => 2, "HI" => 2 },
+                  { "FU" => 17, "KY" => 4, "KE" => 3, "GI" => 4, "KI" => 3, "KA" => 2, "HI" => 2 }
                 ]
               }
             },
             "moves" => [
               {},
               { "move" => { "to" => pos(2, 2), "piece" => "KI", "color" => 0 } },
-              { "special" => "TSUMI" },
+              { "special" => "TSUMI" }
             ]
           ]
         end
@@ -959,7 +959,7 @@ EOS
         is_expected.to eq Hash[
           "header" => {
             "先手" => "sente",
-            "後手" => "gote",
+            "後手" => "gote"
           },
           "initial" => initial,
           "moves" => [
@@ -968,7 +968,7 @@ EOS
             { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
             { "move" => { "from" => pos(7, 9), "to" => pos(7, 8), "piece" => "GI", "color" => 0 } },
             { "move" => { "from" => pos(2, 2), "to" => pos(8, 8), "piece" => "UM", "color" => 1 } },
-            { "special" => "TORYO" },
+            { "special" => "TORYO" }
           ]
         ]
       end

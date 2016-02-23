@@ -14,7 +14,7 @@ module Jkf::Converter
       result += @header2.join
       result += "手数----指手---------消費時間--\n"
       result += convert_moves(jkf["moves"])
-      if @forks.size > 0
+      if !@forks.empty?
         result += "\n"
         result += @forks.join("\n")
       end
@@ -86,7 +86,7 @@ module Jkf::Converter
         time["now"]["s"],
         time["total"]["h"],
         time["total"]["m"],
-        time["total"]["s"],
+        time["total"]["s"]
       ]
     end
 

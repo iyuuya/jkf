@@ -162,7 +162,7 @@ module Jkf::Converter
         "NK" => "成桂",
         "NG" => "成銀",
         "UM" => "馬",
-        "RY" => "龍",
+        "RY" => "龍"
       }[csa]
     end
 

@@ -562,7 +562,7 @@ module Jkf::Parser
             @reported_pos = s0
             s1 = -> (line, c) do
               ret = {}
-              ret["comments"] = c if c.length > 0
+              ret["comments"] = c if !c.empty?
               if line["move"].is_a? Hash
                 ret["move"] = line["move"]
               else
@@ -1345,7 +1345,7 @@ module Jkf::Parser
       s1 = []
       s2 = parse_newline
       if s2 != :failed
-        while (s2 != :failed)
+        while s2 != :failed
           s1 << s2
           s2 = parse_newline
         end
@@ -1530,7 +1530,7 @@ module Jkf::Parser
         "六枚落ち" => "6",
         "八枚落ち" => "8",
         "十枚落ち" => "10",
-        "その他" => "OTHER",
+        "その他" => "OTHER"
       }[preset.gsub(/\s/, "")]
     end
 

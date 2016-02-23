@@ -35,7 +35,7 @@ describe Jkf::Parser::Ki2 do
           { "move" => { "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
           { "move" => { "to" => pos(2, 2), "piece" => "KA", "color" => 0, "promote" => true } },
           { "move" => { "same" => true, "piece" => "GI", "color" => 1 } },
-          { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 } },
+          { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 } }
         ]
       ]
     end
@@ -55,7 +55,7 @@ describe Jkf::Parser::Ki2 do
           { "move" => { "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
           { "move" => { "to" => pos(7, 8), "piece" => "GI", "color" => 0 } },
           { "move" => { "to" => pos(8, 8), "piece" => "KA", "color" => 1, "promote" => true } },
-          { "special" => "TORYO" },
+          { "special" => "TORYO" }
         ]
       ]
     end
@@ -70,7 +70,7 @@ describe Jkf::Parser::Ki2 do
       it do
         is_expected.to eq Hash[
           "header" => {
-            "手合割" => "平手",
+            "手合割" => "平手"
           },
           "initial" => { "preset" => "HIRATE" },
           "moves" => [
@@ -79,7 +79,7 @@ describe Jkf::Parser::Ki2 do
             { "move" => { "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
             { "move" => { "to" => pos(2, 2), "piece" => "KA", "color" => 0, "promote" => true } },
             { "move" => { "same" => true, "piece" => "GI", "color" => 1 } },
-            { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 } },
+            { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 } }
           ]
         ]
       end
@@ -93,7 +93,7 @@ describe Jkf::Parser::Ki2 do
       it do
         is_expected.to eq Hash[
           "header" => {
-            "手合割" => "六枚落ち",
+            "手合割" => "六枚落ち"
           },
           "initial" => { "preset" => "6" },
           "moves" => [
@@ -102,7 +102,7 @@ describe Jkf::Parser::Ki2 do
             { "move" => { "to" => pos(7, 6), "piece" => "FU", "color" => 0 } },
             { "move" => { "to" => pos(2, 2), "piece" => "GI", "color" => 1 } },
             { "move" => { "to" => pos(6, 6), "piece" => "KA", "color" => 0 } },
-            { "move" => { "to" => pos(8, 2), "piece" => "GI", "color" => 1 } },
+            { "move" => { "to" => pos(8, 2), "piece" => "GI", "color" => 1 } }
           ]
         ]
       end
@@ -124,7 +124,7 @@ describe Jkf::Parser::Ki2 do
             { "move" => { "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
             { "move" => { "to" => pos(2, 2), "piece" => "KA", "color" => 0, "promote" => true } },
             { "move" => { "same" => true, "piece" => "GI", "color" => 1 } },
-            { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 } },
+            { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 } }
           ]
         ]
       end
@@ -162,7 +162,7 @@ EOS
           "header" => {
             "手合割" => "その他　",
             "上手" => "uwate",
-            "下手" => "shitate",
+            "下手" => "shitate"
           },
           "initial" => {
             "preset" => "OTHER",
@@ -180,12 +180,12 @@ EOS
                 [{}, {}, {}, {}, {}, {}, {}, {}, {}],
                 [{}, {}, {}, {}, {}, {}, {}, {}, {}],
                 [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                [{}, {}, {}, {}, {}, {}, {}, {}, {}]
               ],
               "color" => 0,
               "hands" => [
                 { "FU" => 0, "KY" => 4, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 2 },
-                { "FU" => 0, "KY" => 0, "KE" => 4, "GI" => 4, "KI" => 0, "KA" => 0, "HI" => 0 },
+                { "FU" => 0, "KY" => 0, "KE" => 4, "GI" => 4, "KI" => 0, "KA" => 0, "HI" => 0 }
               ]
             }
           },
@@ -193,7 +193,7 @@ EOS
             {},
             { "move" => { "to" => pos(1, 3), "piece" => "KY", "color" => 0 } },
             { "move" => { "to" => pos(1, 2), "piece" => "KE", "color" => 1 } },
-            { "move" => { "same" => true, "piece" => "KY", "color" => 0, "promote" => true } },
+            { "move" => { "same" => true, "piece" => "KY", "color" => 0, "promote" => true } }
           ]
         ]
       end
@@ -216,7 +216,7 @@ EOS
       it do
         is_expected.to eq Hash[
           "header" => {
-            "手合割" => "平手",
+            "手合割" => "平手"
           },
           "initial" => { "preset" => "HIRATE" },
           "moves" => [
@@ -227,13 +227,13 @@ EOS
               "forks" => [
                 [
                   { "move" => { "to" => pos(6, 6), "piece" => "FU", "color" => 0 } },
-                  { "move" => { "to" => pos(8, 4), "piece" => "FU", "color" => 1 } },
+                  { "move" => { "to" => pos(8, 4), "piece" => "FU", "color" => 1 } }
                 ]
               ]
             },
             { "move" => { "same" => true, "piece" => "GI", "color" => 1 } },
             { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 } },
-            { "special" => "CHUDAN" },
+            { "special" => "CHUDAN" }
           ]
         ]
       end

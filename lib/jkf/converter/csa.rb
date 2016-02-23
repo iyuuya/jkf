@@ -158,7 +158,7 @@ module Jkf::Converter
         "場所" => "SITE",
         "開始日時" => "START_TIME",
         "終了日時" => "END_TIME",
-        "持ち時間" => "TIME_LIMIT",
+        "持ち時間" => "TIME_LIMIT"
       }[key] || key
     end
   end

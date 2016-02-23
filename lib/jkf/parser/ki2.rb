@@ -497,7 +497,7 @@ module Jkf::Parser
               @reported_pos = s0
               s1 = -> (line, c) do
                 ret = { "move" => line }
-                ret["comments"] = c if c.length > 0
+                ret["comments"] = c if !c.empty?
                 ret
               end.call(s1, s2)
               s0 = s1
@@ -1192,7 +1192,7 @@ module Jkf::Parser
       {
         "左" => "L",
         "直" => "C",
-        "右" => "R",
+        "右" => "R"
       }[str] || ""
     end
 
@@ -1200,7 +1200,7 @@ module Jkf::Parser
       {
         "上" => "U",
         "寄" => "M",
-        "引" => "D",
+        "引" => "D"
       }[str] || ""
     end
 
@@ -1220,7 +1220,7 @@ module Jkf::Parser
         "六枚落ち" => "6",
         "八枚落ち" => "8",
         "十枚落ち" => "10",
-        "その他" => "OTHER",
+        "その他" => "OTHER"
       }[preset.gsub(/\s/, "")]
     end
 

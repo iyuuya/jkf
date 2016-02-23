@@ -965,25 +965,25 @@ module Jkf::Parser
     def get_hirate
       [
         [{ "color" => 1, "kind" => "KY" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
-         { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" },],
+         { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }],
         [{ "color" => 1, "kind" => "KE" }, { "color" => 1, "kind" => "KA" },
          { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" },
-         { "color" => 0, "kind" => "HI" }, { "color" => 0, "kind" => "KE" },],
+         { "color" => 0, "kind" => "HI" }, { "color" => 0, "kind" => "KE" }],
         [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
-         { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "GI" },],
+         { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "GI" }],
         [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
-         { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KI" },],
+         { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KI" }],
         [{ "color" => 1, "kind" => "OU" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
-         { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "OU" },],
+         { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "OU" }],
         [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
-         { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KI" },],
+         { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KI" }],
         [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
-         { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "GI" },],
+         { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "GI" }],
         [{ "color" => 1, "kind" => "KE" }, { "color" => 1, "kind" => "HI" },
          { "color" => 1, "kind" => "FU" }, {}, {}, {}, { "color" => 0, "kind" => "FU" },
-         { "color" => 0, "kind" => "KA" }, { "color" => 0, "kind" => "KE" },],
+         { "color" => 0, "kind" => "KA" }, { "color" => 0, "kind" => "KE" }],
         [{ "color" => 1, "kind" => "KY" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
-         { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" },],
+         { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }]
       ]
     end
 
@@ -993,7 +993,7 @@ module Jkf::Parser
         "SITE" => "場所",
         "START_TIME" => "開始日時",
         "END_TIME" => "終了日時",
-        "TIME_LIMIT" => "持ち時間",
+        "TIME_LIMIT" => "持ち時間"
       }[key] || key
     end
   end

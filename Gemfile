@@ -8,8 +8,7 @@ group :development do
   gem "yard", require: false
   gem "redcarpet", require: false
 
-  # NOTE: version should match HoundCi RuboCop version
-  gem "rubocop", "= 0.29.1", require: false
+  gem "rubocop", "~> 0.37.2", require: false
   gem "guard-rubocop", require: false
 end
 

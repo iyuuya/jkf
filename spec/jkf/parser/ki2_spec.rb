@@ -101,6 +101,28 @@ describe Jkf::Parser::Ki2 do
     end
   end
 
+  describe "comments" do
+    context "first comment" do
+      let(:str) do
+        "*最初：コメント\n▲７六歩 △３四歩 ▲２二角成 △同　銀 ▲４五角"
+      end
+
+      it do
+        is_expected.to eq Hash[
+          "header" => {},
+          "moves" => [
+            { "comments" => ["最初：コメント"] },
+            { "move" => { "to" => pos(7, 6), "piece" => "FU", "color" => 0 } },
+            { "move" => { "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
+            { "move" => { "to" => pos(2, 2), "piece" => "KA", "color" => 0, "promote" => true } },
+            { "move" => { "same" => true, "piece" => "GI", "color" => 1 } },
+            { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 } },
+          ]
+        ]
+      end
+    end
+  end
+
   describe 'initial' do
     context 'simple' do
       let(:str) { "\

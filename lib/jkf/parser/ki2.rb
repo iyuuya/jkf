@@ -96,7 +96,7 @@ module Jkf::Parser
     def parse_header
       s0 = @current_pos
       s1 = []
-      s2 = match_regexp(/^[^：\r\n]/)
+      s2 = match_regexp(/^[^*：\r\n]/)
       if s2 != :failed
         while s2 != :failed
           s1 << s2

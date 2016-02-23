@@ -1,6 +1,6 @@
 module Jkf::Converter
   class Csa < Base
-    VERSION = "2.2"
+    VERSION = "2.2".freeze
 
     def convert_root(jkf)
       result = version
@@ -47,7 +47,7 @@ module Jkf::Converter
       hands[color].each_value { |n| sum += n }
       if sum > 0
         result += "P#{csa_color(color)}"
-        hands[color].to_a.reverse.each { |(k, v)| v.times { result += "00#{k}" } }
+        hands[color].to_a.reverse_each { |(k, v)| v.times { result += "00#{k}" } }
         result += "\n"
       end
       result

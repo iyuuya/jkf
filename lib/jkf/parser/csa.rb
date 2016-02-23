@@ -650,7 +650,7 @@ module Jkf::Parser
       end
       if s1 != :failed
         @reported_pos = s0
-        s1 = s1.size > 0 ? { "comments" => s1 } : {}
+        s1 = !s1.empty? ? { "comments" => s1 } : {}
       end
       s0 = s1
       s0
@@ -674,7 +674,7 @@ module Jkf::Parser
             @reported_pos = s0
             s0 = -> (move, time, comments) do
               ret = {}
-              ret["comments"] = comments if comments.size > 0
+              ret["comments"] = comments if !comments.empty?
               ret["time"] = time if time
               if move["special"]
                 ret["special"] = move["special"]

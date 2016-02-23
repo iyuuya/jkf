@@ -18,7 +18,6 @@ AllCops:
   Exclude:
   - "vendor/**/*"
   - ".bundle/**/*"
-  RunRailsCops: false
   DisplayCopNames: false
   StyleGuideCopsOnly: false
 Style/AccessModifierIndentation:
@@ -552,48 +551,6 @@ Lint/DefEndAlignment:
   SupportedStyles:
   - start_of_line
   - def
-Rails/ActionFilter:
-  Description: Enforces consistent use of action filter methods.
-  Enabled: false
-  EnforcedStyle: action
-  SupportedStyles:
-  - action
-  - filter
-  Include:
-  - app/controllers/**/*.rb
-Rails/DefaultScope:
-  Description: Checks if the argument passed to default_scope is a block.
-  Enabled: true
-  Include:
-  - app/models/**/*.rb
-Rails/HasAndBelongsToMany:
-  Description: Prefer has_many :through to has_and_belongs_to_many.
-  Enabled: true
-  Include:
-  - app/models/**/*.rb
-Rails/Output:
-  Description: Checks for calls to puts, print, etc.
-  Enabled: true
-  Include:
-  - app/**/*.rb
-  - config/**/*.rb
-  - db/**/*.rb
-  - lib/**/*.rb
-Rails/ReadWriteAttribute:
-  Description: Checks for read_attribute(:attr) and write_attribute(:attr, val).
-  Enabled: true
-  Include:
-  - app/models/**/*.rb
-Rails/ScopeArgs:
-  Description: Checks the arguments of ActiveRecord scopes.
-  Enabled: true
-  Include:
-  - app/models/**/*.rb
-Rails/Validation:
-  Description: Use validates :attribute, hash of validations.
-  Enabled: true
-  Include:
-  - app/models/**/*.rb
 Style/InlineComment:
   Description: Avoid inline comments.
   Enabled: false
@@ -1062,7 +1019,4 @@ Lint/UselessSetterCall:
   Enabled: true
 Lint/Void:
   Description: Possible use of operator/literal/variable in void context.
-  Enabled: false
-Rails/Delegate:
-  Description: Prefer delegate method for delegations.
   Enabled: false

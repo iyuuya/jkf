@@ -1027,6 +1027,15 @@ module Jkf::Parser
         preset = preset2str(ret["header"]["手合割"])
         ret["initial"] = { "preset" => preset } if preset && preset != "OTHER"
       end
+      transform_root_header_data(ret)
+      transform_root_forks(forks, moves)
+      if ret["initial"] && ret["initial"]["data"] && ret["initial"]["data"]["color"] == 1
+        reverse_color(ret["moves"])
+      end
+      ret
+    end
+
+    def transform_root_header_data(ret)
       if ret["initial"] && ret["initial"]["data"]
         if ret["header"]["手番"]
           ret["initial"]["data"]["color"] = "下先".include?(ret["header"]["手番"]) ? 0 : 1
@@ -1042,11 +1051,6 @@ module Jkf::Parser
           ret["header"].delete(key)
         end
       end
-      transform_root_forks(forks, moves)
-      if ret["initial"] && ret["initial"]["data"] && ret["initial"]["data"]["color"] == 1
-        reverse_color(ret["moves"])
-      end
-      ret
     end
 
     def transform_root_forks(forks, moves)

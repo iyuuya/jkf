@@ -1,4 +1,19 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-# Specify your gem's dependencies in jkf.gemspec
 gemspec
+
+gem "rake", "~> 10.0"
+
+group :development do
+  gem "yard", require: false
+  gem "redcarpet", require: false
+
+  gem "rubocop", "~> 0.37.2", require: false
+  gem "guard-rubocop", require: false
+end
+
+group :test do
+  gem "codeclimate-test-reporter", require: nil
+  gem "rspec", "~> 3.0", require: false
+  gem "guard-rspec", require: false
+end

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Jkf::Converter::Kif do
   let(:kif_converter) { Jkf::Converter::Kif.new }
@@ -8,8 +8,8 @@ describe Jkf::Converter::Kif do
 
   shared_examples(:parse_file) do |filename|
     let(:str) do
-      if File.extname(filename) == '.kif'
-        File.read(filename, encoding: 'Shift_JIS').toutf8
+      if File.extname(filename) == ".kif"
+        File.read(filename, encoding: "Shift_JIS").toutf8
       else
         File.read(filename).toutf8
       end

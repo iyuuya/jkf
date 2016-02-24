@@ -1,8 +1,11 @@
-require 'kconv'
-require 'pry'
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
 
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'jkf'
+require "kconv"
+require "pry"
+
+$LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
+require "jkf"
 
 module ExtendHelper
   def fixtures(type)
@@ -12,7 +15,7 @@ end
 
 module IncludeHelper
   def pos(x, y)
-    { 'x' => x, 'y' => y }
+    { "x" => x, "y" => y }
   end
 
   def fixtures(type)

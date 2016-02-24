@@ -861,6 +861,11 @@ module Jkf::Parser
           ret["header"].delete(key)
         end
       end
+      transform_root_forks(forks, moves)
+      ret
+    end
+
+    def transform_root_forks(forks, moves)
       fork_stack = [{ "te" => 0, "moves" => moves }]
       forks.each do |f|
         now_fork = f
@@ -872,7 +877,6 @@ module Jkf::Parser
         fork_stack << _fork
         fork_stack << now_fork
       end
-      ret
     end
 
     def transform_initialboard(lines)

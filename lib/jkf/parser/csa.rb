@@ -393,41 +393,7 @@ module Jkf::Parser
         s2 = parse_komabetsu_line
       end
       @reported_pos = s0
-      s0 = -> (lines) do
-        board = []
-        hands = [
-          { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 },
-          { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 }
-        ]
-        all = { "FU" => 18, "KY" => 4, "KE" => 4, "GI" => 4, "KI" => 4, "KA" => 2, "HI" => 2 }
-        9.times do |_i|
-          line = []
-          9.times do |_j|
-            line << {}
-          end
-          board << line
-        end
-
-        lines.each do |line|
-          line["pieces"].each do |piece|
-            if piece["xy"]["x"] == 0
-              if piece["piece"] == "AL"
-                hands[line["teban"]] = all
-                return { "preset" => "OTHER", "data" => { "board" => board, "hands" => hands } }
-              end
-              obj = hands[line["teban"]]
-              obj[piece["piece"]] += 1
-            else
-              board[piece["xy"]["x"] - 1][piece["xy"]["y"] - 1] = { "color" => line["teban"],
-                                                                    "kind" => piece["piece"] }
-            end
-            all[piece["piece"]] -= 1 if piece["piece"] != "OU"
-          end
-        end
-
-        { "preset" => "OTHER", "data" => { "board" => board, "hands" => hands } }
-      end.call(s1)
-      s0
+      transform_komabetsu_lines(s1)
     end
 
     def parse_komabetsu_line
@@ -752,6 +718,47 @@ module Jkf::Parser
     end
 
     protected
+
+    def transform_komabetsu_lines(lines)
+      board = generate_empty_board
+      hands = [
+        { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 },
+        { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 }
+      ]
+      all = { "FU" => 18, "KY" => 4, "KE" => 4, "GI" => 4, "KI" => 4, "KA" => 2, "HI" => 2 }
+
+      lines.each do |line|
+        line["pieces"].each do |piece|
+          xy = piece["xy"]
+          if xy["x"] == 0
+            if piece["piece"] == "AL"
+              hands[line["teban"]] = all
+              return { "preset" => "OTHER", "data" => { "board" => board, "hands" => hands } }
+            end
+            obj = hands[line["teban"]]
+            obj[piece["piece"]] += 1
+          else
+            board[xy["x"] - 1][xy["y"] - 1] = { "color" => line["teban"],
+                                                "kind" => piece["piece"] }
+          end
+          all[piece["piece"]] -= 1 if piece["piece"] != "OU"
+        end
+      end
+
+      { "preset" => "OTHER", "data" => { "board" => board, "hands" => hands } }
+    end
+
+    def generate_empty_board
+      board = []
+      9.times do |_i|
+        line = []
+        9.times do |_j|
+          line << {}
+        end
+        board << line
+      end
+      board
+    end
 
     def sec2time(sec)
       s = sec % 60

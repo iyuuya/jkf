@@ -5,6 +5,7 @@ module Jkf
 end
 
 require "jkf/parser/base"
+require "jkf/parser/kifuable"
 require "jkf/parser/kif"
 require "jkf/parser/ki2"
 require "jkf/parser/csa"

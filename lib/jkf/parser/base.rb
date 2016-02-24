@@ -67,6 +67,10 @@ module Jkf::Parser
       stack
     end
 
+    def match_digit
+      match_regexp(/^\d/)
+    end
+
     def fail(expected)
       return if @current_pos < @max_fail_pos
 

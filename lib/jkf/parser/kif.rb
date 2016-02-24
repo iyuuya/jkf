@@ -450,11 +450,11 @@ module Jkf::Parser
 
     def parse_te
       s0 = []
-      s1 = match_regexp(/^[0-9]/)
+      s1 = match_digit
       if s1 != :failed
         while s1 != :failed
           s0 << s1
-          s1 = match_regexp(/^[0-9]/)
+          s1 = match_digit
         end
       else
         s0 = :failed
@@ -622,12 +622,12 @@ module Jkf::Parser
 
     def parse_hms
       s0 = @current_pos
-      s2 = match_regexp(/^[0-9]/)
+      s2 = match_digit
       if s2 != :failed
         s1 = []
         while s2 != :failed
           s1 << s2
-          s2 = match_regexp(/^[0-9]/)
+          s2 = match_digit
         end
       else
         s1 = :failed
@@ -635,24 +635,24 @@ module Jkf::Parser
 
       if s1 != :failed
         if match_str(":") != :failed
-          s4 = match_regexp(/^[0-9]/)
+          s4 = match_digit
           if s4 != :failed
             s3 = []
             while s4 != :failed
               s3 << s4
-              s4 = match_regexp(/^[0-9]/)
+              s4 = match_digit
             end
           else
             s3 = :failed
           end
           if s3 != :failed
             if match_str(":") != :failed
-              s6 = match_regexp(/^[0-9]/)
+              s6 = match_digit
               if s6 != :failed
                 s5 = []
                 while s6 != :failed
                   s5 << s6
-                  s6 = match_regexp(/^[0-9]/)
+                  s6 = match_digit
                 end
               else
                 s5 = :failed
@@ -685,24 +685,24 @@ module Jkf::Parser
 
     def parse_ms(with_hour: false)
       s0 = @current_pos
-      s2 = match_regexp(/^[0-9]/)
+      s2 = match_digit
       if s2 != :failed
         s1 = []
         while s2 != :failed
           s1 << s2
-          s2 = match_regexp(/^[0-9]/)
+          s2 = match_digit
         end
       else
         s1 = :failed
       end
       if s1 != :failed
         if match_str(":") != :failed
-          s4 = match_regexp(/^[0-9]/)
+          s4 = match_digit
           if s4 != :failed
             s3 = []
             while s4 != :failed
               s3 << s4
-              s4 = match_regexp(/^[0-9]/)
+              s4 = match_digit
             end
           else
             s3 = :failed
@@ -782,12 +782,12 @@ module Jkf::Parser
       s0 = @current_pos
 
       if match_str("まで") != :failed
-        s3 = match_regexp(/^[0-9]/)
+        s3 = match_digit
         if s3 != :failed
           s2 = []
           while s3 != :failed
             s2 << s3
-            s3 = match_regexp(/^[0-9]/)
+            s3 = match_digit
           end
         else
           s2 = :failed

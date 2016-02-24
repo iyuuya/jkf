@@ -215,8 +215,7 @@ module Jkf::Parser
           parse_comments
           s5 = parse_teban
           if s5 != :failed
-            s6 = parse_nl
-            if s6 != :failed
+            if parse_nl != :failed
               @reported_pos = s0
               -> (data, koma, teban) do
                 if data == "NO"

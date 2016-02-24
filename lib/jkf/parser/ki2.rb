@@ -80,30 +80,32 @@ module Jkf::Parser
         @current_pos = s0
         s0 = :failed
       end
-      if s0 == :failed
-        s0 = @current_pos
-        s1 = match_regexp(/^[先後上下]/)
-        if s1 != :failed
-          s2 = match_str("手番")
-          if s2 != :failed
-            s3 = parse_nl
-            if s3 != :failed
-              @reported_pos = s0
-              s0 = { "k" => "手番", "v" => s1 }
-            else
-              @current_pos = s0
-              s0 = :failed
-            end
+      s0 = parse_header_teban if s0 == :failed
+      s0
+    end
+
+    def parse_header_teban
+      s0 = @current_pos
+      s1 = match_regexp(/^[先後上下]/)
+      if s1 != :failed
+        s2 = match_str("手番")
+        if s2 != :failed
+          s3 = parse_nl
+          if s3 != :failed
+            @reported_pos = s0
+            { "k" => "手番", "v" => s1 }
           else
             @current_pos = s0
-            s0 = :failed
+            :failed
           end
         else
           @current_pos = s0
-          s0 = :failed
+          :failed
         end
+      else
+        @current_pos = s0
+        :failed
       end
-      s0
     end
 
     def parse_initialboard

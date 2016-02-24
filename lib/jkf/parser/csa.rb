@@ -774,10 +774,10 @@ module Jkf::Parser
       if s0 == :failed
         s0 = @current_pos
         s1 = []
-        s2 = match_str(" ")
+        s2 = match_space
         while s2 != :failed
           s1 << s2
-          s2 = match_str(" ")
+          s2 = match_space
         end
         s2 = match_str(",")
         if s2 != :failed

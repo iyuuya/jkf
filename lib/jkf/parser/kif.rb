@@ -129,7 +129,7 @@ module Jkf::Parser
 
     def parse_initial_board
       s0 = s1 = @current_pos
-      s2 = match_str(" ")
+      s2 = match_space
       if s2 != :failed
         s3 = []
         s4 = parse_nonl
@@ -271,7 +271,7 @@ module Jkf::Parser
 
     def parse_teban
       s0 = @current_pos
-      s1 = match_str(" ")
+      s1 = match_space
       if s1 == :failed
         s1 = match_str("+")
         s1 = match_str("^") if s1 == :failed
@@ -396,18 +396,18 @@ module Jkf::Parser
     def parse_line
       s0 = @current_pos
       s1 = []
-      s2 = match_str(" ")
+      s2 = match_space
       while s2 != :failed
         s1 << s2
-        s2 = match_str(" ")
+        s2 = match_space
       end
       s2 = parse_te
       if s2 != :failed
         s3 = []
-        s4 = match_str(" ")
+        s4 = match_space
         while s4 != :failed
           s3 << s4
-          s4 = match_str(" ")
+          s4 = match_space
         end
         s4 = @current_pos
         s5 = parse_fugou
@@ -437,10 +437,10 @@ module Jkf::Parser
         end
         if s4 != :failed
           s5 = []
-          s6 = match_str(" ")
+          s6 = match_space
           while s6 != :failed
             s5 << s6
-            s6 = match_str(" ")
+            s6 = match_space
           end
           s6 = parse_time
           s6 = nil if s6 == :failed
@@ -603,10 +603,10 @@ module Jkf::Parser
       s0 = @current_pos
       if match_str("(") != :failed
         s2 = []
-        s3 = match_str(" ")
+        s3 = match_space
         while s3 != :failed
           s2 << s3
-          s3 = match_str(" ")
+          s3 = match_space
         end
         s3 = parse_ms
         if s3 != :failed
@@ -975,10 +975,10 @@ module Jkf::Parser
       s0 = @current_pos
       if match_str("変化：") != :failed
         s2 = []
-        s3 = match_str(" ")
+        s3 = match_space
         while s3 != :failed
           s2 << s3
-          s3 = match_str(" ")
+          s3 = match_space
         end
         s3 = parse_te
         if s3 != :failed

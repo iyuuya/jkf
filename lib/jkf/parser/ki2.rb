@@ -113,7 +113,7 @@ module Jkf::Parser
 
     def parse_initialboard
       s0 = s1 = @current_pos
-      s2 = match_str(" ")
+      s2 = match_space
       if s2 != :failed
         s3 = []
         s4 = parse_nonl
@@ -270,7 +270,7 @@ module Jkf::Parser
 
     def parse_teban
       s0 = @current_pos
-      s1 = match_str(" ")
+      s1 = match_space
       s1 = match_str("+") if s1 == :failed
       s1 = match_str("^") if s1 == :failed
       if s1 != :failed
@@ -343,11 +343,11 @@ module Jkf::Parser
         parse_pointer
         s4 = []
         s5 = parse_nl
-        s5 = match_str(" ") if s5 == :failed
+        s5 = match_space if s5 == :failed
         while s5 != :failed
           s4 << s5
           s5 = parse_nl
-          s5 = match_str(" ") if s5 == :failed
+          s5 = match_space if s5 == :failed
         end
         @reported_pos = s0
         s0 = -> (line, c) do
@@ -400,11 +400,11 @@ module Jkf::Parser
         if s2 != :failed
           s3 = []
           s4 = parse_nl
-          s4 = match_str(" ") if s4 == :failed
+          s4 = match_space if s4 == :failed
           while s4 != :failed
             s3 << s4
             s4 = parse_nl
-            s4 = match_str(" ") if s4 == :failed
+            s4 = match_space if s4 == :failed
           end
           @reported_pos = s0
           s0 = s2.merge(s1)
@@ -737,10 +737,10 @@ module Jkf::Parser
       s0 = @current_pos
       if match_str("変化：") != :failed
         s2 = []
-        s3 = match_str(" ")
+        s3 = match_space
         while s3 != :failed
           s2 << s3
-          s3 = match_str(" ")
+          s3 = match_space
         end
         s4 = match_regexp(/^[0-9]/)
         if s4 != :failed
@@ -838,7 +838,7 @@ module Jkf::Parser
     end
 
     def parse_whitespace
-      s0 = match_str(" ")
+      s0 = match_space
       s0 = match_str("\t") if s0 == :failed
       s0
     end

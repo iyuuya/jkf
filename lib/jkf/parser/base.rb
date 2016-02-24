@@ -53,6 +53,10 @@ module Jkf::Parser
       ret
     end
 
+    def match_space
+      match_str(" ")
+    end
+
     def fail(expected)
       return if @current_pos < @max_fail_pos
 

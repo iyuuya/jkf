@@ -40,12 +40,7 @@ module Jkf::Parser
 
     def parse_version22
       s0 = @current_pos
-      s1 = []
-      s2 = parse_comment
-      while s2 != :failed
-        s1 << s2
-        s2 = parse_comment
-      end
+      s1 = parse_comments
       s2 = match_str("V2.2")
       if s2 != :failed
         s3 = parse_nl
@@ -98,12 +93,7 @@ module Jkf::Parser
 
     def parse_header
       s0 = @current_pos
-      s1 = []
-      s2 = parse_comment
-      while s2 != :failed
-        s1 << s2
-        s2 = parse_comment
-      end
+      parse_comments
       if match_str("$") != :failed
         s4 = match_regexp(/^[^:]/)
         if s4 != :failed
@@ -171,12 +161,7 @@ module Jkf::Parser
 
     def parse_players
       s0 = @current_pos
-      s1 = []
-      s2 = parse_comment
-      while s2 != :failed
-        s1 << s2
-        s2 = parse_comment
-      end
+      parse_comments
       s2 = @current_pos
       if match_str("N+") != :failed
         s4 = []
@@ -197,12 +182,7 @@ module Jkf::Parser
         s2 = :failed
       end
       s2 = nil if s2 == :failed
-      s3 = []
-      s4 = parse_comment
-      while s4 != :failed
-        s3 << s4
-        s4 = parse_comment
-      end
+      parse_comments
       s4 = @current_pos
       if match_str("N-") != :failed
         s6 = []
@@ -230,12 +210,7 @@ module Jkf::Parser
 
     def parse_initial_board
       s0 = @current_pos
-      s1 = []
-      s2 = parse_comment
-      while s2 != :failed
-        s1 << s2
-        s2 = parse_comment
-      end
+      parse_comments
       s2 = parse_hirate
       if s2 == :failed
         s2 = parse_ikkatsu
@@ -252,18 +227,13 @@ module Jkf::Parser
       if s2 != :failed
         s3 = parse_komabetsu
         if s3 != :failed
-          s4 = []
-          s5 = parse_comment
-          while s5 != :failed
-            s4 << s5
-            s5 = parse_comment
-          end
+          parse_comments
           s5 = parse_teban
           if s5 != :failed
             s6 = parse_nl
             if s6 != :failed
               @reported_pos = s0
-              s0 = -> (data, koma, teban) do
+              -> (data, koma, teban) do
                 if data == "NO"
                   data = koma
                 else
@@ -274,21 +244,20 @@ module Jkf::Parser
               end.call(s2, s3, s5)
             else
               @current_pos = s0
-              s0 = :failed
+              :failed
             end
           else
             @current_pos = s0
-            s0 = :failed
+            :failed
           end
         else
           @current_pos = s0
-          s0 = :failed
+          :failed
         end
       else
         @current_pos = s0
-        s0 = :failed
+        :failed
       end
-      s0
     end
 
     def parse_hirate
@@ -509,8 +478,7 @@ module Jkf::Parser
           s2 << s3
           s3 = parse_move
         end
-        s3 = parse_comment
-        s3 = parse_comment while s3 != :failed
+        parse_comments
         @reported_pos = s0
         s0 = s2.unshift(s1)
       else
@@ -522,12 +490,7 @@ module Jkf::Parser
 
     def parse_firstboard
       s0 = @current_pos
-      s1 = []
-      s2 = parse_comment
-      while s2 != :failed
-        s1 << s2
-        s2 = parse_comment
-      end
+      s1 = parse_comments
       @reported_pos = s0
       s1.empty? ? {} : { "comments" => s1 }
     end
@@ -539,12 +502,7 @@ module Jkf::Parser
       if s1 != :failed
         s2 = parse_time
         s2 = nil if s2 == :failed
-        s3 = []
-        s4 = parse_comment
-        while s4 != :failed
-          s3 << s4
-          s4 = parse_comment
-        end
+        s3 = parse_comments
         @reported_pos = s0
         s0 = -> (move, time, comments) do
           ret = {}
@@ -668,16 +626,25 @@ module Jkf::Parser
         end
         if parse_nl != :failed
           @reported_pos = s0
-          s0 = s2.join
+          s2.join
         else
           @current_pos = s0
-          s0 = :failed
+          :failed
         end
       else
         @current_pos = s0
-        s0 = :failed
+        :failed
       end
-      s0
+    end
+
+    def parse_comments
+      stack = []
+      matched = parse_comment
+      while matched != :failed
+        stack << matched
+        matched = parse_comment
+      end
+      stack
     end
 
     def parse_time

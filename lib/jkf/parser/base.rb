@@ -71,6 +71,25 @@ module Jkf::Parser
       match_regexp(/^\d/)
     end
 
+    def match_digits
+      stack = []
+      matched = match_digit
+      while matched != :failed
+        stack << matched
+        matched = match_digit
+      end
+      stack
+    end
+
+    def match_digits!
+      matched = match_digits
+      if matched.empty?
+        :failed
+      else
+        matched
+      end
+    end
+
     def fail(expected)
       return if @current_pos < @max_fail_pos
 

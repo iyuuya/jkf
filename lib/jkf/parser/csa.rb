@@ -683,12 +683,7 @@ module Jkf::Parser
     def parse_time
       s0 = @current_pos
       if match_str("T") != :failed
-        s2 = []
-        s3 = match_digit
-        while s3 != :failed
-          s2 << s3
-          s3 = match_digit
-        end
+        s2 = match_digits
         if parse_nl != :failed
           @reported_pos = s0
           s0 = { "now" => sec2time(s2.join.to_i) }

@@ -385,31 +385,15 @@ module Jkf::Parser
           s6 = match_str("打")
           s6 = nil if s6 == :failed
           @reported_pos = s0
-          s0 = -> (pl, pi, sou, dou, pro, da) do
-            ret = { "piece" => pi }
-            if pl["same"]
-              ret["same"] = true
-            else
-              ret["to"] = pl
-            end
-            ret["promote"] = (pro == "成") if pro
-            if da
-              ret["relative"] = "H"
-            else
-              rel = soutai2relative(sou) + dousa2relative(dou)
-              ret["relative"] = rel unless rel.empty?
-            end
-            ret
-          end.call(s1, s2, s3, s4, s5, s6)
+          transform_fugou(s1, s2, s3, s4, s5, s6)
         else
           @current_pos = s0
-          s0 = :failed
+          :failed
         end
       else
         @current_pos = s0
-        s0 = :failed
+        :failed
       end
-      s0
     end
 
     def parse_place
@@ -901,6 +885,23 @@ module Jkf::Parser
         board << line
       end
       { "preset" => "OTHER", "data" => { "board" => board } }
+    end
+
+    def transform_fugou(pl, pi, sou, dou, pro, da)
+      ret = { "piece" => pi }
+      if pl["same"]
+        ret["same"] = true
+      else
+        ret["to"] = pl
+      end
+      ret["promote"] = (pro == "成") if pro
+      if da
+        ret["relative"] = "H"
+      else
+        rel = soutai2relative(sou) + dousa2relative(dou)
+        ret["relative"] = rel unless rel.empty?
+      end
+      ret
     end
 
     def zen2n(s)

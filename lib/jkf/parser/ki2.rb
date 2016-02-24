@@ -846,23 +846,25 @@ module Jkf::Parser
         preset = preset2str(ret["header"]["手合割"])
         ret["initial"] = { "preset" => preset } if preset != "OTHER"
       end
-      if ret["initial"] && ret["initial"]["data"]
-        if ret["header"]["手番"]
-          ret["initial"]["data"]["color"] = "下先".index(ret["header"]["手番"]) >= 0 ? 0 : 1
-          ret["header"].delete("手番")
-        else
-          ret["initial"]["data"]["color"] = 0
-        end
-        ret["initial"]["data"]["hands"] = [
-          make_hand(ret["header"]["先手の持駒"] || ret["header"]["下手の持駒"]),
-          make_hand(ret["header"]["後手の持駒"] || ret["header"]["上手の持駒"])
-        ]
-        %w(先手の持駒 下手の持駒 後手の持駒 上手の持駒).each do |key|
-          ret["header"].delete(key)
-        end
-      end
+      transform_root_header_data(ret) if ret["initial"] && ret["initial"]["data"]
       transform_root_forks(forks, moves)
       ret
+    end
+
+    def transform_root_header_data(ret)
+      if ret["header"]["手番"]
+        ret["initial"]["data"]["color"] = "下先".index(ret["header"]["手番"]) >= 0 ? 0 : 1
+        ret["header"].delete("手番")
+      else
+        ret["initial"]["data"]["color"] = 0
+      end
+      ret["initial"]["data"]["hands"] = [
+        make_hand(ret["header"]["先手の持駒"] || ret["header"]["下手の持駒"]),
+        make_hand(ret["header"]["後手の持駒"] || ret["header"]["上手の持駒"])
+      ]
+      %w(先手の持駒 下手の持駒 後手の持駒 上手の持駒).each do |key|
+        ret["header"].delete(key)
+      end
     end
 
     def transform_root_forks(forks, moves)

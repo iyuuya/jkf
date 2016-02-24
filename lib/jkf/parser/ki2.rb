@@ -572,13 +572,7 @@ module Jkf::Parser
             if match_str("で") != :failed
               if parse_turn != :failed
                 if match_str("手の") != :failed
-                  s8 = @current_pos
-                  s9 = match_str("勝ち")
-                  if s9 != :failed
-                    @reported_pos = s8
-                    s9 = "TORYO"
-                  end
-                  s8 = s9
+                  s8 = parse_result_toryo
                   s8 = parse_result_illegal if s8 == :failed
                   s4 = if s8 != :failed
                          @reported_pos = s4
@@ -616,7 +610,7 @@ module Jkf::Parser
               end
             end
             if s4 != :failed
-              if parse_nl != :failed || @input[@current_pos].nil?
+              if parse_nl != :failed || eos?
                 @reported_pos = s0
                 s4
               else
@@ -635,6 +629,18 @@ module Jkf::Parser
           @current_pos = s0
           :failed
         end
+      else
+        @current_pos = s0
+        :failed
+      end
+    end
+
+    def parse_result_toryo
+      s0 = @current_pos
+      s1 = match_str("勝ち")
+      if s1 != :failed
+        @reported_pos = s0
+        "TORYO"
       else
         @current_pos = s0
         :failed
@@ -1020,6 +1026,10 @@ module Jkf::Parser
       end
 
       ret
+    end
+
+    def eos?
+      @input[@current_pos].nil?
     end
   end
 end

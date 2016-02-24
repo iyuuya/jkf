@@ -21,7 +21,7 @@ module Jkf::Parser
         s2 << s3
         s3 = parse_header
       end
-      s3 = parse_initial_board
+      s3 = parse_initialboard
       s3 = nil if s3 == :failed
       s4 = []
       s5 = parse_header
@@ -51,9 +51,9 @@ module Jkf::Parser
 
     def parse_header
       s0 = @current_pos
-      s1 = []
       s2 = match_regexp(/^[^：\r\n]/)
       if s2 != :failed
+        s1 = []
         while s2 != :failed
           s1 << s2
           s2 = match_regexp(/^[^：\r\n]/)
@@ -124,13 +124,12 @@ module Jkf::Parser
       match_regexp(/[先後上下]/)
     end
 
-    def parse_initial_board
+    def parse_initialboard
       s0 = s1 = @current_pos
-      s2 = match_space
-      if s2 != :failed
+      if match_space != :failed
         parse_nonls
-        s4 = parse_nl
-        @current_pos = s1 if s4 == :failed
+        s2 = parse_nl
+        @current_pos = s1 if s2 == :failed
       else
         @current_pos = s1
       end
@@ -141,12 +140,12 @@ module Jkf::Parser
       else
         @current_pos = s2
       end
-      s4 = parse_ikkatsu_line
+      s4 = parse_ikkatsuline
       if s4 != :failed
         s3 = []
         while s4 != :failed
           s3 << s4
-          s4 = parse_ikkatsu_line
+          s4 = parse_ikkatsuline
         end
       else
         s3 = :failed
@@ -160,21 +159,19 @@ module Jkf::Parser
           @current_pos = s4
         end
         @reported_pos = s0
-        s0 = transform_initialboard(s3)
+        transform_initialboard(s3)
       else
         @current_pos = s0
-        s0 = :failed
+        :failed
       end
-
-      s0
     end
 
-    def parse_ikkatsu_line
+    def parse_ikkatsuline
       s0 = @current_pos
       if match_str("|") != :failed
-        s2 = []
         s3 = parse_masu
         if s3 != :failed
+          s2 = []
           while s3 != :failed
             s2 << s3
             s3 = parse_masu

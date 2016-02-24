@@ -228,8 +228,10 @@ module Jkf::Parser
     def parse_teban
       s0 = @current_pos
       s1 = match_space
-      s1 = match_str("+") if s1 == :failed
-      s1 = match_str("^") if s1 == :failed
+      if s1 == :failed
+        s1 = match_str("+")
+        s1 = match_str("^") if s1 == :failed
+      end
       if s1 != :failed
         @reported_pos = s0
         s1 = 0

@@ -54,12 +54,7 @@ module Jkf::Parser
       end
       if s1 != :failed
         if match_str("：") != :failed
-          s3 = []
-          s4 = parse_nonl
-          while s4 != :failed
-            s3 << s4
-            s4 = parse_nonl
-          end
+          s3 = parse_nonls
           s5 = parse_nl
           if s5 != :failed
             s4 = []
@@ -115,12 +110,7 @@ module Jkf::Parser
       s0 = s1 = @current_pos
       s2 = match_space
       if s2 != :failed
-        s3 = []
-        s4 = parse_nonl
-        while s4 != :failed
-          s3 << s4
-          s4 = parse_nonl
-        end
+        s3 = parse_nonls
         s4 = parse_nl
         if s4 != :failed
           s1 = [s2, s3, s4]
@@ -131,14 +121,8 @@ module Jkf::Parser
         @current_pos = s1
       end
       s2 = @current_pos
-      s3 = match_str("+")
-      if s3 != :failed
-        s4 = []
-        s5 = parse_nonl
-        while s5 != :failed
-          s4 << s5
-          s5 = parse_nonl
-        end
+      if match_str("+") != :failed
+        parse_nonls
         @current_pos = s2 if parse_nl == :failed
       else
         @current_pos = s2
@@ -156,12 +140,7 @@ module Jkf::Parser
       if s3 != :failed
         s4 = @current_pos
         if match_str("+") != :failed
-          s6 = []
-          s7 = parse_nonl
-          while s7 != :failed
-            s6 << s7
-            s7 = parse_nonl
-          end
+          parse_nonls
           @current_pos = s4 if parse_nl == :failed
         else
           @current_pos = s4
@@ -201,16 +180,7 @@ module Jkf::Parser
         end
         if s2 != :failed
           if match_str("|") != :failed
-            s5 = parse_nonl
-            if s5 != :failed
-              s4 = []
-              while s5 != :failed
-                s4 << s5
-                s5 = parse_nonl
-              end
-            else
-              s4 = :failed
-            end
+            s4 = parse_nonls!
             if s4 != :failed
               if parse_nl != :failed
                 @reported_pos = s0
@@ -367,12 +337,7 @@ module Jkf::Parser
       s0 = @current_pos
       s1 = match_str("&")
       if s1 != :failed
-        s2 = []
-        s3 = parse_nonl
-        while s3 != :failed
-          s2 << s3
-          s3 = parse_nonl
-        end
+        s2 = parse_nonls
         s3 = parse_nl
         if s3 != :failed
           s0 = [s1, s2, s3]
@@ -541,12 +506,7 @@ module Jkf::Parser
     def parse_comment
       s0 = @current_pos
       if match_str("*") != :failed
-        s2 = []
-        s3 = parse_nonl
-        while s3 != :failed
-          s2 << s3
-          s3 = parse_nonl
-        end
+        s2 = parse_nonls
         s3 = parse_nl
         if s3 != :failed
           @reported_pos = s0
@@ -831,12 +791,7 @@ module Jkf::Parser
       s0 = @current_pos
       s1 = match_str("#")
       if s1 != :failed
-        s2 = []
-        s3 = parse_nonl
-        while s3 != :failed
-          s2 << s3
-          s3 = parse_nonl
-        end
+        s2 = parse_nonls
         s3 = parse_newline
         if s3 != :failed
           s0 = [s1, s2, s3]
@@ -889,6 +844,25 @@ module Jkf::Parser
 
     def parse_nonl
       match_regexp(/^[^\r\n]/)
+    end
+
+    def parse_nonls
+      stack = []
+      matched = parse_nonl
+      while matched != :failed
+        stack << matched
+        matched = parse_nonl
+      end
+      stack
+    end
+
+    def parse_nonls!
+      matched = parse_nonls
+      if matched.empty?
+        :failed
+      else
+        matched
+      end
     end
 
     protected

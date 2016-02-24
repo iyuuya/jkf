@@ -600,32 +600,9 @@ module Jkf::Parser
               s4 = :failed
             end
             if s4 == :failed
-              s4 = @current_pos
-              s4 = if match_str("で時間切れにより") != :failed
-                     if parse_turn != :failed
-                       if match_str("手の勝ち") != :failed
-                         @reported_pos = s4
-                         "TIME_UP"
-                       else
-                         @current_pos = s4
-                         :failed
-                       end
-                     else
-                       @current_pos = s4
-                       :failed
-                     end
-                   else
-                     @current_pos = s4
-                     :failed
-                   end
+              s4 = parse_result_timeup
               if s4 == :failed
-                s4 = @current_pos
-                s5 = match_str("で中断")
-                if s5 != :failed
-                  @reported_pos = s4
-                  s5 = "CHUDAN"
-                end
-                s4 = s5
+                s4 = parse_result_chudan
                 if s4 == :failed
                   s4 = @current_pos
                   s5 = match_str("で持将棋")
@@ -721,6 +698,38 @@ module Jkf::Parser
         end
       else
         @current_pos = s0
+        :failed
+      end
+    end
+
+    def parse_result_timeup
+      s0 = @current_pos
+      if match_str("で時間切れにより") != :failed
+        if parse_turn != :failed
+          if match_str("手の勝ち") != :failed
+            @reported_pos = s0
+            "TIME_UP"
+          else
+            @current_pos = s0
+            :failed
+          end
+        else
+          @current_pos = s0
+          :failed
+        end
+      else
+        @current_pos = s0
+        :failed
+      end
+    end
+
+    def parse_result_chudan
+      s0 = @current_pos
+      s1 = match_str("で中断")
+      if s1 != :failed
+        @reported_pos = s0
+        "CHUDAN"
+      else
         :failed
       end
     end

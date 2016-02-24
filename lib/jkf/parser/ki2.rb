@@ -579,44 +579,14 @@ module Jkf::Parser
                     s9 = "TORYO"
                   end
                   s8 = s9
-                  if s8 == :failed
-                    s8 = @current_pos
-                    if match_str("反則") != :failed
-                      s10 = @current_pos
-                      s11 = match_str("勝ち")
-                      if s11 != :failed
-                        @reported_pos = s10
-                        s11 = "ILLEGAL_ACTION"
-                      end
-                      s10 = s11
-                      if s10 == :failed
-                        s10 = @current_pos
-                        s11 = match_str("負け")
-                        if s11 != :failed
-                          @reported_pos = s10
-                          s11 = "ILLEGAL_MOVE"
-                        end
-                        s10 = s11
-                      end
-                      if s10 != :failed
-                        @reported_pos = s8
-                        s8 = s10
-                      else
-                        @current_pos = s8
-                        s8 = :failed
-                      end
-                    else
-                      @current_pos = s8
-                      s8 = :failed
-                    end
-                  end
-                  if s8 != :failed
-                    @reported_pos = s4
-                    s4 = s8
-                  else
-                    @current_pos = s4
-                    s4 = :failed
-                  end
+                  s8 = parse_result_illegal if s8 == :failed
+                  s4 = if s8 != :failed
+                         @reported_pos = s4
+                         s8
+                       else
+                         @current_pos = s4
+                         :failed
+                       end
                 else
                   @current_pos = s4
                   s4 = :failed
@@ -631,23 +601,23 @@ module Jkf::Parser
             end
             if s4 == :failed
               s4 = @current_pos
-              if match_str("で時間切れにより") != :failed
-                if parse_turn != :failed
-                  if match_str("手の勝ち") != :failed
-                    @reported_pos = s4
-                    s4 = "TIME_UP"
-                  else
-                    @current_pos = s4
-                    s4 = :failed
-                  end
-                else
-                  @current_pos = s4
-                  s4 = :failed
-                end
-              else
-                @current_pos = s4
-                s4 = :failed
-              end
+              s4 = if match_str("で時間切れにより") != :failed
+                     if parse_turn != :failed
+                       if match_str("手の勝ち") != :failed
+                         @reported_pos = s4
+                         "TIME_UP"
+                       else
+                         @current_pos = s4
+                         :failed
+                       end
+                     else
+                       @current_pos = s4
+                       :failed
+                     end
+                   else
+                     @current_pos = s4
+                     :failed
+                   end
               if s4 == :failed
                 s4 = @current_pos
                 s5 = match_str("で中断")
@@ -675,14 +645,14 @@ module Jkf::Parser
                     if s4 == :failed
                       s4 = @current_pos
                       match_str("で")
-                      if match_str("詰") != :failed
-                        match_str("み")
-                        @reported_pos = s4
-                        s4 = "TSUMI"
-                      else
-                        @current_pos = s4
-                        s4 = :failed
-                      end
+                      s4 = if match_str("詰") != :failed
+                             match_str("み")
+                             @reported_pos = s4
+                             "TSUMI"
+                           else
+                             @current_pos = s4
+                             :failed
+                           end
                       if s4 == :failed
                         s4 = @current_pos
                         s5 = match_str("で不詰")
@@ -700,28 +670,59 @@ module Jkf::Parser
             if s4 != :failed
               if parse_nl != :failed || @input[@current_pos].nil?
                 @reported_pos = s0
-                s0 = s4
+                s4
               else
                 @current_pos = s0
-                s0 = :failed
+                :failed
               end
             else
               @current_pos = s0
-              s0 = :failed
+              :failed
             end
           else
             @current_pos = s0
-            s0 = :failed
+            :failed
           end
         else
           @current_pos = s0
-          s0 = :failed
+          :failed
         end
       else
         @current_pos = s0
-        s0 = :failed
+        :failed
       end
-      s0
+    end
+
+    def parse_result_illegal
+      s0 = @current_pos
+      if match_str("反則") != :failed
+        s10 = @current_pos
+        s11 = match_str("勝ち")
+        if s11 != :failed
+          @reported_pos = s10
+          s11 = "ILLEGAL_ACTION"
+        end
+        s10 = s11
+        if s10 == :failed
+          s10 = @current_pos
+          s11 = match_str("負け")
+          if s11 != :failed
+            @reported_pos = s10
+            s11 = "ILLEGAL_MOVE"
+          end
+          s10 = s11
+        end
+        if s10 != :failed
+          @reported_pos = s0
+          s10
+        else
+          @current_pos = s0
+          :failed
+        end
+      else
+        @current_pos = s0
+        :failed
+      end
     end
 
     def parse_fork

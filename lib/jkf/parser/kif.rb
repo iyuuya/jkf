@@ -1042,6 +1042,14 @@ module Jkf::Parser
           ret["header"].delete(key)
         end
       end
+      transform_root_forks(forks, moves)
+      if ret["initial"] && ret["initial"]["data"] && ret["initial"]["data"]["color"] == 1
+        reverse_color(ret["moves"])
+      end
+      ret
+    end
+
+    def transform_root_forks(forks, moves)
       fork_stack = [{ "te" => 0, "moves" => moves }]
       forks.each do |f|
         now_fork = f
@@ -1053,10 +1061,6 @@ module Jkf::Parser
         fork_stack << _fork
         fork_stack << now_fork
       end
-      if ret["initial"] && ret["initial"]["data"] && ret["initial"]["data"]["color"] == 1
-        reverse_color(ret["moves"])
-      end
-      ret
     end
 
     def transform_initial_board(lines)

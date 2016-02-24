@@ -23,18 +23,25 @@ module Jkf::Converter
 
     def convert_header(header)
       header.map do |(key, value)|
-        result = "#{key}：#{value}\n"
+        result = add_header(key, value)
         if key =~ /\A[先後上下]手\Z/
-          if key =~ /[先下]/
-            @header2.unshift result
-          else
-            @header2 << result
-          end
           nil
         else
           result
         end
       end.compact.join
+    end
+
+    def add_header(key, value)
+      result = "#{key}：#{value}\n"
+      if key =~ /\A[先後上下]手\Z/
+        if key =~ /[先下]/
+          @header2.unshift result
+        else
+          @header2 << result
+        end
+      end
+      result
     end
 
     def convert_moves(moves, idx = 0)

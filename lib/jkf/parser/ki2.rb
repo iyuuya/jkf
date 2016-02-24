@@ -110,15 +110,10 @@ module Jkf::Parser
 
     def parse_initialboard
       s0 = s1 = @current_pos
-      s2 = match_space
-      if s2 != :failed
-        s3 = parse_nonls
-        s4 = parse_nl
-        if s4 != :failed
-          s1 = [s2, s3, s4]
-        else
-          @current_pos = s1
-        end
+      if match_space != :failed
+        parse_nonls
+        s2 = parse_nl
+        @current_pos = s1 if s2 == :failed
       else
         @current_pos = s1
       end
@@ -148,23 +143,11 @@ module Jkf::Parser
           @current_pos = s4
         end
         @reported_pos = s0
-        s0 = -> (lines) do
-          board = []
-          9.times do |i|
-            line = []
-            9.times do |j|
-              line << lines[j][8 - i]
-            end
-            board << line
-          end
-          { "preset" => "OTHER", "data" => { "board" => board } }
-        end.call(s3)
+        transform_initialboard(s3)
       else
         @current_pos = s0
-        s0 = :failed
+        :failed
       end
-
-      s0
     end
 
     def parse_ikkatsuline
@@ -906,6 +889,18 @@ module Jkf::Parser
         fork_stack << now_fork
       end
       ret
+    end
+
+    def transform_initialboard(lines)
+      board = []
+      9.times do |i|
+        line = []
+        9.times do |j|
+          line << lines[j][8 - i]
+        end
+        board << line
+      end
+      { "preset" => "OTHER", "data" => { "board" => board } }
     end
 
     def zen2n(s)

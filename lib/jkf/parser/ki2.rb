@@ -736,12 +736,7 @@ module Jkf::Parser
     def parse_fork
       s0 = @current_pos
       if match_str("変化：") != :failed
-        s2 = []
-        s3 = match_space
-        while s3 != :failed
-          s2 << s3
-          s3 = match_space
-        end
+        match_spaces
         s4 = match_regexp(/^[0-9]/)
         if s4 != :failed
           s3 = []

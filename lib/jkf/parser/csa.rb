@@ -773,12 +773,7 @@ module Jkf::Parser
       end
       if s0 == :failed
         s0 = @current_pos
-        s1 = []
-        s2 = match_space
-        while s2 != :failed
-          s1 << s2
-          s2 = match_space
-        end
+        s1 = match_spaces
         s2 = match_str(",")
         if s2 != :failed
           s0 = [s1, s2]

@@ -395,20 +395,10 @@ module Jkf::Parser
 
     def parse_line
       s0 = @current_pos
-      s1 = []
-      s2 = match_space
-      while s2 != :failed
-        s1 << s2
-        s2 = match_space
-      end
+      match_spaces
       s2 = parse_te
       if s2 != :failed
-        s3 = []
-        s4 = match_space
-        while s4 != :failed
-          s3 << s4
-          s4 = match_space
-        end
+        match_spaces
         s4 = @current_pos
         s5 = parse_fugou
         if s5 != :failed
@@ -436,12 +426,7 @@ module Jkf::Parser
           s4 = s5.join
         end
         if s4 != :failed
-          s5 = []
-          s6 = match_space
-          while s6 != :failed
-            s5 << s6
-            s6 = match_space
-          end
+          match_spaces
           s6 = parse_time
           s6 = nil if s6 == :failed
           match_str("+")
@@ -602,12 +587,7 @@ module Jkf::Parser
     def parse_time
       s0 = @current_pos
       if match_str("(") != :failed
-        s2 = []
-        s3 = match_space
-        while s3 != :failed
-          s2 << s3
-          s3 = match_space
-        end
+        match_spaces
         s3 = parse_ms
         if s3 != :failed
           if match_str("/") != :failed
@@ -974,12 +954,7 @@ module Jkf::Parser
     def parse_fork
       s0 = @current_pos
       if match_str("変化：") != :failed
-        s2 = []
-        s3 = match_space
-        while s3 != :failed
-          s2 << s3
-          s3 = match_space
-        end
+        match_spaces
         s3 = parse_te
         if s3 != :failed
           if match_str("手") != :failed

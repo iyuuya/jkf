@@ -604,41 +604,12 @@ module Jkf::Parser
               if s4 == :failed
                 s4 = parse_result_chudan
                 if s4 == :failed
-                  s4 = @current_pos
-                  s5 = match_str("で持将棋")
-                  if s5 != :failed
-                    @reported_pos = s4
-                    s5 = "JISHOGI"
-                  end
-                  s4 = s5
+                  s4 = parse_result_jishogi
                   if s4 == :failed
-                    s4 = @current_pos
-                    s5 = match_str("で千日手")
-                    if s5 != :failed
-                      @reported_pos = s4
-                      s5 = "SENNICHITE"
-                    end
-                    s4 = s5
+                    s4 = parse_result_sennichite
                     if s4 == :failed
-                      s4 = @current_pos
-                      match_str("で")
-                      s4 = if match_str("詰") != :failed
-                             match_str("み")
-                             @reported_pos = s4
-                             "TSUMI"
-                           else
-                             @current_pos = s4
-                             :failed
-                           end
-                      if s4 == :failed
-                        s4 = @current_pos
-                        s5 = match_str("で不詰")
-                        if s5 != :failed
-                          @reported_pos = s4
-                          s5 = "FUZUMI"
-                        end
-                        s4 = s5
-                      end
+                      s4 = parse_result_tsumi
+                      s4 = parse_result_fuzumi if s4 == :failed
                     end
                   end
                 end
@@ -730,6 +701,56 @@ module Jkf::Parser
         @reported_pos = s0
         "CHUDAN"
       else
+        @current_pos = s0
+        :failed
+      end
+    end
+
+    def parse_result_jishogi
+      s0 = @current_pos
+      s1 = match_str("で持将棋")
+      if s1 != :failed
+        @reported_pos = s0
+        "JISHOGI"
+      else
+        @current_pos = s0
+        :failed
+      end
+    end
+
+    def parse_result_sennichite
+      s0 = @current_pos
+      s1 = match_str("で千日手")
+      if s1 != :failed
+        @reported_pos = s0
+        "SENNICHITE"
+      else
+        @current_pos = s0
+        :failed
+      end
+    end
+
+    def parse_result_tsumi
+      s0 = @current_pos
+      match_str("で")
+      if match_str("詰") != :failed
+        match_str("み")
+        @reported_pos = s0
+        "TSUMI"
+      else
+        @current_pos = s0
+        :failed
+      end
+    end
+
+    def parse_result_fuzumi
+      s0 = @current_pos
+      s1 = match_str("で不詰")
+      if s1 != :failed
+        @reported_pos = s0
+        "FUZUMI"
+      else
+        @current_pos = s0
         :failed
       end
     end

@@ -108,8 +108,6 @@ module Jkf::Converter
                  n2zen(move["to"]["x"]) + n2kan(move["to"]["y"])
                elsif move["same"]
                  "同　"
-               else
-                 raise "error??"
                end
       result += csa2kind(move["piece"])
       result += "成" if move["promote"]

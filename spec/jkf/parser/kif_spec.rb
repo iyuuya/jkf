@@ -162,21 +162,16 @@ EOS
           "moves" => [
             {},
             { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 },
-              "time" => { "now" => { "m" => 0, "s" => 1 },
-                          "total" => { "h" => 0, "m" => 0, "s" => 1 } } },
+              "time" => { "now" => ms(0, 1), "total" => hms(0, 0, 1) } },
             { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 },
-              "time" => { "now" => { "m" => 0, "s" => 2 },
-                          "total" => { "h" => 0, "m" => 0, "s" => 2 } } },
+              "time" => { "now" => ms(0, 2), "total" => hms(0, 0, 2) } },
             { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "KA", "color" => 0,
                           "promote" => true },
-              "time" => { "now" => { "m" => 0, "s" => 20 },
-                          "total" => { "h" => 0, "m" => 0, "s" => 21 } } },
+              "time" => { "now" => ms(0, 20), "total" => hms(0, 0, 21) } },
             { "move" => { "from" => pos(3, 1), "same" => true, "piece" => "GI", "color" => 1 },
-              "time" => { "now" => { "m" => 0, "s" => 3 },
-                          "total" => { "h" => 0, "m" => 0, "s" => 5 } } },
+              "time" => { "now" => ms(0, 3), "total" => hms(0, 0, 5) } },
             { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 },
-              "time" => { "now" => { "m" => 0, "s" => 39 },
-                          "total" => { "h" => 0, "m" => 1, "s" => 0 } } }
+              "time" => { "now" => ms(0, 39), "total" => hms(0, 1, 0) } }
           ]
         ]
       end
@@ -204,17 +199,13 @@ EOS
           "moves" => [
             {},
             { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 },
-              "time" => { "now" => { "m" => 0, "s" => 14 },
-                          "total" => { "h" => 0, "m" => 0, "s" => 14 } } },
+              "time" => { "now" => ms(0, 14), "total" => hms(0, 0, 14) } },
             { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 },
-              "time" => { "now" => { "m" => 0, "s" => 1 },
-                          "total" => { "h" => 0, "m" => 0, "s" => 1 } } },
+              "time" => { "now" => ms(0, 1), "total" => hms(0, 0, 1) } },
             { "move" => { "from" => pos(6, 7), "to" => pos(6, 6), "piece" => "FU", "color" => 0 },
-              "time" => { "now" => { "m" => 0, "s" => 3 },
-                          "total" => { "h" => 0, "m" => 0, "s" => 17 } } },
+              "time" => { "now" => ms(0, 3), "total" => hms(0, 0, 17) } },
             { "move" => { "from" => pos(2, 2), "to" => pos(3, 3), "piece" => "KA", "color" => 1 },
-              "time" => { "now" => { "m" => 0, "s" => 1 },
-                          "total" => { "h" => 0, "m" => 0, "s" => 2 } } }
+              "time" => { "now" => ms(0, 1), "total" => hms(0, 0, 2) } }
           ]
         ]
       end
@@ -242,17 +233,13 @@ EOS
           "moves" => [
             {},
             { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 },
-              "time" => { "now" => { "m" => 0, "s" => 14 },
-                          "total" => { "h" => 0, "m" => 0, "s" => 14 } } },
+              "time" => { "now" => ms(0, 14), "total" => hms(0, 0, 14) } },
             { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 },
-              "time" => { "now" => { "m" => 0, "s" => 1 },
-                          "total" => { "h" => 0, "m" => 0, "s" => 1 } } },
+              "time" => { "now" => ms(0, 1), "total" => hms(0, 0, 1) } },
             { "move" => { "from" => pos(6, 7), "to" => pos(6, 6), "piece" => "FU", "color" => 0 },
-              "time" => { "now" => { "m" => 0, "s" => 3 },
-                          "total" => { "h" => 0, "m" => 0, "s" => 17 } } },
+              "time" => { "now" => ms(0, 3), "total" => hms(0, 0, 17) } },
             { "move" => { "from" => pos(2, 2), "to" => pos(3, 3), "piece" => "KA", "color" => 1 },
-              "time" => { "now" => { "m" => 0, "s" => 1 },
-                          "total" => { "h" => 0, "m" => 0, "s" => 2 } } }
+              "time" => { "now" => ms(0, 1), "total" => hms(0, 0, 2) } }
           ]
         ]
       end
@@ -276,26 +263,16 @@ EOS
         "moves" => [
           {},
           { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 },
-            "time" => {
-              "now" => { "m" => 0, "s" => 1 },
-              "total" => { "h" => 0, "m" => 0, "s" => 1 } } },
+            "time" => { "now" => ms(0, 1), "total" => hms(0, 0, 1) } },
           { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 },
-            "time" => {
-              "now" => { "m" => 0, "s" => 2 },
-              "total" => { "h" => 0, "m" => 0, "s" => 2 } } },
+            "time" => { "now" => ms(0, 2), "total" => hms(0, 0, 2) } },
           { "move" => { "from" => pos(8, 8), "to" => pos(2, 2),
                         "piece" => "KA", "color" => 0, "promote" => true },
-            "time" => {
-              "now" => { "m" => 0, "s" => 20 },
-              "total" => { "h" => 0, "m" => 0, "s" => 21 } } },
+            "time" => { "now" => ms(0, 20), "total" => hms(0, 0, 21) } },
           { "move" => { "from" => pos(3, 1), "same" => true, "piece" => "GI", "color" => 1 },
-            "time" => {
-              "now" => { "m" => 0, "s" => 3 },
-              "total" => { "h" => 0, "m" => 0, "s" => 5 } } },
+            "time" => { "now" => ms(0, 3), "total" => hms(0, 0, 5) } },
           { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 },
-            "time" => {
-              "now" => { "m" => 0, "s" => 39 },
-              "total" => { "h" => 0, "m" => 1, "s" => 0 } } }
+            "time" => { "now" => ms(0, 39), "total" => hms(0, 1, 0) } }
         ]
       ]
     end

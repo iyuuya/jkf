@@ -1,5 +1,7 @@
 module Jkf::Parser
   module Kifuable
+    protected
+
     def parse_initialboard
       s0 = s1 = @current_pos
       if match_space != :failed
@@ -492,8 +494,6 @@ module Jkf::Parser
         matched
       end
     end
-
-    protected
 
     def transform_root_header_data(ret)
       if ret["header"]["手番"]

@@ -1,8 +1,8 @@
 module Jkf::Converter
   class Ki2 < Base
-    protected
-
     include Kifuable
+
+    protected
 
     def convert_root(jkf)
       reset!

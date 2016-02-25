@@ -4,6 +4,8 @@ module Jkf::Parser
   class Kif < Base
     include Kifuable
 
+    protected
+
     def parse_root
       @input += "\n" unless @input.end_with?("\n")
 
@@ -518,8 +520,6 @@ module Jkf::Parser
       end
       s0
     end
-
-    protected
 
     def transform_root(headers, ini, headers2, moves, forks)
       ret = { "header" => {}, "moves" => moves }

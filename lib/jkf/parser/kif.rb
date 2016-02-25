@@ -505,7 +505,7 @@ module Jkf::Parser
       s0
     end
 
-    #fork :  "変化：" " "* [0-9]+ "手" nl moves
+    # fork :  "変化：" " "* [0-9]+ "手" nl moves
     def parse_fork
       s0 = @current_pos
       if match_str("変化：") != :failed

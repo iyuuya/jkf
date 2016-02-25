@@ -27,7 +27,7 @@ module Jkf::Converter
 
     def convert_initial(initial)
       result = ""
-      data = initial["data"]
+      data = initial["data"] || {}
       result += if initial["preset"] == "OTHER"
                   convert_board(data["board"])
                 else
@@ -56,9 +56,10 @@ module Jkf::Converter
 
     def convert_moves(moves)
       result = ""
+      before_pos = nil
       moves.each do |move|
         next if move == {}
-        result += convert_move(move["move"]) if move["move"]
+        result += convert_move(move["move"], before_pos) if move["move"]
         result += convert_special(move["special"], move["color"]) if move["special"]
         if move["time"]
           result += "," + convert_time(move["time"])
@@ -66,14 +67,20 @@ module Jkf::Converter
           result += "\n"
         end
         result += convert_comments(move["comments"]) if move["comments"]
+        before_pos = move["move"]["to"] if move["move"] && move["move"]["to"]
       end
       result
     end
 
-    def convert_move(move)
+    def convert_move(move, before_pos)
       result = csa_color(move["color"])
       result += move["from"] ? pos2str(move["from"]) : "00"
-      result + pos2str(move["to"]) + move["piece"]
+      result += if move["to"]
+                  pos2str(move["to"]) + move["piece"]
+                else
+                  pos2str(before_pos) + move["piece"]
+                end
+      result
     end
 
     def convert_special(special, color = nil)

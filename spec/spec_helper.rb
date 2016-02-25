@@ -18,6 +18,14 @@ module IncludeHelper
     { "x" => x, "y" => y }
   end
 
+  def hms(h, m, s)
+    { "h" => h, "m" => m, "s" => s }
+  end
+
+  def ms(m, s)
+    { "m" => m, "s" => s }
+  end
+
   def fixtures(type)
     Dir[File.expand_path("../fixtures/#{type}/**", __FILE__)]
   end

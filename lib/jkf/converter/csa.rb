@@ -111,7 +111,8 @@ module Jkf::Converter
     def convert_preset(preset)
       "PI" +
         case preset
-        when "HIRATE"
+        when "HIRATE" # 平手
+          ""
         when "KY" # 香落ち
           "11KY"
         when "KY_R" # 右香落ち

@@ -2,6 +2,8 @@
 
 module Jkf::Parser
   class Csa < Base
+    protected
+
     def parse_root
       @input += "\n" unless @input[-1] =~ /\n|\r|,/ # FIXME
       s0 = parse_csa2
@@ -705,8 +707,6 @@ module Jkf::Parser
       end
       stack
     end
-
-    protected
 
     def transform_komabetsu_lines(lines)
       board = generate_empty_board

@@ -4,6 +4,8 @@ module Jkf::Parser
   class Ki2 < Base
     include Kifuable
 
+    protected
+
     def parse_root
       s0 = @current_pos
       s1 = []
@@ -336,8 +338,6 @@ module Jkf::Parser
     def parse_turn
       match_regexp(/^[先後上下]/)
     end
-
-    protected
 
     def transform_root(headers, ini, headers2, moves, forks)
       ret = { "header" => {}, "moves" => moves }

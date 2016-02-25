@@ -1,6 +1,7 @@
 # coding: utf-8
 
 module Jkf::Parser
+  # CSA Parser
   class Csa < Base
     protected
 

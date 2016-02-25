@@ -7,6 +7,11 @@ module Jkf
   class FileTypeError < StandardError; end
 
   class << self
+    # ファイルからパースします。拡張子でフォーマットの判定をします。
+    #
+    # @param [String] filename
+    #
+    # @return [String] KIF, KI2, CSA, JKF(JSON)
     def parse_file(filename, encoding: "Shift_JIS")
       parser = case ::File.extname(filename)
                when /kif/
@@ -22,6 +27,11 @@ module Jkf
       parser.parse(str)
     end
 
+    # 文字列からパースします。各パーサでパースに試みて成功した場合結果を返します。
+    #
+    # @param [String] str
+    #
+    # @return [Hash] JKF
     def parse(str)
       parsers = [::Jkf::Parser::Kif.new, ::Jkf::Parser::Ki2.new, ::Jkf::Parser::Csa.new, JSON]
 

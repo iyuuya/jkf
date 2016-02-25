@@ -1,5 +1,8 @@
 module Jkf::Parser
   class Base
+    # @param [String] input
+    #
+    # @return [Hash] JKF
     def parse(input)
       @input = input.clone
 

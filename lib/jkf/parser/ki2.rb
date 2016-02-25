@@ -7,6 +7,7 @@ module Jkf::Parser
 
     protected
 
+    # kifu : header* initialboard? header* moves fork*
     def parse_root
       s0 = @current_pos
       s1 = []
@@ -45,6 +46,7 @@ module Jkf::Parser
       s0
     end
 
+    # header : [^：\r\n]+ "：" nonls nl+ | header_teban
     def parse_header
       s0 = @current_pos
       s2 = match_regexp(/^[^*：\r\n]/)
@@ -89,9 +91,10 @@ module Jkf::Parser
       s0
     end
 
+    # header_teban : [先後上下] "手番" nl
     def parse_header_teban
       s0 = @current_pos
-      s1 = match_regexp(/^[先後上下]/)
+      s1 = parse_turn
       if s1 != :failed
         s2 = match_str("手番")
         if s2 != :failed
@@ -113,6 +116,7 @@ module Jkf::Parser
       end
     end
 
+    # moves : firstboard : move* result?
     def parse_moves
       s0 = @current_pos
       s1 = parse_firstboard
@@ -138,6 +142,7 @@ module Jkf::Parser
       s0
     end
 
+    # firstboard : comment* pointer?
     def parse_firstboard
       s0 = @current_pos
       s1 = []
@@ -152,6 +157,7 @@ module Jkf::Parser
       s0
     end
 
+    # move : line comment* pointer? (nl | " ")*
     def parse_move
       s0 = @current_pos
       s1 = parse_line
@@ -185,6 +191,7 @@ module Jkf::Parser
       s0
     end
 
+    # line : [▲△] fugou (nl / " ")*
     def parse_line
       s0 = @current_pos
       s1 = match_regexp(/^[▲△]/)
@@ -217,6 +224,7 @@ module Jkf::Parser
       s0
     end
 
+    # fugou : place piece soutai? dousa? ("成" | "不成")? "打"?
     def parse_fugou
       s0 = @current_pos
       s1 = parse_place
@@ -244,6 +252,7 @@ module Jkf::Parser
       end
     end
 
+    # place : num numkan
     def parse_place
       s0 = @current_pos
       s1 = parse_num
@@ -274,15 +283,17 @@ module Jkf::Parser
       s0
     end
 
-
+    # soutai : [左直右]
     def parse_soutai
       match_regexp(/^[左直右]/)
     end
 
+    # dousa : [上寄引]
     def parse_dousa
       match_regexp(/^[上寄引]/)
     end
 
+    # "*" nonls nl
     def parse_comment
       s0 = @current_pos
       if match_str("*") != :failed
@@ -301,6 +312,7 @@ module Jkf::Parser
       s0
     end
 
+    # fork : "変化：" " "* [0-9]+ "手" nl moves
     def parse_fork
       s0 = @current_pos
       if match_str("変化：") != :failed
@@ -336,10 +348,12 @@ module Jkf::Parser
       s0
     end
 
+    # turn : [先後上下]
     def parse_turn
       match_regexp(/^[先後上下]/)
     end
 
+    # transform to jkf
     def transform_root(headers, ini, headers2, moves, forks)
       ret = { "header" => {}, "moves" => moves }
       headers.compact.each { |h| ret["header"][h["k"]] = h["v"] }
@@ -355,6 +369,7 @@ module Jkf::Parser
       ret
     end
 
+    # transfrom fugou to jkf
     def transform_fugou(pl, pi, sou, dou, pro, da)
       ret = { "piece" => pi }
       if pl["same"]
@@ -372,6 +387,7 @@ module Jkf::Parser
       ret
     end
 
+    # relative string to jkf
     def soutai2relative(str)
       {
         "左" => "L",
@@ -380,6 +396,7 @@ module Jkf::Parser
       }[str] || ""
     end
 
+    # movement string to jkf
     def dousa2relative(str)
       {
         "上" => "U",
@@ -388,6 +405,7 @@ module Jkf::Parser
       }[str] || ""
     end
 
+    # generate motigoma
     def make_hand(str)
       ret = { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 }
       return ret if str.empty?
@@ -400,6 +418,7 @@ module Jkf::Parser
       ret
     end
 
+    # check eos
     def eos?
       @input[@current_pos].nil?
     end

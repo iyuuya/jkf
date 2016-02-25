@@ -1,4 +1,5 @@
 module Jkf::Parser
+  # Intersection of KIF and KI2
   module Kifuable
     protected
 

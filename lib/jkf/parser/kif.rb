@@ -362,17 +362,20 @@ module Jkf::Parser
       s0
     end
 
-    # time :  "(" " "* ms "/" hms ")"
+    # time :  "(" " "* ms " "* "/" " "* (hms | ms) " "* ")"
     def parse_time
       s0 = @current_pos
       if match_str("(") != :failed
         match_spaces
         s3 = parse_ms
         if s3 != :failed
+          match_spaces
           if match_str("/") != :failed
+            match_spaces
             s5 = parse_hms
             s5 = parse_ms(with_hour: true) if s5 == :failed
             if s5 != :failed
+              match_spaces
               if match_str(")") != :failed
                 @reported_pos = s0
                 s0 = { "now" => s3, "total" => s5 }

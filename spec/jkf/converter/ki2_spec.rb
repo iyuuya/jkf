@@ -24,4 +24,26 @@ describe Jkf::Converter::Ki2 do
   fixtures(:ki2).each do |fixture|
     it_behaves_like :parse_file, fixture
   end
+
+  describe "#csa2relative(relative)" do
+    let(:pairs) do
+      {
+        "L" => "左",
+        "C" => "直",
+        "R" => "右",
+        "U" => "上",
+        "M" => "寄",
+        "D" => "引",
+        "H" => "打"
+      }
+    end
+
+    it "should convert csa to relative string" do
+      pairs.each do |csa, relative_str|
+        expect(ki2_converter.send(:csa2relative, csa)).to eq relative_str
+      end
+
+      expect(ki2_converter.send(:csa2relative, "UNKOWN")).to eq ""
+    end
+  end
 end

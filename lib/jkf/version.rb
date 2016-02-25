@@ -1,3 +1,4 @@
 module Jkf
-  VERSION = "0.4.1".freeze
+  # Gem version
+  VERSION = "0.4.2".freeze
 end

@@ -1,6 +1,9 @@
 module Jkf::Converter
+  # CSA v2.2 Converter
   class Csa < Base
     VERSION = "2.2".freeze
+
+    protected
 
     def convert_root(jkf)
       result = version
@@ -9,8 +12,6 @@ module Jkf::Converter
       result += convert_moves(jkf["moves"]) if jkf["moves"]
       result
     end
-
-    protected
 
     def convert_information(header)
       result = ""

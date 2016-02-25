@@ -1,5 +1,7 @@
 module Jkf
+  # Define parser namespace
   module Parser
+    # Parse error
     class ParseError < StandardError; end
   end
 end

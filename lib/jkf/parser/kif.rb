@@ -1,9 +1,13 @@
 # coding: utf-8
 
 module Jkf::Parser
+  # KIF Parser
   class Kif < Base
     include Kifuable
 
+    protected
+
+    # kifu : skipline* header* initialboard? header* split? moves fork* nl?
     def parse_root
       @input += "\n" unless @input.end_with?("\n")
 
@@ -49,6 +53,9 @@ module Jkf::Parser
       s0
     end
 
+    # header : [^：\r\n]+ "：" nonls nl
+    #        | turn "手番" nl
+    #        | "盤面回転" nl
     def parse_header
       s0 = @current_pos
       s2 = match_regexp(/^[^：\r\n]/)
@@ -120,10 +127,12 @@ module Jkf::Parser
       s0
     end
 
+    # turn : [先後上下]
     def parse_turn
-      match_regexp(/[先後上下]/)
+      match_regexp(/^[先後上下]/)
     end
 
+    # split : "手数----指手--" "-------消費時間--"? nl
     def parse_split
       s0 = @current_pos
       s1 = match_str("手数----指手--")
@@ -144,6 +153,7 @@ module Jkf::Parser
       s0
     end
 
+    # moves : firstboard split? move* result?
     def parse_moves
       s0 = @current_pos
       s1 = parse_firstboard
@@ -165,6 +175,7 @@ module Jkf::Parser
       s0
     end
 
+    # firstboard : comment* pointer?
     def parse_firstboard
       s0 = @current_pos
       s1 = []
@@ -179,6 +190,7 @@ module Jkf::Parser
       s0
     end
 
+    # move : line comment* pointer?
     def parse_move
       s0 = @current_pos
       s1 = parse_line
@@ -199,6 +211,7 @@ module Jkf::Parser
       s0
     end
 
+    # line : " "* te " "* (fugou from | [^\r\n ]*) " "* time? "+"? nl
     def parse_line
       s0 = @current_pos
       match_spaces
@@ -254,10 +267,12 @@ module Jkf::Parser
       s0
     end
 
+    # te : [0-9]+
     def parse_te
       match_digits!
     end
 
+    # fugou : place piece "成"?
     def parse_fugou
       s0 = @current_pos
       s1 = parse_place
@@ -279,6 +294,7 @@ module Jkf::Parser
       s0
     end
 
+    # place : num numkan | "同　"
     def parse_place
       s0 = @current_pos
       s1 = parse_num
@@ -307,6 +323,7 @@ module Jkf::Parser
       s0
     end
 
+    # from : "打" | "(" [1-9] [1-9] ")"
     def parse_from
       s0 = @current_pos
       s1 = match_str("打")
@@ -345,16 +362,20 @@ module Jkf::Parser
       s0
     end
 
+    # time :  "(" " "* ms " "* "/" " "* (hms | ms) " "* ")"
     def parse_time
       s0 = @current_pos
       if match_str("(") != :failed
         match_spaces
         s3 = parse_ms
         if s3 != :failed
+          match_spaces
           if match_str("/") != :failed
+            match_spaces
             s5 = parse_hms
             s5 = parse_ms(with_hour: true) if s5 == :failed
             if s5 != :failed
+              match_spaces
               if match_str(")") != :failed
                 @reported_pos = s0
                 s0 = { "now" => s3, "total" => s5 }
@@ -381,6 +402,7 @@ module Jkf::Parser
       s0
     end
 
+    # hms : [0-9]+ ":" [0-9]+ ":" [0-9]+
     def parse_hms
       s0 = @current_pos
       s1 = match_digits!
@@ -417,6 +439,7 @@ module Jkf::Parser
       s0
     end
 
+    # ms : [0-9]+ ":" [0-9]+
     def parse_ms(with_hour: false)
       s0 = @current_pos
       s1 = match_digits!
@@ -449,6 +472,7 @@ module Jkf::Parser
       s0
     end
 
+    # comment : "*" nonls nl | "&" nonls nl
     def parse_comment
       s0 = @current_pos
       if match_str("*") != :failed
@@ -484,6 +508,7 @@ module Jkf::Parser
       s0
     end
 
+    # fork :  "変化：" " "* [0-9]+ "手" nl moves
     def parse_fork
       s0 = @current_pos
       if match_str("変化：") != :failed
@@ -519,8 +544,7 @@ module Jkf::Parser
       s0
     end
 
-    protected
-
+    # transfrom to jkf
     def transform_root(headers, ini, headers2, moves, forks)
       ret = { "header" => {}, "moves" => moves }
       headers.compact.each { |h| ret["header"][h["k"]] = h["v"] }
@@ -539,6 +563,7 @@ module Jkf::Parser
       ret
     end
 
+    # transform move to jkf
     def transform_move(line, c)
       ret = {}
       ret["comments"] = c if !c.empty?
@@ -551,6 +576,7 @@ module Jkf::Parser
       ret
     end
 
+    # transform teban-fugou-from to jkf
     def transform_teban_fugou_from(teban, fugou, from)
       ret = { "color" => teban2color(teban.join), "piece" => fugou["piece"] }
       if fugou["to"]
@@ -563,6 +589,7 @@ module Jkf::Parser
       ret
     end
 
+    # special string to csa
     def special2csa(str)
       {
         "中断" => "CHUDAN",
@@ -577,11 +604,13 @@ module Jkf::Parser
       }[str] || (raise ParseError)
     end
 
+    # teban to color
     def teban2color(teban)
       teban = teban.to_i unless teban.is_a? Fixnum
       (teban + 1) % 2
     end
 
+    # generate motigoma
     def make_hand(str)
       # Kifu for iPhoneは半角スペース区切り
       ret = { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 }
@@ -595,6 +624,7 @@ module Jkf::Parser
       ret
     end
 
+    # exchange sente gote
     def reverse_color(moves)
       moves.each do |move|
         if move["move"] && move["move"]["color"]

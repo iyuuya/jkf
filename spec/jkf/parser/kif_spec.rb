@@ -145,39 +145,104 @@ EOS
   end
 
   context "time" do
-    let(:str) do
-      <<EOS
+    context "when nospaces" do
+      let(:str) do
+        <<EOS
 1 ７六歩(77) (0:01/00:00:01)
 2 ３四歩(33) (0:02/00:00:02)
 3 ２二角成(88) (0:20/00:00:21)
 4 同　銀(31) (0:03/00:00:05)
 5 ４五角打 (0:39/00:01:00)
 EOS
+      end
+
+      it do
+        is_expected.to eq Hash[
+          "header" => {},
+          "moves" => [
+            {},
+            { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 },
+              "time" => { "now" => ms(0, 1), "total" => hms(0, 0, 1) } },
+            { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 },
+              "time" => { "now" => ms(0, 2), "total" => hms(0, 0, 2) } },
+            { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "KA", "color" => 0,
+                          "promote" => true },
+              "time" => { "now" => ms(0, 20), "total" => hms(0, 0, 21) } },
+            { "move" => { "from" => pos(3, 1), "same" => true, "piece" => "GI", "color" => 1 },
+              "time" => { "now" => ms(0, 3), "total" => hms(0, 0, 5) } },
+            { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 },
+              "time" => { "now" => ms(0, 39), "total" => hms(0, 1, 0) } }
+          ]
+        ]
+      end
     end
 
-    it do
-      is_expected.to eq Hash[
-        "header" => {},
-        "moves" => [
-          {},
-          { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 },
-            "time" => { "now" => { "m" => 0, "s" => 1 },
-                        "total" => { "h" => 0, "m" => 0, "s" => 1 } } },
-          { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 },
-            "time" => { "now" => { "m" => 0, "s" => 2 },
-                        "total" => { "h" => 0, "m" => 0, "s" => 2 } } },
-          { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "KA", "color" => 0,
-                        "promote" => true },
-            "time" => { "now" => { "m" => 0, "s" => 20 },
-                        "total" => { "h" => 0, "m" => 0, "s" => 21 } } },
-          { "move" => { "from" => pos(3, 1), "same" => true, "piece" => "GI", "color" => 1 },
-            "time" => { "now" => { "m" => 0, "s" => 3 },
-                        "total" => { "h" => 0, "m" => 0, "s" => 5 } } },
-          { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 },
-            "time" => { "now" => { "m" => 0, "s" => 39 },
-                        "total" => { "h" => 0, "m" => 1, "s" => 0 } } }
+    context "with spaces" do
+      let(:str) do
+        <<EOS
+先手：人
+後手：レベル3
+手数----指手---------消費時間--
+   1 ７六歩(77)   ( 00:14/00:00:14)
+   2 ３四歩(33)   (00:01 /00:00:01)
+   3 ６六歩(67)   (00:03/ 00:00:17)
+   4 ３三角(22)   (00:01/00:00:02 )
+EOS
+      end
+
+      it do
+        is_expected.to eq Hash[
+          "header" => {
+            "先手" => "人",
+            "後手" => "レベル3"
+          },
+          "moves" => [
+            {},
+            { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 },
+              "time" => { "now" => ms(0, 14), "total" => hms(0, 0, 14) } },
+            { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 },
+              "time" => { "now" => ms(0, 1), "total" => hms(0, 0, 1) } },
+            { "move" => { "from" => pos(6, 7), "to" => pos(6, 6), "piece" => "FU", "color" => 0 },
+              "time" => { "now" => ms(0, 3), "total" => hms(0, 0, 17) } },
+            { "move" => { "from" => pos(2, 2), "to" => pos(3, 3), "piece" => "KA", "color" => 1 },
+              "time" => { "now" => ms(0, 1), "total" => hms(0, 0, 2) } }
+          ]
         ]
-      ]
+      end
+    end
+
+    context "when mm:ss mm:ss" do
+      let(:str) do
+        <<EOS
+先手：人
+後手：レベル3
+手数----指手---------消費時間--
+   1 ７六歩(77)   ( 00:14/00:14)
+   2 ３四歩(33)   (00:01 /00:01)
+   3 ６六歩(67)   (00:03/ 00:17)
+   4 ３三角(22)   (00:01/00:02 )
+EOS
+      end
+
+      it do
+        is_expected.to eq Hash[
+          "header" => {
+            "先手" => "人",
+            "後手" => "レベル3"
+          },
+          "moves" => [
+            {},
+            { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 },
+              "time" => { "now" => ms(0, 14), "total" => hms(0, 0, 14) } },
+            { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 },
+              "time" => { "now" => ms(0, 1), "total" => hms(0, 0, 1) } },
+            { "move" => { "from" => pos(6, 7), "to" => pos(6, 6), "piece" => "FU", "color" => 0 },
+              "time" => { "now" => ms(0, 3), "total" => hms(0, 0, 17) } },
+            { "move" => { "from" => pos(2, 2), "to" => pos(3, 3), "piece" => "KA", "color" => 1 },
+              "time" => { "now" => ms(0, 1), "total" => hms(0, 0, 2) } }
+          ]
+        ]
+      end
     end
   end
 
@@ -198,26 +263,16 @@ EOS
         "moves" => [
           {},
           { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 },
-            "time" => {
-              "now" => { "m" => 0, "s" => 1 },
-              "total" => { "h" => 0, "m" => 0, "s" => 1 } } },
+            "time" => { "now" => ms(0, 1), "total" => hms(0, 0, 1) } },
           { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 },
-            "time" => {
-              "now" => { "m" => 0, "s" => 2 },
-              "total" => { "h" => 0, "m" => 0, "s" => 2 } } },
+            "time" => { "now" => ms(0, 2), "total" => hms(0, 0, 2) } },
           { "move" => { "from" => pos(8, 8), "to" => pos(2, 2),
                         "piece" => "KA", "color" => 0, "promote" => true },
-            "time" => {
-              "now" => { "m" => 0, "s" => 20 },
-              "total" => { "h" => 0, "m" => 0, "s" => 21 } } },
+            "time" => { "now" => ms(0, 20), "total" => hms(0, 0, 21) } },
           { "move" => { "from" => pos(3, 1), "same" => true, "piece" => "GI", "color" => 1 },
-            "time" => {
-              "now" => { "m" => 0, "s" => 3 },
-              "total" => { "h" => 0, "m" => 0, "s" => 5 } } },
+            "time" => { "now" => ms(0, 3), "total" => hms(0, 0, 5) } },
           { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 },
-            "time" => {
-              "now" => { "m" => 0, "s" => 39 },
-              "total" => { "h" => 0, "m" => 1, "s" => 0 } } }
+            "time" => { "now" => ms(0, 39), "total" => hms(0, 1, 0) } }
         ]
       ]
     end

@@ -1,28 +1,31 @@
 # Jkf
 [![Gem Version](https://badge.fury.io/rb/jkf.svg)](https://badge.fury.io/rb/jkf) [![Build Status](https://travis-ci.org/iyuuya/jkf.svg?branch=master)](https://travis-ci.org/iyuuya/jkf) [![Code Climate](https://codeclimate.com/github/iyuuya/jkf/badges/gpa.svg)](https://codeclimate.com/github/iyuuya/jkf) [![Test Coverage](https://codeclimate.com/github/iyuuya/jkf/badges/coverage.svg)](https://codeclimate.com/github/iyuuya/jkf/coverage) [![Inline docs](http://inch-ci.org/github/iyuuya/jkf.svg?branch=develop)](http://inch-ci.org/github/iyuuya/jkf)
 
-jkfはJSON棋譜フォーマット( https://github.com/na2hiro/json-kifu-format )をRubyに移植したものです。
-KIF, KI2, CSAをパースしJKFへ変換、JKFからKIF, KI2, CSAへの変換に対応しています。
+
+jkf is json-kifu-format( https://github.com/na2hiro/json-kifu-format ) library for ruby.
+
+### Feature
+
+* KIF, KI2, CSA to JKF
+* JKF to KIF, KI2, CSA
 
 ## Installation
 
-アプリケーションにインストールする場合(bundlerを使用する場合)、Gemfileに以下のように記述してください。
+Add this line to your application's Gemfile:
 
 ```ruby
 gem 'jkf'
 ```
 
-さらにbundleコマンドを実行することでインストールできます。
+And then execute:
 
     $ bundle
 
-または、gem installコマンドを使って直接インストールすることもできます。
+Or install it yourself as:
 
     $ gem install jkf
 
 ## Usage
-
-KIF, KI2, CSAそれぞれParserとConverterが用意してあります。
 
 ```ruby
 kif_parser = Jkf::Parser::Kif.new
@@ -35,8 +38,6 @@ kif_converter = Jkf::Converter::Kif.new
 ki2_converter = Jkf::Converter::Ki2.new
 csa_converter = Jkf::Converter::Csa.new
 ```
-
-`parser#parse(str)`でjkfへの変換、`#convert(jkf)`でjkfから各フォーマットへ変換できます。
 
 ```ruby
 jkf = kif_parser.parse(kif_str) #=> Hash
@@ -52,11 +53,9 @@ csa = csa_converter.parse(jkf) #=> String
 
 ## Contributing
 
-バグレポートやプルリクエストはGithubでよろしくお願いします。
-https://github.com/iyuuya/jkf.
+Bug reports and pull requests are welcome on GitHub at https://github.com/iyuuya/jkf.
 
 ## License
 
-ライセンスはMITです。
-[MIT License](http://opensource.org/licenses/MIT).
+The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
 

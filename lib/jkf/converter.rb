@@ -1,5 +1,7 @@
 module Jkf
+  # Define converter namespace
   module Converter
+    # Convert error
     class ConvertError < StandardError; end
   end
 end

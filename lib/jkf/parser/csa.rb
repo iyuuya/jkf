@@ -5,6 +5,7 @@ module Jkf::Parser
   class Csa < Base
     protected
 
+    # kifu : csa2 | csa1
     def parse_root
       @input += "\n" unless @input[-1] =~ /\n|\r|,/ # FIXME
       s0 = parse_csa2
@@ -12,6 +13,7 @@ module Jkf::Parser
       s0
     end
 
+    # csa2 : version22 information? initialboard moves?
     def parse_csa2
       s0 = @current_pos
       if parse_version22 != :failed
@@ -41,6 +43,7 @@ module Jkf::Parser
       s0
     end
 
+    # version22 : comment* "V2.2" nl
     def parse_version22
       s0 = @current_pos
       s1 = parse_comments
@@ -60,6 +63,7 @@ module Jkf::Parser
       s0
     end
 
+    # information : players? headers
     def parse_information
       s0 = @current_pos
       s1 = parse_players
@@ -75,6 +79,7 @@ module Jkf::Parser
       s0
     end
 
+    # headers : header*
     def parse_headers
       s0 = @current_pos
       s1 = []
@@ -94,6 +99,7 @@ module Jkf::Parser
       s0
     end
 
+    # header : comment* "$" [^:]+ ":" nonls nl
     def parse_header
       s0 = @current_pos
       parse_comments
@@ -133,6 +139,7 @@ module Jkf::Parser
       s0
     end
 
+    # csa1 : players? initialboard? moves
     def parse_csa1
       s0 = @current_pos
       s1 = parse_players
@@ -157,6 +164,7 @@ module Jkf::Parser
       s0
     end
 
+    # players : comment* ("N+" nonls nl)? comment* ("N-" nonls nl)?
     def parse_players
       s0 = @current_pos
       parse_comments
@@ -196,6 +204,7 @@ module Jkf::Parser
       s0
     end
 
+    # initialboard : comment* (hirate | ikkatsu | "") komabetsu comment* teban nl
     def parse_initial_board
       s0 = @current_pos
       parse_comments
@@ -247,6 +256,7 @@ module Jkf::Parser
       end
     end
 
+    # hirate : "PI" xypiece* nl
     def parse_hirate
       s0 = @current_pos
       if match_str("PI") != :failed
@@ -276,6 +286,7 @@ module Jkf::Parser
       s0
     end
 
+    # ikkatsu : ikkatsuline+
     def parse_ikkatsu
       s0 = @current_pos
       s2 = parse_ikkatsu_line
@@ -306,10 +317,11 @@ module Jkf::Parser
       s0
     end
 
+    # ikkatsuline : "P" [1-9] masu+ nl
     def parse_ikkatsu_line
       s0 = @current_pos
       if match_str("P") != :failed
-        if match_regexp(/^[1-9]/) != :failed
+        if match_digit != :failed
           s4 = parse_masu
           if s4 != :failed
             s3 = []
@@ -344,6 +356,7 @@ module Jkf::Parser
       s0
     end
 
+    # masu : teban piece | " * "
     def parse_masu
       s0 = @current_pos
       s1 = parse_teban
@@ -371,6 +384,7 @@ module Jkf::Parser
       s0
     end
 
+    # komabetsu : komabetsuline*
     def parse_komabetsu
       s0 = @current_pos
       s1 = []
@@ -383,6 +397,7 @@ module Jkf::Parser
       transform_komabetsu_lines(s1)
     end
 
+    # komabetsuline : "P" teban xypiece+ nl
     def parse_komabetsu_line
       s0 = @current_pos
       if match_str("P") != :failed
@@ -421,6 +436,7 @@ module Jkf::Parser
       s0
     end
 
+    # moves : firstboard move* comment*
     def parse_moves
       s0 = @current_pos
       s1 = parse_firstboard
@@ -441,6 +457,7 @@ module Jkf::Parser
       s0
     end
 
+    # firstboard : comment*
     def parse_firstboard
       s0 = @current_pos
       s1 = parse_comments
@@ -448,6 +465,7 @@ module Jkf::Parser
       s1.empty? ? {} : { "comments" => s1 }
     end
 
+    # move : (normalmove | specialmove) time? comment*
     def parse_move
       s0 = @current_pos
       s1 = parse_normal_move
@@ -475,6 +493,7 @@ module Jkf::Parser
       s0
     end
 
+    # normalmove : teban xy xy piece nl
     def parse_normal_move
       s0 = @current_pos
       s1 = parse_teban
@@ -515,6 +534,7 @@ module Jkf::Parser
       s0
     end
 
+    # specialmove : "%" [-+_A-Z]+ nl
     def parse_special_move
       s0 = @current_pos
       s1 = match_str("%")
@@ -548,6 +568,7 @@ module Jkf::Parser
       s0
     end
 
+    # teban : "+" | "-"
     def parse_teban
       s0 = @current_pos
       s1 = match_str("+")
@@ -568,6 +589,7 @@ module Jkf::Parser
       s0
     end
 
+    # comment : "'" nonls nl
     def parse_comment
       s0 = @current_pos
       if match_str("'") != :failed
@@ -585,6 +607,7 @@ module Jkf::Parser
       end
     end
 
+    # comments : comment*
     def parse_comments
       stack = []
       matched = parse_comment
@@ -595,6 +618,7 @@ module Jkf::Parser
       stack
     end
 
+    # time : "T" [0-9]* nl
     def parse_time
       s0 = @current_pos
       if match_str("T") != :failed
@@ -613,6 +637,7 @@ module Jkf::Parser
       s0
     end
 
+    # xy : [0-9] [0-9]
     def parse_xy
       s0 = @current_pos
       s1 = match_digit
@@ -632,6 +657,7 @@ module Jkf::Parser
       s0
     end
 
+    # piece : [A-Z] [A-Z]
     def parse_piece
       s0 = @current_pos
       s1 = match_regexp(/^[A-Z]/)
@@ -651,6 +677,7 @@ module Jkf::Parser
       s0
     end
 
+    # xypiece : xy piece
     def parse_xy_piece
       s0 = @current_pos
       s1 = parse_xy
@@ -670,6 +697,7 @@ module Jkf::Parser
       s0
     end
 
+    # nl : ("\r"? "\n") | " "* ","
     def parse_nl
       s0 = @current_pos
       s1 = match_str("\r")
@@ -695,10 +723,12 @@ module Jkf::Parser
       s0
     end
 
+    # nonl : [^\r\n]
     def parse_nonl
       match_regexp(/^[^\r\n]/)
     end
 
+    # nonls : nonl*
     def parse_nonls
       stack = []
       matched = parse_nonl
@@ -709,6 +739,7 @@ module Jkf::Parser
       stack
     end
 
+    # lines to jkf
     def transform_komabetsu_lines(lines)
       board = generate_empty_board
       hands = [
@@ -738,6 +769,7 @@ module Jkf::Parser
       { "preset" => "OTHER", "data" => { "board" => board, "hands" => hands } }
     end
 
+    # return empty board jkf
     def generate_empty_board
       board = []
       9.times do |_i|
@@ -750,12 +782,14 @@ module Jkf::Parser
       board
     end
 
+    # sec to time(m, s)
     def sec2time(sec)
       s = sec % 60
       m = (sec - s) / 60
       { "m" => m, "s" => s }
     end
 
+    # return hirate board jkf
     def get_hirate
       [
         [{ "color" => 1, "kind" => "KY" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
@@ -781,6 +815,7 @@ module Jkf::Parser
       ]
     end
 
+    # normalize header key
     def normalize_header_key(key)
       {
         "EVENT" => "棋戦",

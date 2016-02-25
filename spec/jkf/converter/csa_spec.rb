@@ -50,5 +50,13 @@ describe Jkf::Converter::Csa do
         expect(csa_converter.send(:convert_preset, preset)).to eq "PI" + pi
       end
     end
+
+    context "when 8mai" do
+      let(:kif_parser) { Jkf::Parser::Kif.new }
+      let(:filename) { fixtures(:kif).find { |file| file =~ /8mai/ } }
+      let(:jkf) { kif_parser.parse(File.read(filename, encoding: "Shift_JIS").toutf8) }
+
+      it { expect(csa_converter.convert(jkf)).to be_a String }
+    end
   end
 end

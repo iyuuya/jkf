@@ -3,6 +3,7 @@ module Jkf::Parser
   module Kifuable
     protected
 
+    # initialboard : (" " nonls nl)? ("+" nonls nl)? ikkatsuline+ ("+" nonls nl)?
     def parse_initialboard
       s0 = s1 = @current_pos
       if match_space != :failed
@@ -45,6 +46,7 @@ module Jkf::Parser
       end
     end
 
+    # ikkatsuline : "|" masu:masu+ "|" nonls! nl
     def parse_ikkatsuline
       s0 = @current_pos
       if match_str("|") != :failed
@@ -89,6 +91,7 @@ module Jkf::Parser
       s0
     end
 
+    # masu : teban piece | " ・"
     def parse_masu
       s0 = @current_pos
       s1 = parse_teban
@@ -118,6 +121,7 @@ module Jkf::Parser
       s0
     end
 
+    # teban : (" " | "+" | "^") | ("v" | "V")
     def parse_teban
       s0 = @current_pos
       s1 = match_space
@@ -143,6 +147,7 @@ module Jkf::Parser
       s0
     end
 
+    # pointer : "&" nonls nl
     def parse_pointer
       s0 = @current_pos
       s1 = match_str("&")
@@ -162,6 +167,29 @@ module Jkf::Parser
       s0
     end
 
+    # num : [１２３４５６７８９]
+    def parse_num
+      s0 = @current_pos
+      s1 = match_regexp(/^[１２３４５６７８９]/)
+      if s1 != :failed
+        @reported_pos = s0
+        s1 = zen2n(s1)
+      end
+      s1
+    end
+
+    # numkan : [一二三四五六七八九]
+    def parse_numkan
+      s0 = @current_pos
+      s1 = match_regexp(/^[一二三四五六七八九]/)
+      if s1 != :failed
+        @reported_pos = s0
+        s1 = kan2n(s1)
+      end
+      s1
+    end
+
+    # piece : "成"? [歩香桂銀金角飛王玉と杏圭全馬竜龍]
     def parse_piece
       s0 = @current_pos
       s1 = match_str("成")
@@ -176,6 +204,11 @@ module Jkf::Parser
       end
     end
 
+    # result : "まで" [0-9]+ "手" (
+    #            "で" (turn "手の" (result_toryo | result_illegal)) |
+    #            result_timeup | result_chudan | result_jishogi |
+    #            result_sennichite | result_tsumi | result_fuzumi
+    #          ) nl
     def parse_result
       s0 = @current_pos
       if match_str("まで") != :failed
@@ -249,6 +282,7 @@ module Jkf::Parser
       end
     end
 
+    # result_toryo : "勝ち"
     def parse_result_toryo
       s0 = @current_pos
       s1 = match_str("勝ち")
@@ -261,6 +295,7 @@ module Jkf::Parser
       end
     end
 
+    # result_illegal : "反則" ("勝ち" | "負け")
     def parse_result_illegal
       s0 = @current_pos
       if match_str("反則") != :failed
@@ -293,6 +328,7 @@ module Jkf::Parser
       end
     end
 
+    # result_timeup : "で時間切れにより" turn "手の勝ち"
     def parse_result_timeup
       s0 = @current_pos
       if match_str("で時間切れにより") != :failed
@@ -314,6 +350,7 @@ module Jkf::Parser
       end
     end
 
+    # result_chudan : "で中断"
     def parse_result_chudan
       s0 = @current_pos
       s1 = match_str("で中断")
@@ -326,6 +363,7 @@ module Jkf::Parser
       end
     end
 
+    # result_jishogi : "で持将棋"
     def parse_result_jishogi
       s0 = @current_pos
       s1 = match_str("で持将棋")
@@ -338,6 +376,7 @@ module Jkf::Parser
       end
     end
 
+    # result_sennichite : "で千日手"
     def parse_result_sennichite
       s0 = @current_pos
       s1 = match_str("で千日手")
@@ -350,6 +389,7 @@ module Jkf::Parser
       end
     end
 
+    # result_tsumi : "で"? "詰" "み"?
     def parse_result_tsumi
       s0 = @current_pos
       match_str("で")
@@ -363,6 +403,7 @@ module Jkf::Parser
       end
     end
 
+    # result_fuzumi : "で不詰"
     def parse_result_fuzumi
       s0 = @current_pos
       s1 = match_str("で不詰")
@@ -375,6 +416,7 @@ module Jkf::Parser
       end
     end
 
+    # skipline : "#" nonls newline
     def parse_skipline
       s0 = @current_pos
       s1 = match_str("#")
@@ -394,30 +436,12 @@ module Jkf::Parser
       s0
     end
 
-    def parse_num
-      s0 = @current_pos
-      s1 = match_regexp(/^[１２３４５６７８９]/)
-      if s1 != :failed
-        @reported_pos = s0
-        s1 = zen2n(s1)
-      end
-      s1
-    end
-
-    def parse_numkan
-      s0 = @current_pos
-      s1 = match_regexp(/^[一二三四五六七八九]/)
-      if s1 != :failed
-        @reported_pos = s0
-        s1 = kan2n(s1)
-      end
-      s1
-    end
-
+    # whitespace : " " | "\t"
     def parse_whitespace
       match_regexp(/^[ \t]/)
     end
 
+    # newline : whitespace* ("\n" | "\r" "\n"?)
     def parse_newline
       s0 = @current_pos
       s1 = []
@@ -447,6 +471,7 @@ module Jkf::Parser
       end
     end
 
+    # nl : newline+ skipline*
     def parse_nl
       s0 = @current_pos
       s2 = parse_newline
@@ -473,10 +498,12 @@ module Jkf::Parser
       end
     end
 
+    # nonl : 
     def parse_nonl
       match_regexp(/^[^\r\n]/)
     end
 
+    # nonls : nonl*
     def parse_nonls
       stack = []
       matched = parse_nonl
@@ -487,6 +514,7 @@ module Jkf::Parser
       stack
     end
 
+    # nonls! : nonl+
     def parse_nonls!
       matched = parse_nonls
       if matched.empty?
@@ -496,6 +524,7 @@ module Jkf::Parser
       end
     end
 
+    # transform header-data to jkf
     def transform_root_header_data(ret)
       if ret["header"]["手番"]
         ret["initial"]["data"]["color"] = "下先".include?(ret["header"]["手番"]) ? 0 : 1
@@ -512,6 +541,7 @@ module Jkf::Parser
       end
     end
 
+    # transfrom forks to jkf
     def transform_root_forks(forks, moves)
       fork_stack = [{ "te" => 0, "moves" => moves }]
       forks.each do |f|
@@ -526,6 +556,7 @@ module Jkf::Parser
       end
     end
 
+    # transform initialboard to jkf
     def transform_initialboard(lines)
       board = []
       9.times do |i|
@@ -538,14 +569,17 @@ module Jkf::Parser
       { "preset" => "OTHER", "data" => { "board" => board } }
     end
 
+    # zenkaku number to number
     def zen2n(s)
       "０１２３４５６７８９".index(s)
     end
 
+    # kanji number to number (1)
     def kan2n(s)
       "〇一二三四五六七八九".index(s)
     end
 
+    # kanji number to number (2)
     def kan2n2(s)
       case s.length
       when 1
@@ -557,6 +591,7 @@ module Jkf::Parser
       end
     end
 
+    # kanji piece-type to csa
     def kind2csa(kind)
       if kind[0] == "成"
         {
@@ -586,6 +621,7 @@ module Jkf::Parser
       end
     end
 
+    # preset string to jkf
     def preset2str(preset)
       {
         "平手" => "HIRATE",

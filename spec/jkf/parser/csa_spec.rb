@@ -163,15 +163,15 @@ EOS
           "moves" => [
             {},
             { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 },
-              "time" => { "now" => { "m" => 0, "s" => 12 } } },
+              "time" => { "now" => ms(0, 12) } },
             { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 },
-              "time" => { "now" => { "m" => 0, "s" => 2 } } },
+              "time" => { "now" => ms(0, 2) } },
             { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "UM", "color" => 0 },
-              "time" => { "now" => { "m" => 1, "s" => 40 } } },
+              "time" => { "now" => ms(1, 40) } },
             { "move" => { "from" => pos(3, 1), "to" => pos(2, 2), "piece" => "GI", "color" => 1 },
-              "time" => { "now" => { "m" => 0, "s" => 1 } } },
+              "time" => { "now" => ms(0, 1) } },
             { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 },
-              "time" => { "now" => { "m" => 0, "s" => 0 } } }
+              "time" => { "now" => ms(0, 0) } }
           ]
         ]
       end
@@ -203,15 +203,15 @@ EOS
           "moves" => [
             {},
             { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 },
-              "time" => { "now" => { "m" => 0, "s" => 12 } } },
+              "time" => { "now" => ms(0, 12) } },
             { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 },
-              "time" => { "now" => { "m" => 0, "s" => 2 } } },
+              "time" => { "now" => ms(0, 2) } },
             { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "UM", "color" => 0 },
-              "time" => { "now" => { "m" => 1, "s" => 40 } } },
+              "time" => { "now" => ms(1, 40) } },
             { "move" => { "from" => pos(3, 1), "to" => pos(2, 2), "piece" => "GI", "color" => 1 },
-              "time" => { "now" => { "m" => 0, "s" => 1 } } },
+              "time" => { "now" => ms(0, 1) } },
             { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 },
-              "time" => { "now" => { "m" => 0, "s" => 0 } } }
+              "time" => { "now" => ms(0, 0) } }
           ]
         ]
       end
@@ -642,15 +642,15 @@ EOS
           "moves" => [
             {},
             { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 },
-              "time" => { "now" => { "m" => 0, "s" => 12 } } },
+              "time" => { "now" => ms(0, 12) } },
             { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 },
-              "time" => { "now" => { "m" => 0, "s" => 2 } } },
+              "time" => { "now" => ms(0, 2) } },
             { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "UM", "color" => 0 },
-              "time" => { "now" => { "m" => 1, "s" => 40 } } },
+              "time" => { "now" => ms(1, 40) } },
             { "move" => { "from" => pos(3, 1), "to" => pos(2, 2), "piece" => "GI", "color" => 1 },
-              "time" => { "now" => { "m" => 0, "s" => 1 } } },
+              "time" => { "now" => ms(0, 1) } },
             { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 },
-              "time" => { "now" => { "m" => 0, "s" => 0 } } }
+              "time" => { "now" => ms(0, 0) } }
           ]
         ]
       end
@@ -681,15 +681,15 @@ EOS
           "moves" => [
             {},
             { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 },
-              "time" => { "now" => { "m" => 0, "s" => 12 } } },
+              "time" => { "now" => ms(0, 12) } },
             { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 },
-              "time" => { "now" => { "m" => 0, "s" => 2 } } },
+              "time" => { "now" => ms(0, 2) } },
             { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "UM", "color" => 0 },
-              "time" => { "now" => { "m" => 1, "s" => 40 } } },
+              "time" => { "now" => ms(1, 40) } },
             { "move" => { "from" => pos(3, 1), "to" => pos(2, 2), "piece" => "GI", "color" => 1 },
-              "time" => { "now" => { "m" => 0, "s" => 1 } } },
+              "time" => { "now" => ms(0, 1) } },
             { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 },
-              "time" => { "now" => { "m" => 0, "s" => 0 } } }
+              "time" => { "now" => ms(0, 0) } }
           ]
         ]
       end

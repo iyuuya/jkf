@@ -3,7 +3,9 @@ require "jkf/version"
 require "jkf/parser"
 require "jkf/converter"
 
+# JSON Kifu Format
 module Jkf
+  # raise when unsupport file type
   class FileTypeError < StandardError; end
 
   class << self
@@ -22,6 +24,8 @@ module Jkf
                  ::Jkf::Parser::Csa.new
                when /jkf|json/
                  JSON
+               else
+                 raise FileTypeError
                end
       str = File.read(File.expand_path(filename), encoding: encoding).toutf8
       parser.parse(str)

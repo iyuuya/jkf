@@ -1,4 +1,5 @@
 module Jkf::Converter
+  # KI2 Converter
   class Ki2 < Base
     include Kifuable
 

@@ -1,6 +1,7 @@
 # coding: utf-8
 
 module Jkf::Parser
+  # KIF Parser
   class Kif < Base
     include Kifuable
 

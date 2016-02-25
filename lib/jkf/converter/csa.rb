@@ -1,4 +1,5 @@
 module Jkf::Converter
+  # CSA v2.2 Converter
   class Csa < Base
     VERSION = "2.2".freeze
 

@@ -1,4 +1,5 @@
 module Jkf::Converter
+  # KIF Converter
   class Kif < Base
     protected
 

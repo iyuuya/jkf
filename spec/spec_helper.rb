@@ -1,12 +1,14 @@
 require "codeclimate-test-reporter"
 SimpleCov.start do
-  add_filter '/vendor'
-  add_filter '.bundle'
+  add_filter "/vendor"
+  add_filter ".bundle"
 
-  formatter SimpleCov::Formatter::MultiFormatter.new([
-    SimpleCov::Formatter::HTMLFormatter,
-    CodeClimate::TestReporter::Formatter
-  ])
+  formatter SimpleCov::Formatter::MultiFormatter.new(
+    [
+      SimpleCov::Formatter::HTMLFormatter,
+      CodeClimate::TestReporter::Formatter
+    ]
+  )
 end
 
 require "kconv"

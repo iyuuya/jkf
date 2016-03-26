@@ -1,5 +1,13 @@
 require "codeclimate-test-reporter"
-CodeClimate::TestReporter.start
+SimpleCov.start do
+  add_filter '/vendor'
+  add_filter '.bundle'
+
+  formatter SimpleCov::Formatter::MultiFormatter.new([
+    SimpleCov::Formatter::HTMLFormatter,
+    CodeClimate::TestReporter::Formatter
+  ])
+end
 
 require "kconv"
 require "pry"

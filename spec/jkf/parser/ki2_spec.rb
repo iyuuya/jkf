@@ -21,6 +21,19 @@ describe Jkf::Parser::Ki2 do
     it_behaves_like :parse_file, fixture
   end
 
+  shared_examples(:parse_error_file) do |filename|
+    let(:str) do
+      File.read(filename).toutf8
+    end
+    it "should not be parse #{File.basename(filename)}" do
+      expect { subject }.to raise_error(Jkf::Parser::ParseError)
+    end
+  end
+
+  error_fixtures(:ki2).each do |fixture|
+    it_behaves_like :parse_error_file, fixture
+  end
+
   context "simple" do
     let(:str) do
       "▲７六歩 △３四歩 ▲２二角成 △同　銀 ▲４五角"

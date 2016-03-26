@@ -31,6 +31,12 @@ describe Jkf do
 
       it { is_expected.to be_a Hash }
     end
+
+    context "when .csv" do
+      let(:filename) { fixtures(:csv).first }
+
+      it { expect { subject }.to raise_error(Jkf::FileTypeError) }
+    end
   end
 
   describe ".parse(str)" do

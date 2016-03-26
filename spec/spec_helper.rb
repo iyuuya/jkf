@@ -1,5 +1,15 @@
 require "codeclimate-test-reporter"
-CodeClimate::TestReporter.start
+SimpleCov.start do
+  add_filter "/vendor"
+  add_filter ".bundle"
+
+  formatter SimpleCov::Formatter::MultiFormatter.new(
+    [
+      SimpleCov::Formatter::HTMLFormatter,
+      CodeClimate::TestReporter::Formatter
+    ]
+  )
+end
 
 require "kconv"
 require "pry"
@@ -10,6 +20,10 @@ require "jkf"
 module ExtendHelper
   def fixtures(type)
     Dir[File.expand_path("../fixtures/#{type}/**", __FILE__)]
+  end
+
+  def error_fixtures(type)
+    Dir[File.expand_path("../error_fixtures/#{type}/**", __FILE__)]
   end
 end
 
@@ -28,6 +42,10 @@ module IncludeHelper
 
   def fixtures(type)
     Dir[File.expand_path("../fixtures/#{type}/**", __FILE__)]
+  end
+
+  def error_fixtures(type)
+    Dir[File.expand_path("../error_fixtures/#{type}/**", __FILE__)]
   end
 end
 

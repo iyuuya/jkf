@@ -8,6 +8,7 @@ module Jkf::Converter
     def convert_root(jkf)
       reset!
       setup_players!(jkf)
+      jkf = normalize_handicap(jkf)
 
       result = ""
       result += convert_header(jkf["header"]) if jkf["header"]
@@ -113,6 +114,13 @@ module Jkf::Converter
 
     def pos2str(pos)
       "%d%d" % [pos["x"], pos["y"]]
+    end
+
+    def normalize_handicap(jkf)
+      if jkf["initial"] && jkf["initial"]["preset"] && jkf["header"]
+        jkf["header"].delete("手合割")
+      end
+      jkf
     end
   end
 end

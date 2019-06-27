@@ -17,6 +17,19 @@ describe Jkf::Parser::Csa do
     it_behaves_like :parse_file, fixture
   end
 
+  shared_examples(:parse_error_file) do |filename|
+    let(:str) do
+      File.read(filename).toutf8
+    end
+    it "should not be parse #{File.basename(filename)}" do
+      expect { subject }.to raise_error(Jkf::Parser::ParseError)
+    end
+  end
+
+  error_fixtures(:csa).each do |fixture|
+    it_behaves_like :parse_error_file, fixture
+  end
+
   describe "csa-parser V2" do
     let(:initial) do
       Hash[

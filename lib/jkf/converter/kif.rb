@@ -10,7 +10,7 @@ module Jkf::Converter
       setup_players!(jkf)
 
       result = ""
-      result += convert_header(jkf["header"]) if jkf["header"]
+      result += convert_header(jkf["header"], jkf) if jkf["header"]
       result += convert_initial(jkf["initial"]) if jkf["initial"]
       result += @header2.join
       result += "手数----指手---------消費時間--\n"
@@ -23,7 +23,7 @@ module Jkf::Converter
       result
     end
 
-    def convert_header(header)
+    def convert_header(header, jkf)
       header.map do |(key, value)|
         result = "#{key}：#{value}\n"
         if key =~ /\A[先後上下]手\Z/
@@ -32,6 +32,8 @@ module Jkf::Converter
           else
             @header2 << result
           end
+          nil
+        elsif key == "手合割" && jkf["initial"] && jkf["initial"]["preset"] && value == preset2str(jkf["initial"]["preset"])
           nil
         else
           result

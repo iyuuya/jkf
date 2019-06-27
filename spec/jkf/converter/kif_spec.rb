@@ -24,4 +24,27 @@ describe Jkf::Converter::Kif do
   fixtures(:kif).each do |fixture|
     it_behaves_like :parse_file, fixture
   end
+
+  describe "handicap" do
+    subject {
+      <<-KIF
+手合割：十枚落ち
+手数----指手---------消費時間--
+   1 投了         
+まで0手で後手の勝ち
+      KIF
+    }
+
+    let(:handicap_hash) {
+      {
+        "header"  => { "手合割" => "十枚落ち" },
+        "moves"   => [{}, { "special" => "TORYO" }],
+        "initial" => { "preset" => "10" }
+      }
+    }
+
+    it "should be convert" do
+      is_expected.to eq kif_converter.convert(handicap_hash)
+    end
+  end
 end

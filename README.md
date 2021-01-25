@@ -45,9 +45,9 @@ jkf = csa_parser.parse(csa_str) #=> Hash
 ```
 
 ```ruby
-kif = kif_converter.parse(jkf) #=> String
-ki2 = ki2_converter.parse(jkf) #=> String
-csa = csa_converter.parse(jkf) #=> String
+kif = kif_converter.convert(jkf) #=> String
+ki2 = ki2_converter.convert(jkf) #=> String
+csa = csa_converter.convert(jkf) #=> String
 ```
 
 ## Contributing

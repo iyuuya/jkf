@@ -8,7 +8,7 @@ group :development do
   gem "yard", require: false
   gem "redcarpet", require: false
 
-  gem "rubocop", "~> 0.37.2", require: false
+  gem "rubocop", "~> 1.32.0", require: false
   gem "guard-rubocop", require: false
 end
 

@@ -110,7 +110,7 @@ module Jkf::Converter
     def ljust(str, n)
       len = 0
       str.each_codepoint { |codepoint| len += codepoint > 255 ? 2 : 1 }
-      str + " " * (n - len)
+      str + (" " * (n - len))
     end
 
     def pos2str(pos)

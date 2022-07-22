@@ -1,10 +1,11 @@
 require "spec_helper"
 
 describe Jkf::Parser::Ki2 do
-  let(:ki2_parser) { Jkf::Parser::Ki2.new }
   subject { ki2_parser.parse(str) }
 
-  shared_examples(:parse_file) do |filename|
+  let(:ki2_parser) { Jkf::Parser::Ki2.new }
+
+  shared_examples('parse file') do |filename|
     let(:str) do
       if File.extname(filename) == ".ki2"
         File.read(filename, encoding: "Shift_JIS").toutf8
@@ -12,26 +13,26 @@ describe Jkf::Parser::Ki2 do
         File.read(filename).toutf8
       end
     end
-    it "should be parse #{File.basename(filename)}" do
-      is_expected.not_to be_nil
+    it "is parse #{File.basename(filename)}" do
+      expect(subject).not_to be_nil
     end
   end
 
   fixtures(:ki2).each do |fixture|
-    it_behaves_like :parse_file, fixture
+    it_behaves_like 'parse file', fixture
   end
 
-  shared_examples(:parse_error_file) do |filename|
+  shared_examples('parse error file') do |filename|
     let(:str) do
       File.read(filename).toutf8
     end
-    it "should not be parse #{File.basename(filename)}" do
+    it "is not parse #{File.basename(filename)}" do
       expect { subject }.to raise_error(Jkf::Parser::ParseError)
     end
   end
 
   error_fixtures(:ki2).each do |fixture|
-    it_behaves_like :parse_error_file, fixture
+    it_behaves_like 'parse error file', fixture
   end
 
   context "simple" do
@@ -40,17 +41,15 @@ describe Jkf::Parser::Ki2 do
     end
 
     it do
-      is_expected.to eq Hash[
-        "header" => {},
-        "moves" => [
-          {},
-          { "move" => { "to" => pos(7, 6), "piece" => "FU", "color" => 0 } },
-          { "move" => { "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
-          { "move" => { "to" => pos(2, 2), "piece" => "KA", "color" => 0, "promote" => true } },
-          { "move" => { "same" => true, "piece" => "GI", "color" => 1 } },
-          { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 } }
-        ]
-      ]
+      expect(subject).to eq({ "header" => {},
+                              "moves" => [
+                                {},
+                                { "move" => { "to" => pos(7, 6), "piece" => "FU", "color" => 0 } },
+                                { "move" => { "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
+                                { "move" => { "to" => pos(2, 2), "piece" => "KA", "color" => 0, "promote" => true } },
+                                { "move" => { "same" => true, "piece" => "GI", "color" => 1 } },
+                                { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 } }
+                              ] })
     end
   end
 
@@ -60,17 +59,15 @@ describe Jkf::Parser::Ki2 do
     end
 
     it do
-      is_expected.to eq Hash[
-        "header" => {},
-        "moves" => [
-          {},
-          { "move" => { "to" => pos(7, 6), "piece" => "FU", "color" => 0 } },
-          { "move" => { "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
-          { "move" => { "to" => pos(7, 8), "piece" => "GI", "color" => 0 } },
-          { "move" => { "to" => pos(8, 8), "piece" => "KA", "color" => 1, "promote" => true } },
-          { "special" => "TORYO" }
-        ]
-      ]
+      expect(subject).to eq({ "header" => {},
+                              "moves" => [
+                                {},
+                                { "move" => { "to" => pos(7, 6), "piece" => "FU", "color" => 0 } },
+                                { "move" => { "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
+                                { "move" => { "to" => pos(7, 8), "piece" => "GI", "color" => 0 } },
+                                { "move" => { "to" => pos(8, 8), "piece" => "KA", "color" => 1, "promote" => true } },
+                                { "special" => "TORYO" }
+                              ] })
     end
   end
 
@@ -81,20 +78,18 @@ describe Jkf::Parser::Ki2 do
       end
 
       it do
-        is_expected.to eq Hash[
-          "header" => {
-            "手合割" => "平手"
-          },
-          "initial" => { "preset" => "HIRATE" },
-          "moves" => [
-            {},
-            { "move" => { "to" => pos(7, 6), "piece" => "FU", "color" => 0 } },
-            { "move" => { "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
-            { "move" => { "to" => pos(2, 2), "piece" => "KA", "color" => 0, "promote" => true } },
-            { "move" => { "same" => true, "piece" => "GI", "color" => 1 } },
-            { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 } }
-          ]
-        ]
+        expect(subject).to eq({ "header" => {
+                                  "手合割" => "平手"
+                                },
+                                "initial" => { "preset" => "HIRATE" },
+                                "moves" => [
+                                  {},
+                                  { "move" => { "to" => pos(7, 6), "piece" => "FU", "color" => 0 } },
+                                  { "move" => { "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
+                                  { "move" => { "to" => pos(2, 2), "piece" => "KA", "color" => 0, "promote" => true } },
+                                  { "move" => { "same" => true, "piece" => "GI", "color" => 1 } },
+                                  { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 } }
+                                ] })
       end
     end
 
@@ -104,20 +99,18 @@ describe Jkf::Parser::Ki2 do
       end
 
       it do
-        is_expected.to eq Hash[
-          "header" => {
-            "手合割" => "六枚落ち"
-          },
-          "initial" => { "preset" => "6" },
-          "moves" => [
-            {},
-            { "move" => { "to" => pos(4, 2), "piece" => "OU", "color" => 1 } },
-            { "move" => { "to" => pos(7, 6), "piece" => "FU", "color" => 0 } },
-            { "move" => { "to" => pos(2, 2), "piece" => "GI", "color" => 1 } },
-            { "move" => { "to" => pos(6, 6), "piece" => "KA", "color" => 0 } },
-            { "move" => { "to" => pos(8, 2), "piece" => "GI", "color" => 1 } }
-          ]
-        ]
+        expect(subject).to eq({ "header" => {
+                                  "手合割" => "六枚落ち"
+                                },
+                                "initial" => { "preset" => "6" },
+                                "moves" => [
+                                  {},
+                                  { "move" => { "to" => pos(4, 2), "piece" => "OU", "color" => 1 } },
+                                  { "move" => { "to" => pos(7, 6), "piece" => "FU", "color" => 0 } },
+                                  { "move" => { "to" => pos(2, 2), "piece" => "GI", "color" => 1 } },
+                                  { "move" => { "to" => pos(6, 6), "piece" => "KA", "color" => 0 } },
+                                  { "move" => { "to" => pos(8, 2), "piece" => "GI", "color" => 1 } }
+                                ] })
       end
     end
   end
@@ -129,17 +122,15 @@ describe Jkf::Parser::Ki2 do
       end
 
       it do
-        is_expected.to eq Hash[
-          "header" => {},
-          "moves" => [
-            { "comments" => ["最初：コメント"] },
-            { "move" => { "to" => pos(7, 6), "piece" => "FU", "color" => 0 } },
-            { "move" => { "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
-            { "move" => { "to" => pos(2, 2), "piece" => "KA", "color" => 0, "promote" => true } },
-            { "move" => { "same" => true, "piece" => "GI", "color" => 1 } },
-            { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 } }
-          ]
-        ]
+        expect(subject).to eq({ "header" => {},
+                                "moves" => [
+                                  { "comments" => ["最初：コメント"] },
+                                  { "move" => { "to" => pos(7, 6), "piece" => "FU", "color" => 0 } },
+                                  { "move" => { "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
+                                  { "move" => { "to" => pos(2, 2), "piece" => "KA", "color" => 0, "promote" => true } },
+                                  { "move" => { "same" => true, "piece" => "GI", "color" => 1 } },
+                                  { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 } }
+                                ] })
       end
     end
   end
@@ -171,44 +162,42 @@ EOS
       end
 
       it do
-        is_expected.to eq Hash[
-          "header" => {
-            "手合割" => "その他　",
-            "上手" => "uwate",
-            "下手" => "shitate"
-          },
-          "initial" => {
-            "preset" => "OTHER",
-            "data" => {
-              "board" => [
-                [{ "color" => 1, "kind" => "OU" }, {}, {}, {}, {}, {}, {}, {}, {}],
-                [{ "color" => 1, "kind" => "FU" }, { "color" => 1, "kind" => "FU" },
-                 { "color" => 1, "kind" => "FU" }, { "color" => 1, "kind" => "FU" },
-                 { "color" => 1, "kind" => "FU" }, { "color" => 1, "kind" => "FU" },
-                 { "color" => 1, "kind" => "FU" }, { "color" => 1, "kind" => "FU" },
-                 { "color" => 1, "kind" => "FU" }],
-                [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                [{}, {}, {}, {}, {}, {}, {}, {}, {}]
-              ],
-              "color" => 0,
-              "hands" => [
-                { "FU" => 0, "KY" => 4, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 2 },
-                { "FU" => 0, "KY" => 0, "KE" => 4, "GI" => 4, "KI" => 0, "KA" => 0, "HI" => 0 }
-              ]
-            }
-          },
-          "moves" => [
-            {},
-            { "move" => { "to" => pos(1, 3), "piece" => "KY", "color" => 0 } },
-            { "move" => { "to" => pos(1, 2), "piece" => "KE", "color" => 1 } },
-            { "move" => { "same" => true, "piece" => "KY", "color" => 0, "promote" => true } }
-          ]
-        ]
+        expect(subject).to eq({ "header" => {
+                                  "手合割" => "その他　",
+                                  "上手" => "uwate",
+                                  "下手" => "shitate"
+                                },
+                                "initial" => {
+                                  "preset" => "OTHER",
+                                  "data" => {
+                                    "board" => [
+                                      [{ "color" => 1, "kind" => "OU" }, {}, {}, {}, {}, {}, {}, {}, {}],
+                                      [{ "color" => 1, "kind" => "FU" }, { "color" => 1, "kind" => "FU" },
+                                       { "color" => 1, "kind" => "FU" }, { "color" => 1, "kind" => "FU" },
+                                       { "color" => 1, "kind" => "FU" }, { "color" => 1, "kind" => "FU" },
+                                       { "color" => 1, "kind" => "FU" }, { "color" => 1, "kind" => "FU" },
+                                       { "color" => 1, "kind" => "FU" }],
+                                      [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                      [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                      [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                      [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                      [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                      [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                      [{}, {}, {}, {}, {}, {}, {}, {}, {}]
+                                    ],
+                                    "color" => 0,
+                                    "hands" => [
+                                      { "FU" => 0, "KY" => 4, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 2 },
+                                      { "FU" => 0, "KY" => 0, "KE" => 4, "GI" => 4, "KI" => 0, "KA" => 0, "HI" => 0 }
+                                    ]
+                                  }
+                                },
+                                "moves" => [
+                                  {},
+                                  { "move" => { "to" => pos(1, 3), "piece" => "KY", "color" => 0 } },
+                                  { "move" => { "to" => pos(1, 2), "piece" => "KE", "color" => 1 } },
+                                  { "move" => { "same" => true, "piece" => "KY", "color" => 0, "promote" => true } }
+                                ] })
       end
     end
   end
@@ -227,28 +216,26 @@ EOS
       end
 
       it do
-        is_expected.to eq Hash[
-          "header" => {
-            "手合割" => "平手"
-          },
-          "initial" => { "preset" => "HIRATE" },
-          "moves" => [
-            {},
-            { "move" => { "to" => pos(7, 6), "piece" => "FU", "color" => 0 } },
-            { "move" => { "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
-            { "move" => { "to" => pos(2, 2), "piece" => "KA", "color" => 0, "promote" => true },
-              "forks" => [
-                [
-                  { "move" => { "to" => pos(6, 6), "piece" => "FU", "color" => 0 } },
-                  { "move" => { "to" => pos(8, 4), "piece" => "FU", "color" => 1 } }
-                ]
-              ]
-            },
-            { "move" => { "same" => true, "piece" => "GI", "color" => 1 } },
-            { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 } },
-            { "special" => "CHUDAN" }
-          ]
-        ]
+        expect(subject).to eq({ "header" => {
+                                  "手合割" => "平手"
+                                },
+                                "initial" => { "preset" => "HIRATE" },
+                                "moves" => [
+                                  {},
+                                  { "move" => { "to" => pos(7, 6), "piece" => "FU", "color" => 0 } },
+                                  { "move" => { "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
+                                  { "move" => { "to" => pos(2, 2), "piece" => "KA", "color" => 0, "promote" => true },
+                                    "forks" => [
+                                      [
+                                        { "move" => { "to" => pos(6, 6), "piece" => "FU", "color" => 0 } },
+                                        { "move" => { "to" => pos(8, 4), "piece" => "FU", "color" => 1 } }
+                                      ]
+                                    ]
+                                  },
+                                  { "move" => { "same" => true, "piece" => "GI", "color" => 1 } },
+                                  { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 } },
+                                  { "special" => "CHUDAN" }
+                                ] })
       end
     end
   end

@@ -1,15 +1,6 @@
-require "codeclimate-test-reporter"
-SimpleCov.start do
-  add_filter "/vendor"
-  add_filter ".bundle"
+require "simplecov"
 
-  formatter SimpleCov::Formatter::MultiFormatter.new(
-    [
-      SimpleCov::Formatter::HTMLFormatter,
-      CodeClimate::TestReporter::Formatter
-    ]
-  )
-end
+SimpleCov.start
 
 require "kconv"
 require "pry"

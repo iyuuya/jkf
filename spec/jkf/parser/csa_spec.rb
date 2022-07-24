@@ -1,39 +1,39 @@
 require "spec_helper"
 
 describe Jkf::Parser::Csa do
-  let(:csa_parser) { Jkf::Parser::Csa.new }
   subject { csa_parser.parse(str) }
 
-  shared_examples(:parse_file) do |filename|
+  let(:csa_parser) { Jkf::Parser::Csa.new }
+
+  shared_examples('parse file') do |filename|
     let(:str) do
       File.read(filename).toutf8
     end
-    it "should be parse #{File.basename(filename)}" do
-      is_expected.not_to be_nil
+    it "is parse #{File.basename(filename)}" do
+      expect(subject).not_to be_nil
     end
   end
 
   fixtures(:csa).each do |fixture|
-    it_behaves_like :parse_file, fixture
+    it_behaves_like 'parse file', fixture
   end
 
-  shared_examples(:parse_error_file) do |filename|
+  shared_examples('parse error file') do |filename|
     let(:str) do
       File.read(filename).toutf8
     end
-    it "should not be parse #{File.basename(filename)}" do
+    it "is not parse #{File.basename(filename)}" do
       expect { subject }.to raise_error(Jkf::Parser::ParseError)
     end
   end
 
   error_fixtures(:csa).each do |fixture|
-    it_behaves_like :parse_error_file, fixture
+    it_behaves_like 'parse error file', fixture
   end
 
   describe "csa-parser V2" do
     let(:initial) do
-      Hash[
-        "preset" => "OTHER",
+      { "preset" => "OTHER",
         "data" => {
           "board" => [
             [{ "color" => 1, "kind" => "KY" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
@@ -62,8 +62,7 @@ describe Jkf::Parser::Csa do
             { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 },
             { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 }
           ]
-        }
-      ]
+        } }
     end
 
     context "simple" do
@@ -81,18 +80,20 @@ EOS
       end
 
       it do
-        is_expected.to eq Hash[
-          "header" => {},
-          "initial" => initial,
-          "moves" => [
-            {},
-            { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 } },
-            { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
-            { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "UM", "color" => 0 } },
-            { "move" => { "from" => pos(3, 1), "to" => pos(2, 2), "piece" => "GI", "color" => 1 } },
-            { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 } }
-          ]
-        ]
+        expect(subject).to eq({ "header" => {},
+                                "initial" => initial,
+                                "moves" => [
+                                  {},
+                                  { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", 
+                                                "color" => 0 } },
+                                  { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", 
+                                                "color" => 1 } },
+                                  { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "UM", 
+                                                "color" => 0 } },
+                                  { "move" => { "from" => pos(3, 1), "to" => pos(2, 2), "piece" => "GI", 
+                                                "color" => 1 } },
+                                  { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 } }
+                                ] })
       end
     end
 
@@ -112,17 +113,16 @@ EOS
       end
 
       it do
-        is_expected.to eq Hash[
-          "header" => {},
-          "initial" => initial,
-          "moves" => [
-            { "comments" => ["開始時コメント"] },
-            { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 },
-              "comments" => ["初手コメント", "初手コメント2"] },
-            { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
-            { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "UM", "color" => 0 } }
-          ]
-        ]
+        expect(subject).to eq({ "header" => {},
+                                "initial" => initial,
+                                "moves" => [
+                                  { "comments" => ["開始時コメント"] },
+                                  { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 },
+                                    "comments" => ["初手コメント", "初手コメント2"] },
+                                  { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", 
+                                                "color" => 1 } },
+                                  { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "UM", "color" => 0 } }
+                                ] })
       end
     end
 
@@ -141,18 +141,20 @@ EOS
       end
 
       it do
-        is_expected.to eq Hash[
-          "header" => {},
-          "initial" => initial,
-          "moves" => [
-            {},
-            { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 } },
-            { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
-            { "move" => { "from" => pos(7, 9), "to" => pos(7, 8), "piece" => "GI", "color" => 0 } },
-            { "move" => { "from" => pos(2, 2), "to" => pos(8, 8), "piece" => "UM", "color" => 1 } },
-            { "special" => "TORYO" }
-          ]
-        ]
+        expect(subject).to eq({ "header" => {},
+                                "initial" => initial,
+                                "moves" => [
+                                  {},
+                                  { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", 
+                                                "color" => 0 } },
+                                  { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", 
+                                                "color" => 1 } },
+                                  { "move" => { "from" => pos(7, 9), "to" => pos(7, 8), "piece" => "GI", 
+                                                "color" => 0 } },
+                                  { "move" => { "from" => pos(2, 2), "to" => pos(8, 8), "piece" => "UM", 
+                                                "color" => 1 } },
+                                  { "special" => "TORYO" }
+                                ] })
       end
     end
 
@@ -170,23 +172,21 @@ EOS
       end
 
       it do
-        is_expected.to eq Hash[
-          "header" => {},
-          "initial" => initial,
-          "moves" => [
-            {},
-            { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 },
-              "time" => { "now" => ms(0, 12) } },
-            { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 },
-              "time" => { "now" => ms(0, 2) } },
-            { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "UM", "color" => 0 },
-              "time" => { "now" => ms(1, 40) } },
-            { "move" => { "from" => pos(3, 1), "to" => pos(2, 2), "piece" => "GI", "color" => 1 },
-              "time" => { "now" => ms(0, 1) } },
-            { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 },
-              "time" => { "now" => ms(0, 0) } }
-          ]
-        ]
+        expect(subject).to eq({ "header" => {},
+                                "initial" => initial,
+                                "moves" => [
+                                  {},
+                                  { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 },
+                                    "time" => { "now" => ms(0, 12) } },
+                                  { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 },
+                                    "time" => { "now" => ms(0, 2) } },
+                                  { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "UM", "color" => 0 },
+                                    "time" => { "now" => ms(1, 40) } },
+                                  { "move" => { "from" => pos(3, 1), "to" => pos(2, 2), "piece" => "GI", "color" => 1 },
+                                    "time" => { "now" => ms(0, 1) } },
+                                  { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 },
+                                    "time" => { "now" => ms(0, 0) } }
+                                ] })
       end
     end
 
@@ -210,23 +210,21 @@ EOS
       end
 
       it do
-        is_expected.to eq Hash[
-          "header" => {},
-          "initial" => initial,
-          "moves" => [
-            {},
-            { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 },
-              "time" => { "now" => ms(0, 12) } },
-            { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 },
-              "time" => { "now" => ms(0, 2) } },
-            { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "UM", "color" => 0 },
-              "time" => { "now" => ms(1, 40) } },
-            { "move" => { "from" => pos(3, 1), "to" => pos(2, 2), "piece" => "GI", "color" => 1 },
-              "time" => { "now" => ms(0, 1) } },
-            { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 },
-              "time" => { "now" => ms(0, 0) } }
-          ]
-        ]
+        expect(subject).to eq({ "header" => {},
+                                "initial" => initial,
+                                "moves" => [
+                                  {},
+                                  { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 },
+                                    "time" => { "now" => ms(0, 12) } },
+                                  { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 },
+                                    "time" => { "now" => ms(0, 2) } },
+                                  { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "UM", "color" => 0 },
+                                    "time" => { "now" => ms(1, 40) } },
+                                  { "move" => { "from" => pos(3, 1), "to" => pos(2, 2), "piece" => "GI", "color" => 1 },
+                                    "time" => { "now" => ms(0, 1) } },
+                                  { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 },
+                                    "time" => { "now" => ms(0, 0) } }
+                                ] })
       end
     end
 
@@ -246,54 +244,52 @@ EOS
         end
 
         it do
-          is_expected.to eq Hash[
-            "header" => {},
-            "initial" => {
-              "preset" => "OTHER",
-              "data" => {
-                "board" => [
-                  [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
-                   { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }],
-                  [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
-                   { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "HI" },
-                   { "color" => 0, "kind" => "KE" }],
-                  [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {},
-                   {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "GI" }],
-                  [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {},
-                   {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KI" }],
-                  [{ "color" => 1, "kind" => "OU" }, {}, { "color" => 1, "kind" => "FU" }, {}, {},
-                   {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "OU" }],
-                  [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {},
-                   {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KI" }],
-                  [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {},
-                   {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "GI" }],
-                  [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
-                   { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "KA" },
-                   { "color" => 0, "kind" => "KE" }],
-                  [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
-                   { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }]
-                ],
-                "color" => 1,
-                "hands" => [
-                  { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 },
-                  { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 }
-                ]
-              }
-            },
-            "moves" => [
-              {},
-              { "move" => { "from" => pos(5, 1), "to" => pos(4, 2),
-                            "piece" => "OU", "color" => 1 } },
-              { "move" => { "from" => pos(7, 7), "to" => pos(7, 6),
-                            "piece" => "FU", "color" => 0 } },
-              { "move" => { "from" => pos(3, 1), "to" => pos(2, 2),
-                            "piece" => "GI", "color" => 1 } },
-              { "move" => { "from" => pos(8, 8), "to" => pos(6, 6),
-                            "piece" => "KA", "color" => 0 } },
-              { "move" => { "from" => pos(7, 1), "to" => pos(8, 2),
-                            "piece" => "GI", "color" => 1 } }
-            ]
-          ]
+          expect(subject).to eq({ "header" => {},
+                                  "initial" => {
+                                    "preset" => "OTHER",
+                                    "data" => {
+                                      "board" => [
+                                        [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
+                                         { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }],
+                                        [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
+                                         { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "HI" },
+                                         { "color" => 0, "kind" => "KE" }],
+                                        [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {},
+                                         {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "GI" }],
+                                        [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {},
+                                         {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KI" }],
+                                        [{ "color" => 1, "kind" => "OU" }, {}, { "color" => 1, "kind" => "FU" }, {}, {},
+                                         {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "OU" }],
+                                        [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {},
+                                         {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KI" }],
+                                        [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {},
+                                         {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "GI" }],
+                                        [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
+                                         { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "KA" },
+                                         { "color" => 0, "kind" => "KE" }],
+                                        [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
+                                         { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }]
+                                      ],
+                                      "color" => 1,
+                                      "hands" => [
+                                        { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 },
+                                        { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 }
+                                      ]
+                                    }
+                                  },
+                                  "moves" => [
+                                    {},
+                                    { "move" => { "from" => pos(5, 1), "to" => pos(4, 2),
+                                                  "piece" => "OU", "color" => 1 } },
+                                    { "move" => { "from" => pos(7, 7), "to" => pos(7, 6),
+                                                  "piece" => "FU", "color" => 0 } },
+                                    { "move" => { "from" => pos(3, 1), "to" => pos(2, 2),
+                                                  "piece" => "GI", "color" => 1 } },
+                                    { "move" => { "from" => pos(8, 8), "to" => pos(6, 6),
+                                                  "piece" => "KA", "color" => 0 } },
+                                    { "move" => { "from" => pos(7, 1), "to" => pos(8, 2),
+                                                  "piece" => "GI", "color" => 1 } }
+                                  ] })
         end
       end
 
@@ -320,54 +316,52 @@ EOS
         end
 
         it do
-          is_expected.to eq Hash[
-            "header" => {},
-            "initial" => {
-              "preset" => "OTHER",
-              "data" => {
-                "board" => [
-                  [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
-                   { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }],
-                  [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
-                   { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "HI" },
-                   { "color" => 0, "kind" => "KE" }],
-                  [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {},
-                   {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "GI" }],
-                  [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {},
-                   {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KI" }],
-                  [{ "color" => 1, "kind" => "OU" }, {}, { "color" => 1, "kind" => "FU" }, {}, {},
-                   {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "OU" }],
-                  [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {},
-                   {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KI" }],
-                  [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {},
-                   {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "GI" }],
-                  [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
-                   { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "KA" },
-                   { "color" => 0, "kind" => "KE" }],
-                  [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
-                   { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }]
-                ],
-                "color" => 1,
-                "hands" => [
-                  { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 },
-                  { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 }
-                ]
-              }
-            },
-            "moves" => [
-              {},
-              { "move" => { "from" => pos(5, 1), "to" => pos(4, 2),
-                            "piece" => "OU", "color" => 1 } },
-              { "move" => { "from" => pos(7, 7), "to" => pos(7, 6),
-                            "piece" => "FU", "color" => 0 } },
-              { "move" => { "from" => pos(3, 1), "to" => pos(2, 2),
-                            "piece" => "GI", "color" => 1 } },
-              { "move" => { "from" => pos(8, 8), "to" => pos(6, 6),
-                            "piece" => "KA", "color" => 0 } },
-              { "move" => { "from" => pos(7, 1), "to" => pos(8, 2),
-                            "piece" => "GI", "color" => 1 } }
-            ]
-          ]
+          expect(subject).to eq({ "header" => {},
+                                  "initial" => {
+                                    "preset" => "OTHER",
+                                    "data" => {
+                                      "board" => [
+                                        [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
+                                         { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }],
+                                        [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
+                                         { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "HI" },
+                                         { "color" => 0, "kind" => "KE" }],
+                                        [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {},
+                                         {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "GI" }],
+                                        [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {},
+                                         {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KI" }],
+                                        [{ "color" => 1, "kind" => "OU" }, {}, { "color" => 1, "kind" => "FU" }, {}, {},
+                                         {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "OU" }],
+                                        [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {},
+                                         {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KI" }],
+                                        [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" }, {}, {},
+                                         {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "GI" }],
+                                        [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
+                                         { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "KA" },
+                                         { "color" => 0, "kind" => "KE" }],
+                                        [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
+                                         { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }]
+                                      ],
+                                      "color" => 1,
+                                      "hands" => [
+                                        { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 },
+                                        { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 }
+                                      ]
+                                    }
+                                  },
+                                  "moves" => [
+                                    {},
+                                    { "move" => { "from" => pos(5, 1), "to" => pos(4, 2),
+                                                  "piece" => "OU", "color" => 1 } },
+                                    { "move" => { "from" => pos(7, 7), "to" => pos(7, 6),
+                                                  "piece" => "FU", "color" => 0 } },
+                                    { "move" => { "from" => pos(3, 1), "to" => pos(2, 2),
+                                                  "piece" => "GI", "color" => 1 } },
+                                    { "move" => { "from" => pos(8, 8), "to" => pos(6, 6),
+                                                  "piece" => "KA", "color" => 0 } },
+                                    { "move" => { "from" => pos(7, 1), "to" => pos(8, 2),
+                                                  "piece" => "GI", "color" => 1 } }
+                                  ] })
         end
       end
 
@@ -386,41 +380,39 @@ EOS
         end
 
         it do
-          is_expected.to eq Hash[
-            "header" => {},
-            "initial" => {
-              "preset" => "OTHER",
-              "data" => {
-                "board" => [
-                  [{ "color" => 1, "kind" => "OU" }, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{ "color" => 1, "kind" => "FU" }, { "color" => 1, "kind" => "FU" },
-                   { "color" => 1, "kind" => "FU" }, { "color" => 1, "kind" => "FU" },
-                   { "color" => 1, "kind" => "FU" }, { "color" => 1, "kind" => "FU" },
-                   { "color" => 1, "kind" => "FU" }, { "color" => 1, "kind" => "FU" },
-                   { "color" => 1, "kind" => "FU" }],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}]
-                ],
-                "color" => 0,
-                "hands" => [
-                  { "FU" => 0, "KY" => 4, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 2 },
-                  { "FU" => 0, "KY" => 0, "KE" => 4, "GI" => 4, "KI" => 0, "KA" => 0, "HI" => 0 }
-                ]
-              }
-            },
-            "moves" => [
-              {},
-              { "move" => { "to" => pos(1, 3), "piece" => "KY", "color" => 0 } },
-              { "move" => { "to" => pos(1, 2), "piece" => "KE", "color" => 1 } },
-              { "move" => { "from" => pos(1, 3), "to" => pos(1, 2),
-                            "piece" => "NY", "color" => 0 } }
-            ]
-          ]
+          expect(subject).to eq({ "header" => {},
+                                  "initial" => {
+                                    "preset" => "OTHER",
+                                    "data" => {
+                                      "board" => [
+                                        [{ "color" => 1, "kind" => "OU" }, {}, {}, {}, {}, {}, {}, {}, {}],
+                                        [{ "color" => 1, "kind" => "FU" }, { "color" => 1, "kind" => "FU" },
+                                         { "color" => 1, "kind" => "FU" }, { "color" => 1, "kind" => "FU" },
+                                         { "color" => 1, "kind" => "FU" }, { "color" => 1, "kind" => "FU" },
+                                         { "color" => 1, "kind" => "FU" }, { "color" => 1, "kind" => "FU" },
+                                         { "color" => 1, "kind" => "FU" }],
+                                        [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                        [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                        [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                        [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                        [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                        [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                        [{}, {}, {}, {}, {}, {}, {}, {}, {}]
+                                      ],
+                                      "color" => 0,
+                                      "hands" => [
+                                        { "FU" => 0, "KY" => 4, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 2 },
+                                        { "FU" => 0, "KY" => 0, "KE" => 4, "GI" => 4, "KI" => 0, "KA" => 0, "HI" => 0 }
+                                      ]
+                                    }
+                                  },
+                                  "moves" => [
+                                    {},
+                                    { "move" => { "to" => pos(1, 3), "piece" => "KY", "color" => 0 } },
+                                    { "move" => { "to" => pos(1, 2), "piece" => "KE", "color" => 1 } },
+                                    { "move" => { "from" => pos(1, 3), "to" => pos(1, 2),
+                                                  "piece" => "NY", "color" => 0 } }
+                                  ] })
         end
       end
 
@@ -439,36 +431,34 @@ EOS
         end
 
         it do
-          is_expected.to eq Hash[
-            "header" => {},
-            "initial" => {
-              "preset" => "OTHER",
-              "data" => {
-                "board" => [
-                  [{ "color" => 1, "kind" => "OU" }, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{ "color" => 1, "kind" => "KE" }, {}, { "color" => 0, "kind" => "FU" },
-                   {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}]
-                ],
-                "color" => 0,
-                "hands" => [
-                  { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 1, "KA" => 0, "HI" => 0 },
-                  { "FU" => 17, "KY" => 4, "KE" => 3, "GI" => 4, "KI" => 3, "KA" => 2, "HI" => 2 }
-                ]
-              }
-            },
-            "moves" => [
-              {},
-              { "move" => { "to" => pos(2, 2), "piece" => "KI", "color" => 0 } },
-              { "special" => "TSUMI" }
-            ]
-          ]
+          expect(subject).to eq({ "header" => {},
+                                  "initial" => {
+                                    "preset" => "OTHER",
+                                    "data" => {
+                                      "board" => [
+                                        [{ "color" => 1, "kind" => "OU" }, {}, {}, {}, {}, {}, {}, {}, {}],
+                                        [{ "color" => 1, "kind" => "KE" }, {}, { "color" => 0, "kind" => "FU" },
+                                         {}, {}, {}, {}, {}, {}],
+                                        [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                        [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                        [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                        [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                        [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                        [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                        [{}, {}, {}, {}, {}, {}, {}, {}, {}]
+                                      ],
+                                      "color" => 0,
+                                      "hands" => [
+                                        { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 1, "KA" => 0, "HI" => 0 },
+                                        { "FU" => 17, "KY" => 4, "KE" => 3, "GI" => 4, "KI" => 3, "KA" => 2, "HI" => 2 }
+                                      ]
+                                    }
+                                  },
+                                  "moves" => [
+                                    {},
+                                    { "move" => { "to" => pos(2, 2), "piece" => "KI", "color" => 0 } },
+                                    { "special" => "TSUMI" }
+                                  ] })
         end
       end
     end
@@ -492,31 +482,32 @@ EOS
       end
 
       it do
-        is_expected.to eq Hash[
-          "header" => {
-            "先手" => "sente",
-            "後手" => "gote",
-            "場所" => "将棋会館",
-            "開始日時" => "2015/08/04 13:00:00"
-          },
-          "initial" => initial,
-          "moves" => [
-            {},
-            { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 } },
-            { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
-            { "move" => { "from" => pos(7, 9), "to" => pos(7, 8), "piece" => "GI", "color" => 0 } },
-            { "move" => { "from" => pos(2, 2), "to" => pos(8, 8), "piece" => "UM", "color" => 1 } },
-            { "special" => "TORYO" }
-          ]
-        ]
+        expect(subject).to eq({ "header" => {
+                                  "先手" => "sente",
+                                  "後手" => "gote",
+                                  "場所" => "将棋会館",
+                                  "開始日時" => "2015/08/04 13:00:00"
+                                },
+                                "initial" => initial,
+                                "moves" => [
+                                  {},
+                                  { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", 
+                                                "color" => 0 } },
+                                  { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", 
+                                                "color" => 1 } },
+                                  { "move" => { "from" => pos(7, 9), "to" => pos(7, 8), "piece" => "GI", 
+                                                "color" => 0 } },
+                                  { "move" => { "from" => pos(2, 2), "to" => pos(8, 8), "piece" => "UM", 
+                                                "color" => 1 } },
+                                  { "special" => "TORYO" }
+                                ] })
       end
     end
   end
 
   describe "csa-parser V1" do
     let(:initial) do
-      Hash[
-        "preset" => "OTHER",
+      { "preset" => "OTHER",
         "data" => {
           "board" => [
             [{ "color" => 1, "kind" => "KY" }, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
@@ -545,8 +536,7 @@ EOS
             { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 },
             { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 }
           ]
-        }
-      ]
+        } }
     end
 
     context "simple" do
@@ -563,18 +553,20 @@ EOS
       end
 
       it do
-        is_expected.to eq Hash[
-          "header" => {},
-          "initial" => initial,
-          "moves" => [
-            {},
-            { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 } },
-            { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
-            { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "UM", "color" => 0 } },
-            { "move" => { "from" => pos(3, 1), "to" => pos(2, 2), "piece" => "GI", "color" => 1 } },
-            { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 } }
-          ]
-        ]
+        expect(subject).to eq({ "header" => {},
+                                "initial" => initial,
+                                "moves" => [
+                                  {},
+                                  { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", 
+                                                "color" => 0 } },
+                                  { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", 
+                                                "color" => 1 } },
+                                  { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "UM", 
+                                                "color" => 0 } },
+                                  { "move" => { "from" => pos(3, 1), "to" => pos(2, 2), "piece" => "GI", 
+                                                "color" => 1 } },
+                                  { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 } }
+                                ] })
       end
     end
 
@@ -593,17 +585,16 @@ EOS
       end
 
       it do
-        is_expected.to eq Hash[
-          "header" => {},
-          "initial" => initial,
-          "moves" => [
-            { "comments" => ["開始時コメント"] },
-            { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 },
-              "comments" => ["初手コメント", "初手コメント2"] },
-            { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
-            { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "UM", "color" => 0 } }
-          ]
-        ]
+        expect(subject).to eq({ "header" => {},
+                                "initial" => initial,
+                                "moves" => [
+                                  { "comments" => ["開始時コメント"] },
+                                  { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 },
+                                    "comments" => ["初手コメント", "初手コメント2"] },
+                                  { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", 
+                                                "color" => 1 } },
+                                  { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "UM", "color" => 0 } }
+                                ] })
       end
     end
 
@@ -621,18 +612,20 @@ EOS
       end
 
       it do
-        is_expected.to eq Hash[
-          "header" => {},
-          "initial" => initial,
-          "moves" => [
-            {},
-            { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 } },
-            { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
-            { "move" => { "from" => pos(7, 9), "to" => pos(7, 8), "piece" => "GI", "color" => 0 } },
-            { "move" => { "from" => pos(2, 2), "to" => pos(8, 8), "piece" => "UM", "color" => 1 } },
-            { "special" => "TORYO" }
-          ]
-        ]
+        expect(subject).to eq({ "header" => {},
+                                "initial" => initial,
+                                "moves" => [
+                                  {},
+                                  { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", 
+                                                "color" => 0 } },
+                                  { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", 
+                                                "color" => 1 } },
+                                  { "move" => { "from" => pos(7, 9), "to" => pos(7, 8), "piece" => "GI", 
+                                                "color" => 0 } },
+                                  { "move" => { "from" => pos(2, 2), "to" => pos(8, 8), "piece" => "UM", 
+                                                "color" => 1 } },
+                                  { "special" => "TORYO" }
+                                ] })
       end
     end
 
@@ -649,23 +642,21 @@ EOS
       end
 
       it do
-        is_expected.to eq Hash[
-          "header" => {},
-          "initial" => initial,
-          "moves" => [
-            {},
-            { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 },
-              "time" => { "now" => ms(0, 12) } },
-            { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 },
-              "time" => { "now" => ms(0, 2) } },
-            { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "UM", "color" => 0 },
-              "time" => { "now" => ms(1, 40) } },
-            { "move" => { "from" => pos(3, 1), "to" => pos(2, 2), "piece" => "GI", "color" => 1 },
-              "time" => { "now" => ms(0, 1) } },
-            { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 },
-              "time" => { "now" => ms(0, 0) } }
-          ]
-        ]
+        expect(subject).to eq({ "header" => {},
+                                "initial" => initial,
+                                "moves" => [
+                                  {},
+                                  { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 },
+                                    "time" => { "now" => ms(0, 12) } },
+                                  { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 },
+                                    "time" => { "now" => ms(0, 2) } },
+                                  { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "UM", "color" => 0 },
+                                    "time" => { "now" => ms(1, 40) } },
+                                  { "move" => { "from" => pos(3, 1), "to" => pos(2, 2), "piece" => "GI", "color" => 1 },
+                                    "time" => { "now" => ms(0, 1) } },
+                                  { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 },
+                                    "time" => { "now" => ms(0, 0) } }
+                                ] })
       end
     end
 
@@ -688,23 +679,21 @@ EOS
       end
 
       it do
-        is_expected.to eq Hash[
-          "header" => {},
-          "initial" => initial,
-          "moves" => [
-            {},
-            { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 },
-              "time" => { "now" => ms(0, 12) } },
-            { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 },
-              "time" => { "now" => ms(0, 2) } },
-            { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "UM", "color" => 0 },
-              "time" => { "now" => ms(1, 40) } },
-            { "move" => { "from" => pos(3, 1), "to" => pos(2, 2), "piece" => "GI", "color" => 1 },
-              "time" => { "now" => ms(0, 1) } },
-            { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 },
-              "time" => { "now" => ms(0, 0) } }
-          ]
-        ]
+        expect(subject).to eq({ "header" => {},
+                                "initial" => initial,
+                                "moves" => [
+                                  {},
+                                  { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 },
+                                    "time" => { "now" => ms(0, 12) } },
+                                  { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 },
+                                    "time" => { "now" => ms(0, 2) } },
+                                  { "move" => { "from" => pos(8, 8), "to" => pos(2, 2), "piece" => "UM", "color" => 0 },
+                                    "time" => { "now" => ms(1, 40) } },
+                                  { "move" => { "from" => pos(3, 1), "to" => pos(2, 2), "piece" => "GI", "color" => 1 },
+                                    "time" => { "now" => ms(0, 1) } },
+                                  { "move" => { "to" => pos(4, 5), "piece" => "KA", "color" => 0 },
+                                    "time" => { "now" => ms(0, 0) } }
+                                ] })
       end
     end
 
@@ -723,54 +712,52 @@ EOS
         end
 
         it do
-          is_expected.to eq Hash[
-            "header" => {},
-            "initial" => {
-              "preset" => "OTHER",
-              "data" => {
-                "board" => [
-                  [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
-                   { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }],
-                  [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
-                   { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "HI" },
-                   { "color" => 0, "kind" => "KE" }],
-                  [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" }, {},
-                   {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "GI" }],
-                  [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" }, {},
-                   {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KI" }],
-                  [{ "color" => 1, "kind" => "OU" }, {}, { "color" => 1, "kind" => "FU" }, {},
-                   {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "OU" }],
-                  [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" }, {},
-                   {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KI" }],
-                  [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" }, {},
-                   {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "GI" }],
-                  [{}, {}, { "color" => 1, "kind" => "FU" },
-                   {}, {}, {}, { "color" => 0, "kind" => "FU" },
-                   { "color" => 0, "kind" => "KA" }, { "color" => 0, "kind" => "KE" }],
-                  [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
-                   { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }]
-                ],
-                "color" => 1,
-                "hands" => [
-                  { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 },
-                  { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 }
-                ]
-              }
-            },
-            "moves" => [
-              {},
-              { "move" => { "from" => pos(5, 1), "to" => pos(4, 2),
-                            "piece" => "OU", "color" => 1 } },
-              { "move" => { "from" => pos(7, 7), "to" => pos(7, 6),
-                            "piece" => "FU", "color" => 0 } },
-              { "move" => { "from" => pos(3, 1), "to" => pos(2, 2),
-                            "piece" => "GI", "color" => 1 } },
-              { "move" => { "from" => pos(8, 8), "to" => pos(6, 6),
-                            "piece" => "KA", "color" => 0 } },
-              { "move" => { "from" => pos(7, 1), "to" => pos(8, 2),
-                            "piece" => "GI", "color" => 1 } }
-            ]
-          ]
+          expect(subject).to eq({ "header" => {},
+                                  "initial" => {
+                                    "preset" => "OTHER",
+                                    "data" => {
+                                      "board" => [
+                                        [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
+                                         { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }],
+                                        [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
+                                         { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "HI" },
+                                         { "color" => 0, "kind" => "KE" }],
+                                        [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" }, {},
+                                         {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "GI" }],
+                                        [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" }, {},
+                                         {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KI" }],
+                                        [{ "color" => 1, "kind" => "OU" }, {}, { "color" => 1, "kind" => "FU" }, {},
+                                         {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "OU" }],
+                                        [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" }, {},
+                                         {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KI" }],
+                                        [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" }, {},
+                                         {}, {}, { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "GI" }],
+                                        [{}, {}, { "color" => 1, "kind" => "FU" },
+                                         {}, {}, {}, { "color" => 0, "kind" => "FU" },
+                                         { "color" => 0, "kind" => "KA" }, { "color" => 0, "kind" => "KE" }],
+                                        [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
+                                         { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }]
+                                      ],
+                                      "color" => 1,
+                                      "hands" => [
+                                        { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 },
+                                        { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 }
+                                      ]
+                                    }
+                                  },
+                                  "moves" => [
+                                    {},
+                                    { "move" => { "from" => pos(5, 1), "to" => pos(4, 2),
+                                                  "piece" => "OU", "color" => 1 } },
+                                    { "move" => { "from" => pos(7, 7), "to" => pos(7, 6),
+                                                  "piece" => "FU", "color" => 0 } },
+                                    { "move" => { "from" => pos(3, 1), "to" => pos(2, 2),
+                                                  "piece" => "GI", "color" => 1 } },
+                                    { "move" => { "from" => pos(8, 8), "to" => pos(6, 6),
+                                                  "piece" => "KA", "color" => 0 } },
+                                    { "move" => { "from" => pos(7, 1), "to" => pos(8, 2),
+                                                  "piece" => "GI", "color" => 1 } }
+                                  ] })
         end
       end
 
@@ -796,59 +783,57 @@ EOS
         end
 
         it do
-          is_expected.to eq Hash[
-            "header" => {},
-            "initial" => {
-              "preset" => "OTHER",
-              "data" => {
-                "board" => [
-                  [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
-                   { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }],
-                  [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
-                   { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "HI" },
-                   { "color" => 0, "kind" => "KE" }],
-                  [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" },
-                   {}, {}, {}, { "color" => 0, "kind" => "FU" },
-                   {}, { "color" => 0, "kind" => "GI" }],
-                  [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" },
-                   {}, {}, {}, { "color" => 0, "kind" => "FU" },
-                   {}, { "color" => 0, "kind" => "KI" }],
-                  [{ "color" => 1, "kind" => "OU" }, {}, { "color" => 1, "kind" => "FU" },
-                   {}, {}, {}, { "color" => 0, "kind" => "FU" },
-                   {}, { "color" => 0, "kind" => "OU" }],
-                  [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" },
-                   {}, {}, {}, { "color" => 0, "kind" => "FU" },
-                   {}, { "color" => 0, "kind" => "KI" }],
-                  [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" },
-                   {}, {}, {}, { "color" => 0, "kind" => "FU" },
-                   {}, { "color" => 0, "kind" => "GI" }],
-                  [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
-                   { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "KA" },
-                   { "color" => 0, "kind" => "KE" }],
-                  [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
-                   { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }]
-                ],
-                "color" => 1,
-                "hands" => [
-                  { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 },
-                  { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 }
-                ]
-              }
-            },
-            "moves" => [
-              {},
-              { "move" => { "from" => pos(5, 1), "to" => pos(4, 2),
-                            "piece" => "OU", "color" => 1 } },
-              { "move" => { "from" => pos(7, 7), "to" => pos(7, 6),
-                            "piece" => "FU", "color" => 0 } },
-              { "move" => { "from" => pos(3, 1), "to" => pos(2, 2),
-                            "piece" => "GI", "color" => 1 } },
-              { "move" => { "from" => pos(8, 8), "to" => pos(6, 6),
-                            "piece" => "KA", "color" => 0 } },
-              { "move" => { "from" => pos(7, 1), "to" => pos(8, 2),
-                            "piece" => "GI", "color" => 1 } }
-            ]
-          ]
+          expect(subject).to eq({ "header" => {},
+                                  "initial" => {
+                                    "preset" => "OTHER",
+                                    "data" => {
+                                      "board" => [
+                                        [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
+                                         { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }],
+                                        [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
+                                         { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "HI" },
+                                         { "color" => 0, "kind" => "KE" }],
+                                        [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" },
+                                         {}, {}, {}, { "color" => 0, "kind" => "FU" },
+                                         {}, { "color" => 0, "kind" => "GI" }],
+                                        [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" },
+                                         {}, {}, {}, { "color" => 0, "kind" => "FU" },
+                                         {}, { "color" => 0, "kind" => "KI" }],
+                                        [{ "color" => 1, "kind" => "OU" }, {}, { "color" => 1, "kind" => "FU" },
+                                         {}, {}, {}, { "color" => 0, "kind" => "FU" },
+                                         {}, { "color" => 0, "kind" => "OU" }],
+                                        [{ "color" => 1, "kind" => "KI" }, {}, { "color" => 1, "kind" => "FU" },
+                                         {}, {}, {}, { "color" => 0, "kind" => "FU" },
+                                         {}, { "color" => 0, "kind" => "KI" }],
+                                        [{ "color" => 1, "kind" => "GI" }, {}, { "color" => 1, "kind" => "FU" },
+                                         {}, {}, {}, { "color" => 0, "kind" => "FU" },
+                                         {}, { "color" => 0, "kind" => "GI" }],
+                                        [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
+                                         { "color" => 0, "kind" => "FU" }, { "color" => 0, "kind" => "KA" },
+                                         { "color" => 0, "kind" => "KE" }],
+                                        [{}, {}, { "color" => 1, "kind" => "FU" }, {}, {}, {},
+                                         { "color" => 0, "kind" => "FU" }, {}, { "color" => 0, "kind" => "KY" }]
+                                      ],
+                                      "color" => 1,
+                                      "hands" => [
+                                        { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 },
+                                        { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 0 }
+                                      ]
+                                    }
+                                  },
+                                  "moves" => [
+                                    {},
+                                    { "move" => { "from" => pos(5, 1), "to" => pos(4, 2),
+                                                  "piece" => "OU", "color" => 1 } },
+                                    { "move" => { "from" => pos(7, 7), "to" => pos(7, 6),
+                                                  "piece" => "FU", "color" => 0 } },
+                                    { "move" => { "from" => pos(3, 1), "to" => pos(2, 2),
+                                                  "piece" => "GI", "color" => 1 } },
+                                    { "move" => { "from" => pos(8, 8), "to" => pos(6, 6),
+                                                  "piece" => "KA", "color" => 0 } },
+                                    { "move" => { "from" => pos(7, 1), "to" => pos(8, 2),
+                                                  "piece" => "GI", "color" => 1 } }
+                                  ] })
         end
       end
 
@@ -866,41 +851,39 @@ EOS
         end
 
         it do
-          is_expected.to eq Hash[
-            "header" => {},
-            "initial" => {
-              "preset" => "OTHER",
-              "data" => {
-                "board" => [
-                  [{ "color" => 1, "kind" => "OU" }, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{ "color" => 1, "kind" => "FU" }, { "color" => 1, "kind" => "FU" },
-                   { "color" => 1, "kind" => "FU" }, { "color" => 1, "kind" => "FU" },
-                   { "color" => 1, "kind" => "FU" }, { "color" => 1, "kind" => "FU" },
-                   { "color" => 1, "kind" => "FU" }, { "color" => 1, "kind" => "FU" },
-                   { "color" => 1, "kind" => "FU" }],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}]
-                ],
-                "color" => 0,
-                "hands" => [
-                  { "FU" => 0, "KY" => 4, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 2 },
-                  { "FU" => 0, "KY" => 0, "KE" => 4, "GI" => 4, "KI" => 0, "KA" => 0, "HI" => 0 }
-                ]
-              }
-            },
-            "moves" => [
-              {},
-              { "move" => { "to" => pos(1, 3), "piece" => "KY", "color" => 0 } },
-              { "move" => { "to" => pos(1, 2), "piece" => "KE", "color" => 1 } },
-              { "move" => { "from" => pos(1, 3), "to" => pos(1, 2),
-                            "piece" => "NY", "color" => 0 } }
-            ]
-          ]
+          expect(subject).to eq({ "header" => {},
+                                  "initial" => {
+                                    "preset" => "OTHER",
+                                    "data" => {
+                                      "board" => [
+                                        [{ "color" => 1, "kind" => "OU" }, {}, {}, {}, {}, {}, {}, {}, {}],
+                                        [{ "color" => 1, "kind" => "FU" }, { "color" => 1, "kind" => "FU" },
+                                         { "color" => 1, "kind" => "FU" }, { "color" => 1, "kind" => "FU" },
+                                         { "color" => 1, "kind" => "FU" }, { "color" => 1, "kind" => "FU" },
+                                         { "color" => 1, "kind" => "FU" }, { "color" => 1, "kind" => "FU" },
+                                         { "color" => 1, "kind" => "FU" }],
+                                        [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                        [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                        [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                        [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                        [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                        [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                        [{}, {}, {}, {}, {}, {}, {}, {}, {}]
+                                      ],
+                                      "color" => 0,
+                                      "hands" => [
+                                        { "FU" => 0, "KY" => 4, "KE" => 0, "GI" => 0, "KI" => 0, "KA" => 0, "HI" => 2 },
+                                        { "FU" => 0, "KY" => 0, "KE" => 4, "GI" => 4, "KI" => 0, "KA" => 0, "HI" => 0 }
+                                      ]
+                                    }
+                                  },
+                                  "moves" => [
+                                    {},
+                                    { "move" => { "to" => pos(1, 3), "piece" => "KY", "color" => 0 } },
+                                    { "move" => { "to" => pos(1, 2), "piece" => "KE", "color" => 1 } },
+                                    { "move" => { "from" => pos(1, 3), "to" => pos(1, 2),
+                                                  "piece" => "NY", "color" => 0 } }
+                                  ] })
         end
       end
 
@@ -919,36 +902,34 @@ EOS
         end
 
         it do
-          is_expected.to eq Hash[
-            "header" => {},
-            "initial" => {
-              "preset" => "OTHER",
-              "data" => {
-                "board" => [
-                  [{ "color" => 1, "kind" => "OU" }, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{ "color" => 1, "kind" => "KE" }, {}, { "color" => 0, "kind" => "FU" },
-                   {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}],
-                  [{}, {}, {}, {}, {}, {}, {}, {}, {}]
-                ],
-                "color" => 0,
-                "hands" => [
-                  { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 1, "KA" => 0, "HI" => 0 },
-                  { "FU" => 17, "KY" => 4, "KE" => 3, "GI" => 4, "KI" => 3, "KA" => 2, "HI" => 2 }
-                ]
-              }
-            },
-            "moves" => [
-              {},
-              { "move" => { "to" => pos(2, 2), "piece" => "KI", "color" => 0 } },
-              { "special" => "TSUMI" }
-            ]
-          ]
+          expect(subject).to eq({ "header" => {},
+                                  "initial" => {
+                                    "preset" => "OTHER",
+                                    "data" => {
+                                      "board" => [
+                                        [{ "color" => 1, "kind" => "OU" }, {}, {}, {}, {}, {}, {}, {}, {}],
+                                        [{ "color" => 1, "kind" => "KE" }, {}, { "color" => 0, "kind" => "FU" },
+                                         {}, {}, {}, {}, {}, {}],
+                                        [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                        [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                        [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                        [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                        [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                        [{}, {}, {}, {}, {}, {}, {}, {}, {}],
+                                        [{}, {}, {}, {}, {}, {}, {}, {}, {}]
+                                      ],
+                                      "color" => 0,
+                                      "hands" => [
+                                        { "FU" => 0, "KY" => 0, "KE" => 0, "GI" => 0, "KI" => 1, "KA" => 0, "HI" => 0 },
+                                        { "FU" => 17, "KY" => 4, "KE" => 3, "GI" => 4, "KI" => 3, "KA" => 2, "HI" => 2 }
+                                      ]
+                                    }
+                                  },
+                                  "moves" => [
+                                    {},
+                                    { "move" => { "to" => pos(2, 2), "piece" => "KI", "color" => 0 } },
+                                    { "special" => "TSUMI" }
+                                  ] })
         end
       end
     end
@@ -969,21 +950,23 @@ EOS
       end
 
       it do
-        is_expected.to eq Hash[
-          "header" => {
-            "先手" => "sente",
-            "後手" => "gote"
-          },
-          "initial" => initial,
-          "moves" => [
-            {},
-            { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", "color" => 0 } },
-            { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", "color" => 1 } },
-            { "move" => { "from" => pos(7, 9), "to" => pos(7, 8), "piece" => "GI", "color" => 0 } },
-            { "move" => { "from" => pos(2, 2), "to" => pos(8, 8), "piece" => "UM", "color" => 1 } },
-            { "special" => "TORYO" }
-          ]
-        ]
+        expect(subject).to eq({ "header" => {
+                                  "先手" => "sente",
+                                  "後手" => "gote"
+                                },
+                                "initial" => initial,
+                                "moves" => [
+                                  {},
+                                  { "move" => { "from" => pos(7, 7), "to" => pos(7, 6), "piece" => "FU", 
+                                                "color" => 0 } },
+                                  { "move" => { "from" => pos(3, 3), "to" => pos(3, 4), "piece" => "FU", 
+                                                "color" => 1 } },
+                                  { "move" => { "from" => pos(7, 9), "to" => pos(7, 8), "piece" => "GI", 
+                                                "color" => 0 } },
+                                  { "move" => { "from" => pos(2, 2), "to" => pos(8, 8), "piece" => "UM", 
+                                                "color" => 1 } },
+                                  { "special" => "TORYO" }
+                                ] })
       end
     end
   end

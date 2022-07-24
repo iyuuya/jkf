@@ -22,7 +22,7 @@ module Jkf::Converter
     end
 
     def convert_handicap(preset)
-      preset != "OTHER" ? "手合割：#{preset2str(preset)}\n" : ""
+      preset == "OTHER" ? "" : "手合割：#{preset2str(preset)}\n"
     end
 
     def convert_teban(data, color)

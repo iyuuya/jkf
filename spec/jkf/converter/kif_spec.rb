@@ -1,12 +1,12 @@
 require "spec_helper"
 
 describe Jkf::Converter::Kif do
+  subject { kif_parser.parse(kif_converter.convert(jkf)) }
+
   let(:kif_converter) { Jkf::Converter::Kif.new }
   let(:kif_parser) { Jkf::Parser::Kif.new }
 
-  subject { kif_parser.parse(kif_converter.convert(jkf)) }
-
-  shared_examples(:parse_file) do |filename|
+  shared_examples('parse file') do |filename|
     let(:str) do
       if File.extname(filename) == ".kif"
         File.read(filename, encoding: "Shift_JIS").toutf8
@@ -16,13 +16,13 @@ describe Jkf::Converter::Kif do
     end
     let(:jkf) { kif_parser.parse(str).to_json }
 
-    it "should be parse #{File.basename(filename)}" do
-      is_expected.to eq JSON.parse(jkf)
+    it "is parse #{File.basename(filename)}" do
+      expect(subject).to eq JSON.parse(jkf)
     end
   end
 
   fixtures(:kif).each do |fixture|
-    it_behaves_like :parse_file, fixture
+    it_behaves_like 'parse file', fixture
   end
 
   describe "handicap" do
@@ -43,8 +43,8 @@ describe Jkf::Converter::Kif do
       }
     }
 
-    it "should be convert" do
-      is_expected.to eq kif_converter.convert(handicap_hash)
+    it "is convert" do
+      expect(subject).to eq kif_converter.convert(handicap_hash)
     end
   end
 end

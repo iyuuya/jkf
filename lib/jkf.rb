@@ -2,6 +2,7 @@ require "kconv"
 require "jkf/version"
 require "jkf/parser"
 require "jkf/converter"
+require "jkf/model/color"
 
 # JSON Kifu Format
 module Jkf

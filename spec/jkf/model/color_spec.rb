@@ -20,4 +20,20 @@ describe Jkf::Model::Color do
       expect(described_class.white.black?).to be false
     end
   end
+
+  describe Jkf::Model::Color::Black do
+    describe "to_jkf" do
+      it "is 0" do
+        expect(Jkf::Model::Color.black.to_jkf).to be 0
+      end
+    end
+  end
+
+  describe Jkf::Model::Color::White do
+    describe "to_jkf" do
+      it "is 1" do
+        expect(Jkf::Model::Color.white.to_jkf).to be 1
+      end
+    end
+  end
 end

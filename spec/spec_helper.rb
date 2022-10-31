@@ -7,6 +7,8 @@ require "pry"
 
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 require "jkf"
+require "jkf/model"
+require "jkf/model/color"
 
 module ExtendHelper
   def fixtures(type)

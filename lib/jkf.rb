@@ -2,10 +2,11 @@ require "kconv"
 require "jkf/version"
 require "jkf/parser"
 require "jkf/converter"
-require "jkf/model/color"
 
 # JSON Kifu Format
 module Jkf
+  Error = Class.new(StandardError)
+
   # raise when unsupport file type
   class FileTypeError < StandardError; end
 

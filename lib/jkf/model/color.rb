@@ -12,6 +12,8 @@ module Jkf
         White.instance
       end
 
+      include JkfObject
+
       def self.from_jkf(jkf)
         Black.from_jkf(jkf)
       rescue UnknownValueError
@@ -28,6 +30,8 @@ module Jkf
         def white?
           !black?
         end
+
+        include JkfObject
 
         def to_jkf
           0
@@ -51,6 +55,8 @@ module Jkf
         def white?
           true
         end
+
+        include JkfObject
 
         def to_jkf
           1

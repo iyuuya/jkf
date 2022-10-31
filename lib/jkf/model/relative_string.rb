@@ -40,7 +40,8 @@ module Jkf
 
       def self.from_jkf(jkf)
         tree = Parser.new.parse(jkf)
-        new(:relative_position => RelativePosition.from_jkf(tree[:relative_position]), :move_direction => MoveDirection.from_jkf(tree[:move_direction]), hit: tree[:hit] && true)
+        new(relative_position: RelativePosition.from_jkf(tree[:relative_position]),
+            move_direction: MoveDirection.from_jkf(tree[:move_direction]), hit: tree[:hit] && true)
       end
 
       class Parser < Parslet::Parser
@@ -58,7 +59,7 @@ module Jkf
     end
 
     HIT_LITERAL = "H"
-    
+
     module RelativePosition
       def self.left
         @left ||= Left.instance
@@ -108,11 +109,11 @@ module Jkf
 
       class Right
         LITERAL = "R"
-        
+
         include Singleton
-        
+
         include JkfObject
-        
+
         def to_jkf
           LITERAL
         end
@@ -144,11 +145,11 @@ module Jkf
 
       class Up
         LITERAL = "U"
-        
+
         include Singleton
-        
+
         include JkfObject
-        
+
         def to_jkf
           LITERAL
         end
@@ -156,11 +157,11 @@ module Jkf
 
       class Middle
         LITERAL = "M"
-        
+
         include Singleton
-        
+
         include JkfObject
-        
+
         def to_jkf
           LITERAL
         end
@@ -168,11 +169,11 @@ module Jkf
 
       class Down
         LITERAL = "D"
-        
+
         include Singleton
-        
+
         include JkfObject
-        
+
         def to_jkf
           LITERAL
         end

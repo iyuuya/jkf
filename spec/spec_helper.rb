@@ -9,6 +9,7 @@ $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 require "jkf"
 require "jkf/model"
 require "jkf/model/color"
+require "jkf/model/relative_string"
 
 module ExtendHelper
   def fixtures(type)

@@ -13,12 +13,8 @@ module Jkf
         raise NotImplementedError
       end
 
-      class << self
-        private
-
-        def included(klass)
-          klass.extend(ClassMethods)
-        end
+      def self.included(klass)
+        klass.extend(ClassMethods)
       end
 
       module ClassMethods

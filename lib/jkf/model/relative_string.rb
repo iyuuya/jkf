@@ -8,20 +8,58 @@ module Jkf
         hit
       end
 
+      def left?
+        relative_position == RelativePosition.left
+      end
+
+      def center?
+        relative_position == RelativePosition.center
+      end
+
+      def right?
+        relative_position == RelativePosition.right
+      end
+
+      def up?
+        move_direction == MoveDirection.up
+      end
+
+      def middle?
+        move_direction == MoveDirection.middle
+      end
+
+      def down?
+        move_direction == MoveDirection.down
+      end
+
       include JkfObject
 
       def to_jkf
-        (relative_position&.to_jkf || "") + (move_direction&.to_jkf || "") + (hit? ? self::HIT_LITERAL : "")
+        (relative_position&.to_jkf || "") + (move_direction&.to_jkf || "") + (hit? ? HIT_LITERAL : "")
       end
 
       def self.from_jkf(jkf)
-        RelativePosition::Parser.new.maybe
+        tree = Parser.new.parse(jkf)
+        new(:relative_position => RelativePosition.from_jkf(tree[:relative_position]), :move_direction => MoveDirection.from_jkf(tree[:move_direction]), hit: tree[:hit] && true)
+      end
+
+      class Parser < Parslet::Parser
+        rule(:left) { str(RelativePosition::Left::LITERAL) }
+        rule(:center) { str(RelativePosition::Center::LITERAL) }
+        rule(:right) { str(RelativePosition::Right::LITERAL) }
+        rule(:up) { str(MoveDirection::Up::LITERAL) }
+        rule(:middle) { str(MoveDirection::Middle::LITERAL) }
+        rule(:down) { str(MoveDirection::Down::LITERAL) }
+        rule(:hit) { str(HIT_LITERAL) }
+        rule(:relative_position) { (left | center | right).as(:relative_position) }
+        rule(:move_direction) { (up | middle | down).as(:move_direction) }
+        rule(:root) { relative_position.maybe >> move_direction.maybe >> hit.maybe.as(:hit) }
       end
     end
 
-    RelativeString::HIT_LITERAL = "H"
+    HIT_LITERAL = "H"
     
-    module RelativeString::RelativePosition
+    module RelativePosition
       def self.left
         @left ||= Left.instance
       end
@@ -35,13 +73,13 @@ module Jkf
       end
 
       include JkfObject
-      def self.from_jkf(jkf)
-        Parser.new(jkf)
-      end
 
-      class Parser < Parslet::Parser
-        rule(:relative_position) { Left::Parser.new | Center::Parser.new | Right::Parser.new }
-        root(:relative_position)
+      def self.from_jkf(jkf)
+        case jkf
+        when "L" then left
+        when "C" then center
+        when "R" then right
+        end
       end
 
       class Left
@@ -53,16 +91,6 @@ module Jkf
 
         def to_jkf
           LITERAL
-        end
-
-        def self.from_jkf(jkf)
-          Parser.new.parse(jkf)
-          instance
-        end
-
-        class Parser < Parslet::Parser
-          rule(:left) { str(LITERAL) }
-          root(:left)
         end
       end
 
@@ -76,16 +104,6 @@ module Jkf
         def to_jkf
           LITERAL
         end
-        
-        def self.from_jkf(jkf)
-          Parser.new.parse(jkf)
-          instance
-        end
-
-        class Parser < Parslet::Parser
-          rule(:center) { str(LITERAL) }
-          root(:center)
-        end
       end
 
       class Right
@@ -98,20 +116,10 @@ module Jkf
         def to_jkf
           LITERAL
         end
-        
-        def self.from_jkf(jkf)
-          Parser.new.parse(jkf)
-          instance
-        end
-
-        class Parser < Parslet::Parser
-          rule(:right) { str(LITERAL) }
-          root(:right)
-        end
       end
     end
 
-    module RelativeString::MoveDirection
+    module MoveDirection
       def self.up
         @up ||= Up.instance
       end
@@ -125,53 +133,48 @@ module Jkf
       end
 
       include JkfObject
+
       def self.from_jkf(jkf)
-        Up.from_jkf(jkf)
-      rescue UnknownValueError
-        Middle.from_jkf(jkf)
-      rescue UnknownValueError
-        Down.from_jkf(jkf)
+        case jkf
+        when "U" then up
+        when "M" then middle
+        when "D" then down
+        end
       end
 
       class Up
+        LITERAL = "U"
+        
         include Singleton
+        
         include JkfObject
+        
         def to_jkf
-          "U"
-        end
-        def self.from_jkf(jkf)
-          case jkf
-          in "U" then instance
-          else raise UnknownValueError.new(jkf)
-          end
+          LITERAL
         end
       end
 
       class Middle
+        LITERAL = "M"
+        
         include Singleton
+        
         include JkfObject
+        
         def to_jkf
-          "M"
-        end
-        def self.from_jkf(jkf)
-          case jkf
-          in "M" then instance
-          else raise UnknownValueError.new(jkf)
-          end
+          LITERAL
         end
       end
 
       class Down
+        LITERAL = "D"
+        
         include Singleton
+        
         include JkfObject
+        
         def to_jkf
-          "D"
-        end
-        def self.from_jkf(jkf)
-          case jkf
-          in "D" then instance
-          else raise UnknownValueError.new(jkf)
-          end
+          LITERAL
         end
       end
     end

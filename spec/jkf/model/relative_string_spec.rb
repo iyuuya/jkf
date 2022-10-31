@@ -1,31 +1,67 @@
 require 'spec_helper'
 
 describe Jkf::Model::RelativeString do
+  describe "left?" do
+    it "is left" do
+      expect(described_class.new(relative_position: Jkf::Model::RelativePosition.left).left?).to be true
+    end
+  end
+
+  describe "center?" do
+    it "is center" do
+      expect(described_class.new(relative_position: Jkf::Model::RelativePosition.center).center?).to be true
+    end
+  end
+
+  describe "right?" do
+    it "is right" do
+      expect(described_class.new(relative_position: Jkf::Model::RelativePosition.right).right?).to be true
+    end
+  end
+  
   describe "relative_position" do
     it "is left" do
-      expect(described_class.new(relative_position: described_class::RelativePosition.left).relative_position).to be described_class::RelativePosition.left
+      expect(described_class.new(relative_position: Jkf::Model::RelativePosition.left).relative_position).to be Jkf::Model::RelativePosition.left
     end
 
     it "is center" do
-      expect(described_class.new(relative_position: described_class::RelativePosition.center).relative_position).to be described_class::RelativePosition.center
+      expect(described_class.new(relative_position: Jkf::Model::RelativePosition.center).relative_position).to be Jkf::Model::RelativePosition.center
     end
 
     it "is right" do
-      expect(described_class.new(relative_position: described_class::RelativePosition.right).relative_position).to be described_class::RelativePosition.right
+      expect(described_class.new(relative_position: Jkf::Model::RelativePosition.right).relative_position).to be Jkf::Model::RelativePosition.right
+    end
+  end
+
+  describe "up?" do
+    it "is up" do
+      expect(described_class.new(move_direction: Jkf::Model::MoveDirection.up).up?).to be true
+    end
+  end
+
+  describe "middle?" do
+    it "is up" do
+      expect(described_class.new(move_direction: Jkf::Model::MoveDirection.middle).middle?).to be true
+    end
+  end
+
+  describe "down?" do
+    it "is up" do
+      expect(described_class.new(move_direction: Jkf::Model::MoveDirection.down).down?).to be true
     end
   end
 
   describe "move_direction" do
     it "is up" do
-      expect(described_class.new(move_direction: described_class::MoveDirection.up).move_direction).to be described_class::MoveDirection.up
+      expect(described_class.new(move_direction: Jkf::Model::MoveDirection.up).move_direction).to be Jkf::Model::MoveDirection.up
     end
 
     it "is middle" do
-      expect(described_class.new(move_direction: described_class::MoveDirection.middle).move_direction).to be described_class::MoveDirection.middle
+      expect(described_class.new(move_direction: Jkf::Model::MoveDirection.middle).move_direction).to be Jkf::Model::MoveDirection.middle
     end
 
     it "is down" do
-      expect(described_class.new(move_direction: described_class::MoveDirection.down).move_direction).to be described_class::MoveDirection.down
+      expect(described_class.new(move_direction: Jkf::Model::MoveDirection.down).move_direction).to be Jkf::Model::MoveDirection.down
     end
   end
 
@@ -41,29 +77,29 @@ describe Jkf::Model::RelativeString do
 
   describe "to_jkf" do
     it "is left up hit" do
-      expect(described_class.new(relative_position: described_class::RelativePosition.left, move_direction: described_class::MoveDirection.up, hit: true).to_jkf).to eq "LUH"
+      expect(described_class.new(relative_position: Jkf::Model::RelativePosition.left, move_direction: Jkf::Model::MoveDirection.up, hit: true).to_jkf).to eq "LUH"
     end
 
     it "is center" do
-      expect(described_class.new(relative_position: described_class::RelativePosition.center).to_jkf).to eq "C"
+      expect(described_class.new(relative_position: Jkf::Model::RelativePosition.center).to_jkf).to eq "C"
     end
 
     it "is right down" do
-      expect(described_class.new(relative_position: described_class::RelativePosition.right, move_direction: described_class::MoveDirection.down).to_jkf).to eq "RD"
+      expect(described_class.new(relative_position: Jkf::Model::RelativePosition.right, move_direction: Jkf::Model::MoveDirection.down).to_jkf).to eq "RD"
     end
   end
 
   describe "from_jkf" do
     it "is left up hit" do
-      expect(described_class.from_jkf("LUH")).to be described_class.new(relative_position: described_class::RelativePosition.left, move_direction: described_class::MoveDirection.up, hit: true)
+      expect(described_class.from_jkf("LUH")).to eq described_class.new(relative_position: Jkf::Model::RelativePosition.left, move_direction: Jkf::Model::MoveDirection.up, hit: true)
     end
 
     it "is center" do
-      expect(described_class.from_jkf("C")).to be described_class.new(relative_position: described_class::RelativePosition.center)
+      expect(described_class.from_jkf("C")).to eq described_class.new(relative_position: Jkf::Model::RelativePosition.center)
     end
 
     it "is right down" do
-      expect(described_class.from_jkf("RD")).to be described_class.new(relative_position: described_class::RelativePosition.right, move_direction: described_class::MoveDirection.right)
+      expect(described_class.from_jkf("RD")).to eq described_class.new(relative_position: Jkf::Model::RelativePosition.right, move_direction: Jkf::Model::MoveDirection.down)
     end
   end
 end

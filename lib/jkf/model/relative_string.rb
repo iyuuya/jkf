@@ -39,23 +39,23 @@ module Jkf
       end
 
       def self.from_jkf(jkf)
-        tree = Parser.new.parse(jkf)
+        tree = RelativeStringParser.new.parse(jkf)
         new(relative_position: RelativePosition.from_jkf(tree[:relative_position]),
             move_direction: MoveDirection.from_jkf(tree[:move_direction]), hit: tree[:hit] && true)
       end
+    end
 
-      class Parser < Parslet::Parser
-        rule(:left) { str(RelativePosition::Left::LITERAL) }
-        rule(:center) { str(RelativePosition::Center::LITERAL) }
-        rule(:right) { str(RelativePosition::Right::LITERAL) }
-        rule(:up) { str(MoveDirection::Up::LITERAL) }
-        rule(:middle) { str(MoveDirection::Middle::LITERAL) }
-        rule(:down) { str(MoveDirection::Down::LITERAL) }
-        rule(:hit) { str(HIT_LITERAL) }
-        rule(:relative_position) { (left | center | right).as(:relative_position) }
-        rule(:move_direction) { (up | middle | down).as(:move_direction) }
-        rule(:root) { relative_position.maybe >> move_direction.maybe >> hit.maybe.as(:hit) }
-      end
+    class RelativeStringParser < Parslet::Parser
+      rule(:left) { str(RelativePosition::Left::LITERAL) }
+      rule(:center) { str(RelativePosition::Center::LITERAL) }
+      rule(:right) { str(RelativePosition::Right::LITERAL) }
+      rule(:up) { str(MoveDirection::Up::LITERAL) }
+      rule(:middle) { str(MoveDirection::Middle::LITERAL) }
+      rule(:down) { str(MoveDirection::Down::LITERAL) }
+      rule(:hit) { str(HIT_LITERAL) }
+      rule(:relative_position) { (left | center | right).as(:relative_position) }
+      rule(:move_direction) { (up | middle | down).as(:move_direction) }
+      rule(:root) { relative_position.maybe >> move_direction.maybe >> hit.maybe.as(:hit) }
     end
 
     HIT_LITERAL = "H".freeze

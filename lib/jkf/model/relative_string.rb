@@ -1,4 +1,5 @@
 require "singleton"
+require "parslet"
 
 module Jkf
   module Model
@@ -6,12 +7,19 @@ module Jkf
       def hit?
         hit
       end
+
       include JkfObject
+
       def to_jkf
-        (relative_position&.to_jkf || "") + (move_direction&.to_jkf || "") + (hit? ? "H" : "")
+        (relative_position&.to_jkf || "") + (move_direction&.to_jkf || "") + (hit? ? self::HIT_LITERAL : "")
       end
-      # def self.from_jkf(jkf); end
+
+      def self.from_jkf(jkf)
+        RelativePosition::Parser.new.maybe
+      end
     end
+
+    RelativeString::HIT_LITERAL = "H"
     
     module RelativeString::RelativePosition
       def self.left
@@ -28,52 +36,77 @@ module Jkf
 
       include JkfObject
       def self.from_jkf(jkf)
-        Left.from_jkf(jkf)
-      rescue UnknownValueError
-        Center.from_jkf(jkf)
-      rescue UnknownValueError
-        Right.from_jkf(jkf)
+        Parser.new(jkf)
+      end
+
+      class Parser < Parslet::Parser
+        rule(:relative_position) { Left::Parser.new | Center::Parser.new | Right::Parser.new }
+        root(:relative_position)
       end
 
       class Left
+        LITERAL = "L"
+
         include Singleton
+
         include JkfObject
+
         def to_jkf
-          "L"
+          LITERAL
         end
+
         def self.from_jkf(jkf)
-          case jkf
-          in "L" then instance
-          else raise UnknownValueError.new(jkf)
-          end
+          Parser.new.parse(jkf)
+          instance
+        end
+
+        class Parser < Parslet::Parser
+          rule(:left) { str(LITERAL) }
+          root(:left)
         end
       end
 
       class Center
+        LITERAL = "C"
+
         include Singleton
+
         include JkfObject
+
         def to_jkf
-          "C"
+          LITERAL
         end
+        
         def self.from_jkf(jkf)
-          case jkf
-          in "C" then instance
-          else raise UnknownValueError.new(jkf)
-          end
+          Parser.new.parse(jkf)
+          instance
+        end
+
+        class Parser < Parslet::Parser
+          rule(:center) { str(LITERAL) }
+          root(:center)
         end
       end
 
       class Right
+        LITERAL = "R"
+        
         include Singleton
+        
         include JkfObject
+        
         def to_jkf
-          "R"
+          LITERAL
         end
+        
         def self.from_jkf(jkf)
-          case jkf
-          in "R" then instance
-          else raise UnknownValueError.new(jkf)
-          end
+          Parser.new.parse(jkf)
+          instance
+        end
+
+        class Parser < Parslet::Parser
+          rule(:right) { str(LITERAL) }
+          root(:right)
         end
       end
     end

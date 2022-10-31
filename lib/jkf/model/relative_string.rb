@@ -58,7 +58,7 @@ module Jkf
       end
     end
 
-    HIT_LITERAL = "H"
+    HIT_LITERAL = "H".freeze
 
     module RelativePosition
       def self.left
@@ -84,7 +84,7 @@ module Jkf
       end
 
       class Left
-        LITERAL = "L"
+        LITERAL = "L".freeze
 
         include Singleton
 
@@ -96,7 +96,7 @@ module Jkf
       end
 
       class Center
-        LITERAL = "C"
+        LITERAL = "C".freeze
 
         include Singleton
 
@@ -108,7 +108,7 @@ module Jkf
       end
 
       class Right
-        LITERAL = "R"
+        LITERAL = "R".freeze
 
         include Singleton
 
@@ -144,7 +144,7 @@ module Jkf
       end
 
       class Up
-        LITERAL = "U"
+        LITERAL = "U".freeze
 
         include Singleton
 
@@ -156,7 +156,7 @@ module Jkf
       end
 
       class Middle
-        LITERAL = "M"
+        LITERAL = "M".freeze
 
         include Singleton
 
@@ -168,7 +168,7 @@ module Jkf
       end
 
       class Down
-        LITERAL = "D"
+        LITERAL = "D".freeze
 
         include Singleton
 

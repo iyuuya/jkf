@@ -10,6 +10,7 @@ require "jkf"
 require "jkf/model"
 require "jkf/model/color"
 require "jkf/model/relative_string"
+require "jkf/model/initial_preset_string"
 
 module ExtendHelper
   def fixtures(type)

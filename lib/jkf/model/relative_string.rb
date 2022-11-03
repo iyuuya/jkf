@@ -3,10 +3,24 @@ require "parslet"
 
 module Jkf
   module Model
-    RelativeString = Struct.new(:relative_position, :move_direction, :hit, keyword_init: true) do
-      def hit?
-        hit
+    class RelativeString
+      attr_accessor :relative_position, :move_direction, :drop
+
+      # +hit+ and +drop+ are identical.
+      # If either of them are turned on, it is turned on.
+      def initialize(relative_position: nil, move_direction: nil, hit: false, drop: false)
+        @relative_position = relative_position
+        @move_direction = move_direction
+        @drop = hit || drop
       end
+
+      def ==(other)
+        relative_position == other.relative_position && move_direction == other.move_direction && drop == other.drop
+      end
+
+      alias drop? drop
+      alias hit? drop
+      alias hit drop
 
       def left?
         relative_position == RelativePosition.left

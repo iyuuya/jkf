@@ -75,10 +75,25 @@ describe Jkf::Model::RelativeString do
     end
   end
 
+  describe "drop?" do
+    it "is drop" do
+      expect(described_class.new(drop: true).drop?).to be true
+    end
+
+    it "is not drop" do
+      expect(described_class.new(drop: false).drop?).to be false
+    end
+  end
+
   describe "to_jkf" do
     it "is left up hit" do
       expect(described_class.new(relative_position: Jkf::Model::RelativePosition.left,
                                  move_direction: Jkf::Model::MoveDirection.up, hit: true).to_jkf).to eq "LUH"
+    end
+
+    it "is left up drop" do
+      expect(described_class.new(relative_position: Jkf::Model::RelativePosition.left,
+                                 move_direction: Jkf::Model::MoveDirection.up, drop: true).to_jkf).to eq "LUH"
     end
 
     it "is center" do
@@ -95,6 +110,12 @@ describe Jkf::Model::RelativeString do
     it "is left up hit" do
       expect(described_class.from_jkf("LUH")).to eq described_class.new(
         relative_position: Jkf::Model::RelativePosition.left, move_direction: Jkf::Model::MoveDirection.up, hit: true
+      )
+    end
+
+    it "is left up drop" do
+      expect(described_class.from_jkf("LUH")).to eq described_class.new(
+        relative_position: Jkf::Model::RelativePosition.left, move_direction: Jkf::Model::MoveDirection.up, drop: true
       )
     end
 

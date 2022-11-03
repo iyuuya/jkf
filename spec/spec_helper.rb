@@ -11,6 +11,7 @@ require "jkf/model"
 require "jkf/model/color"
 require "jkf/model/relative_string"
 require "jkf/model/initial_preset_string"
+require "jkf/model/place_format"
 
 module ExtendHelper
   def fixtures(type)

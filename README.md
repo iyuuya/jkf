@@ -1,5 +1,5 @@
 # Jkf
-[![Gem Version](https://badge.fury.io/rb/jkf.svg)](https://badge.fury.io/rb/jkf) [![Build Status](https://travis-ci.org/iyuuya/jkf.svg?branch=master)](https://travis-ci.org/iyuuya/jkf) [![Code Climate](https://codeclimate.com/github/iyuuya/jkf/badges/gpa.svg)](https://codeclimate.com/github/iyuuya/jkf) [![Test Coverage](https://codeclimate.com/github/iyuuya/jkf/badges/coverage.svg)](https://codeclimate.com/github/iyuuya/jkf/coverage) [![Inline docs](http://inch-ci.org/github/iyuuya/jkf.svg?branch=develop)](http://inch-ci.org/github/iyuuya/jkf)
+[![Gem Version](https://badge.fury.io/rb/jkf.svg)](https://badge.fury.io/rb/jkf) [![Build Status](https://travis-ci.org/iyuuya/jkf.svg?branch=master)](https://travis-ci.org/iyuuya/jkf) [![CI](https://github.com/iyuuya/jkf/actions/workflows/ci.yml/badge.svg)](https://github.com/iyuuya/jkf/actions/workflows/ci.yml) [![Inline docs](http://inch-ci.org/github/iyuuya/jkf.svg?branch=develop)](http://inch-ci.org/github/iyuuya/jkf)
 
 jkfはJSON棋譜フォーマット( https://github.com/na2hiro/json-kifu-format )をRubyに移植したものです。
 KIF, KI2, CSAをパースしJKFへ変換、JKFからKIF, KI2, CSAへの変換に対応しています。

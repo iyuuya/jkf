@@ -1,0 +1,200 @@
+# English translation of jkf gem document
+# Copyright (C) 2023 gemmaro.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: jkf gem\n"
+"POT-Creation-Date: 2023-06-18 15:22+0900\n"
+"PO-Revision-Date: 2023-06-18 15:23+0900\n"
+"Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
+"Language-Team: none\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. type: Title #
+#: README.md:1
+#, no-wrap
+msgid "Jkf"
+msgstr "Jkf"
+
+#. type: Plain text
+#: README.md:3
+msgid ""
+"[![Gem Version](https://badge.fury.io/rb/jkf.svg)](https://badge.fury.io/rb/"
+"jkf) [![Build Status](https://travis-ci.org/iyuuya/jkf.svg?branch=master)]"
+"(https://travis-ci.org/iyuuya/jkf) [![CI](https://github.com/iyuuya/jkf/"
+"actions/workflows/ci.yml/badge.svg)](https://github.com/iyuuya/jkf/actions/"
+"workflows/ci.yml) [![Inline docs](http://inch-ci.org/github/iyuuya/jkf.svg?"
+"branch=develop)](http://inch-ci.org/github/iyuuya/jkf)"
+msgstr ""
+"[![Gem Version](https://badge.fury.io/rb/jkf.svg)](https://badge.fury.io/rb/"
+"jkf)\n"
+"[![Build Status](https://travis-ci.org/iyuuya/jkf.svg?branch=master)]"
+"(https://travis-ci.org/iyuuya/jkf)\n"
+"[![CI](https://github.com/iyuuya/jkf/actions/workflows/ci.yml/badge.svg)]"
+"(https://github.com/iyuuya/jkf/actions/workflows/ci.yml)\n"
+"[![Inline docs](http://inch-ci.org/github/iyuuya/jkf.svg?branch=develop)]"
+"(http://inch-ci.org/github/iyuuya/jkf)"
+
+#. type: Plain text
+#: README.md:6
+msgid ""
+"jkfはJSON棋譜フォーマット( https://github.com/na2hiro/json-kifu-format )を"
+"Rubyに移植したものです。 KIF, KI2, CSAをパースしJKFへ変換、JKFからKIF, KI2, "
+"CSAへの変換に対応しています。"
+msgstr ""
+"jkf is a Ruby port of [json-kifu-format](https://github.com/na2hiro/json-"
+"kifu-format).\n"
+"It supports both of the conversion from KIF, KI2, or CSA to jkf, and the one "
+"from jkf to KIF, KI2, or CSA."
+
+#. type: Title ##
+#: README.md:7
+#, no-wrap
+msgid "Installation"
+msgstr "Installation"
+
+#. type: Plain text
+#: README.md:10
+msgid ""
+"アプリケーションにインストールする場合(bundlerを使用する場合)、Gemfileに以下"
+"のように記述してください。"
+msgstr ""
+"If you install this gem to your application (with Bundler), add this to "
+"Gemfile."
+
+#. type: Fenced code block (ruby)
+#: README.md:11
+#, no-wrap
+msgid "gem 'jkf'\n"
+msgstr "gem 'jkf'\n"
+
+#. type: Plain text
+#: README.md:16
+msgid "さらにbundleコマンドを実行することでインストールできます。"
+msgstr "Then run bundle to install this gem."
+
+#. type: Plain text
+#: README.md:18
+#, no-wrap
+msgid "    $ bundle\n"
+msgstr "    $ bundle\n"
+
+#. type: Plain text
+#: README.md:20
+msgid "または、gem installコマンドを使って直接インストールすることもできます。"
+msgstr "Or directly install with gem install command."
+
+#. type: Plain text
+#: README.md:22
+#, no-wrap
+msgid "    $ gem install jkf\n"
+msgstr "    $ gem install jkf\n"
+
+#. type: Title ##
+#: README.md:23
+#, no-wrap
+msgid "Usage"
+msgstr "Usage"
+
+#. type: Plain text
+#: README.md:26
+msgid "KIF, KI2, CSAそれぞれParserとConverterが用意してあります。"
+msgstr ""
+"This gem has the Parser and the Converter for each formats: KIF, KI2, and "
+"CSA."
+
+#. type: Fenced code block (ruby)
+#: README.md:27
+#, no-wrap
+msgid ""
+"kif_parser = Jkf::Parser::Kif.new\n"
+"ki2_parser = Jkf::Parser::Ki2.new\n"
+"csa_parser = Jkf::Parser::Csa.new\n"
+msgstr ""
+"kif_parser = Jkf::Parser::Kif.new\n"
+"ki2_parser = Jkf::Parser::Ki2.new\n"
+"csa_parser = Jkf::Parser::Csa.new\n"
+
+#. type: Fenced code block (ruby)
+#: README.md:33
+#, no-wrap
+msgid ""
+"kif_converter = Jkf::Converter::Kif.new\n"
+"ki2_converter = Jkf::Converter::Ki2.new\n"
+"csa_converter = Jkf::Converter::Csa.new\n"
+msgstr ""
+"kif_converter = Jkf::Converter::Kif.new\n"
+"ki2_converter = Jkf::Converter::Ki2.new\n"
+"csa_converter = Jkf::Converter::Csa.new\n"
+
+#. type: Plain text
+#: README.md:40
+msgid ""
+"`parser#parse(str)`でjkfへの変換、`#convert(jkf)`でjkfから各フォーマットへ変"
+"換できます。"
+msgstr ""
+"`parser#parse(str)` to convert into jkf.\n"
+"`#convert(jkf)` to convert into each formats from jkf."
+
+#. type: Fenced code block (ruby)
+#: README.md:41
+#, no-wrap
+msgid ""
+"jkf = kif_parser.parse(kif_str) #=> Hash\n"
+"jkf = ki2_parser.parse(ki2_str) #=> Hash\n"
+"jkf = csa_parser.parse(csa_str) #=> Hash\n"
+msgstr ""
+"jkf = kif_parser.parse(kif_str) #=> Hash\n"
+"jkf = ki2_parser.parse(ki2_str) #=> Hash\n"
+"jkf = csa_parser.parse(csa_str) #=> Hash\n"
+
+#. type: Fenced code block (ruby)
+#: README.md:47
+#, no-wrap
+msgid ""
+"kif = kif_converter.convert(jkf) #=> String\n"
+"ki2 = ki2_converter.convert(jkf) #=> String\n"
+"csa = csa_converter.convert(jkf) #=> String\n"
+msgstr ""
+"kif = kif_converter.convert(jkf) #=> String\n"
+"ki2 = ki2_converter.convert(jkf) #=> String\n"
+"csa = csa_converter.convert(jkf) #=> String\n"
+
+#. type: Title ##
+#: README.md:53
+#, no-wrap
+msgid "Contributing"
+msgstr "Contributing"
+
+#. type: Plain text
+#: README.md:57
+msgid ""
+"バグレポートやプルリクエストはGithubでよろしくお願いします。 https://github."
+"com/iyuuya/jkf."
+msgstr ""
+"Feel free to report bugs or send pull requests at [GitHub](https://github."
+"com/iyuuya/jkf)."
+
+#. type: Plain text
+#: README.md:59
+msgid ""
+"Guixで開発されている場合は`guix shell`で`rake test`によるテスト実行ができま"
+"す。"
+msgstr "If you work on Guix, run tests by `guix shell`."
+
+#. type: Title ##
+#: README.md:60
+#, no-wrap
+msgid "License"
+msgstr "License"
+
+#. type: Plain text
+#: README.md:64
+msgid ""
+"ライセンスはMITです。 [MIT License](http://opensource.org/licenses/MIT)."
+msgstr ""
+"This gem is licensed under the [MIT License](http://opensource.org/licenses/"
+"MIT)."

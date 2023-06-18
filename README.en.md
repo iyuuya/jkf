@@ -1,31 +1,38 @@
 # Jkf
-[![Gem Version](https://badge.fury.io/rb/jkf.svg)](https://badge.fury.io/rb/jkf) [![Build Status](https://travis-ci.org/iyuuya/jkf.svg?branch=master)](https://travis-ci.org/iyuuya/jkf) [![CI](https://github.com/iyuuya/jkf/actions/workflows/ci.yml/badge.svg)](https://github.com/iyuuya/jkf/actions/workflows/ci.yml) [![Inline docs](http://inch-ci.org/github/iyuuya/jkf.svg?branch=develop)](http://inch-ci.org/github/iyuuya/jkf)
+[![Gem
+Version](https://badge.fury.io/rb/jkf.svg)](https://badge.fury.io/rb/jkf)
+[![Build
+Status](https://travis-ci.org/iyuuya/jkf.svg?branch=master)](https://travis-ci.org/iyuuya/jkf)
+[![CI](https://github.com/iyuuya/jkf/actions/workflows/ci.yml/badge.svg)](https://github.com/iyuuya/jkf/actions/workflows/ci.yml)
+[![Inline
+docs](http://inch-ci.org/github/iyuuya/jkf.svg?branch=develop)](http://inch-ci.org/github/iyuuya/jkf)
 
-
-jkf is json-kifu-format( https://github.com/na2hiro/json-kifu-format ) library for ruby.
-
-### Feature
-
-* KIF, KI2, CSA to JKF
-* JKF to KIF, KI2, CSA
+jkf is a Ruby port of
+[json-kifu-format](https://github.com/na2hiro/json-kifu-format).
+It supports both of the conversion from KIF, KI2, or CSA to jkf, and the one
+from jkf to KIF, KI2, or CSA.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+If you install this gem to your application (with Bundler), add this to
+Gemfile.
 
 ```ruby
 gem 'jkf'
 ```
 
-And then execute:
+Then run bundle to install this gem.
 
     $ bundle
 
-Or install it yourself as:
+Or directly install with gem install command.
 
     $ gem install jkf
 
 ## Usage
+
+This gem has the Parser and the Converter for each formats: KIF, KI2, and
+CSA.
 
 ```ruby
 kif_parser = Jkf::Parser::Kif.new
@@ -38,6 +45,9 @@ kif_converter = Jkf::Converter::Kif.new
 ki2_converter = Jkf::Converter::Ki2.new
 csa_converter = Jkf::Converter::Csa.new
 ```
+
+`parser#parse(str)` to convert into jkf.
+`#convert(jkf)` to convert into each formats from jkf.
 
 ```ruby
 jkf = kif_parser.parse(kif_str) #=> Hash
@@ -53,9 +63,13 @@ csa = csa_converter.convert(jkf) #=> String
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/iyuuya/jkf.
+Feel free to report bugs or send pull requests at
+[GitHub](https://github.com/iyuuya/jkf).
+
+If you work on Guix, run tests by `guix shell`.
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+This gem is licensed under the [MIT
+License](http://opensource.org/licenses/MIT).
 

@@ -55,6 +55,8 @@ csa = csa_converter.convert(jkf) #=> String
 バグレポートやプルリクエストはGithubでよろしくお願いします。
 https://github.com/iyuuya/jkf.
 
+Guixで開発されている場合は`guix shell`で`rake test`によるテスト実行ができます。
+
 ## License
 
 ライセンスはMITです。

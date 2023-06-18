@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Others
+
+* Fixed link to json-kifu-format
+
 ## [0.5.0] - 2023-06-18
 
 ### Changed

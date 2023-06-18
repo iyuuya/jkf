@@ -5,6 +5,8 @@ require "jkf/converter"
 
 # JSON Kifu Format
 module Jkf
+  Error = Class.new(StandardError)
+
   # raise when unsupport file type
   class FileTypeError < StandardError; end
 

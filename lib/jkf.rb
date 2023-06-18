@@ -1,7 +1,7 @@
-require "kconv"
-require "jkf/version"
-require "jkf/parser"
-require "jkf/converter"
+require 'kconv'
+require 'jkf/version'
+require 'jkf/parser'
+require 'jkf/converter'
 
 # JSON Kifu Format
 module Jkf
@@ -14,7 +14,7 @@ module Jkf
     # @param [String] filename
     #
     # @return [String] KIF, KI2, CSA, JKF(JSON)
-    def parse_file(filename, encoding: "Shift_JIS")
+    def parse_file(filename, encoding: 'Shift_JIS')
       parser = case ::File.extname(filename)
                when /kif/
                  ::Jkf::Parser::Kif.new
@@ -43,7 +43,7 @@ module Jkf
       parsers.each do |parser|
         begin
           result = parser.parse(str)
-        rescue
+        rescue StandardError
           next
         end
         break

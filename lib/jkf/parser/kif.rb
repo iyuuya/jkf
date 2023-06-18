@@ -590,7 +590,7 @@ module Jkf::Parser
 
     # teban to color
     def teban2color(teban)
-      teban = teban.to_i unless teban.is_a? Fixnum
+      teban = teban.to_i unless teban.is_a? Integer
       (teban + 1) % 2
     end
 

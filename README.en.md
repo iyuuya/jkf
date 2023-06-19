@@ -7,10 +7,11 @@ Status](https://travis-ci.org/iyuuya/jkf.svg?branch=master)](https://travis-ci.o
 [![Inline
 docs](http://inch-ci.org/github/iyuuya/jkf.svg?branch=develop)](http://inch-ci.org/github/iyuuya/jkf)
 
-jkf is a Ruby port of
-[json-kifu-format](https://github.com/na2hiro/json-kifu-format).
+jkf is a Ruby port of [json-kifu-format][jkf].
 It supports both of the conversion from KIF, KI2, or CSA to jkf, and the one
 from jkf to KIF, KI2, or CSA.
+
+[jkf]:https://github.com/na2hiro/Kifu-for-JS/tree/master/packages/json-kifu-format
 
 ## Installation
 

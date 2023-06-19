@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: jkf gem\n"
-"POT-Creation-Date: 2023-06-18 15:22+0900\n"
-"PO-Revision-Date: 2023-06-18 15:23+0900\n"
+"POT-Creation-Date: 2023-06-18 16:19+0900\n"
+"PO-Revision-Date: 2023-06-18 16:21+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: en\n"
@@ -41,23 +41,28 @@ msgstr ""
 #. type: Plain text
 #: README.md:6
 msgid ""
-"jkfはJSON棋譜フォーマット( https://github.com/na2hiro/json-kifu-format )を"
-"Rubyに移植したものです。 KIF, KI2, CSAをパースしJKFへ変換、JKFからKIF, KI2, "
-"CSAへの変換に対応しています。"
+"jkfは[JSON棋譜フォーマット (JKF)][jkf]をRubyに移植したものです。 KIF, KI2, "
+"CSAをパースしJKFへ変換、JKFからKIF, KI2, CSAへの変換に対応しています。"
 msgstr ""
-"jkf is a Ruby port of [json-kifu-format](https://github.com/na2hiro/json-"
-"kifu-format).\n"
-"It supports both of the conversion from KIF, KI2, or CSA to jkf, and the one "
-"from jkf to KIF, KI2, or CSA."
+"jkf is a Ruby port of [json-kifu-format][jkf].\n"
+"It supports both of the conversion from KIF, KI2, or CSA to jkf, and the one from jkf to KIF, KI2, or CSA."
+
+# TODO: insert space after colon; temp po4a limitation
+#. type: Plain text
+#: README.md:8
+msgid ""
+"[jkf]: https://github.com/na2hiro/Kifu-for-JS/tree/master/packages/json-kifu-"
+"format"
+msgstr "[jkf]:https://github.com/na2hiro/Kifu-for-JS/tree/master/packages/json-kifu-format"
 
 #. type: Title ##
-#: README.md:7
+#: README.md:9
 #, no-wrap
 msgid "Installation"
 msgstr "Installation"
 
 #. type: Plain text
-#: README.md:10
+#: README.md:12
 msgid ""
 "アプリケーションにインストールする場合(bundlerを使用する場合)、Gemfileに以下"
 "のように記述してください。"
@@ -66,48 +71,48 @@ msgstr ""
 "Gemfile."
 
 #. type: Fenced code block (ruby)
-#: README.md:11
+#: README.md:13
 #, no-wrap
 msgid "gem 'jkf'\n"
 msgstr "gem 'jkf'\n"
 
 #. type: Plain text
-#: README.md:16
+#: README.md:18
 msgid "さらにbundleコマンドを実行することでインストールできます。"
 msgstr "Then run bundle to install this gem."
 
 #. type: Plain text
-#: README.md:18
+#: README.md:20
 #, no-wrap
 msgid "    $ bundle\n"
 msgstr "    $ bundle\n"
 
 #. type: Plain text
-#: README.md:20
+#: README.md:22
 msgid "または、gem installコマンドを使って直接インストールすることもできます。"
 msgstr "Or directly install with gem install command."
 
 #. type: Plain text
-#: README.md:22
+#: README.md:24
 #, no-wrap
 msgid "    $ gem install jkf\n"
 msgstr "    $ gem install jkf\n"
 
 #. type: Title ##
-#: README.md:23
+#: README.md:25
 #, no-wrap
 msgid "Usage"
 msgstr "Usage"
 
 #. type: Plain text
-#: README.md:26
+#: README.md:28
 msgid "KIF, KI2, CSAそれぞれParserとConverterが用意してあります。"
 msgstr ""
 "This gem has the Parser and the Converter for each formats: KIF, KI2, and "
 "CSA."
 
 #. type: Fenced code block (ruby)
-#: README.md:27
+#: README.md:29
 #, no-wrap
 msgid ""
 "kif_parser = Jkf::Parser::Kif.new\n"
@@ -119,7 +124,7 @@ msgstr ""
 "csa_parser = Jkf::Parser::Csa.new\n"
 
 #. type: Fenced code block (ruby)
-#: README.md:33
+#: README.md:35
 #, no-wrap
 msgid ""
 "kif_converter = Jkf::Converter::Kif.new\n"
@@ -131,7 +136,7 @@ msgstr ""
 "csa_converter = Jkf::Converter::Csa.new\n"
 
 #. type: Plain text
-#: README.md:40
+#: README.md:42
 msgid ""
 "`parser#parse(str)`でjkfへの変換、`#convert(jkf)`でjkfから各フォーマットへ変"
 "換できます。"
@@ -140,7 +145,7 @@ msgstr ""
 "`#convert(jkf)` to convert into each formats from jkf."
 
 #. type: Fenced code block (ruby)
-#: README.md:41
+#: README.md:43
 #, no-wrap
 msgid ""
 "jkf = kif_parser.parse(kif_str) #=> Hash\n"
@@ -152,7 +157,7 @@ msgstr ""
 "jkf = csa_parser.parse(csa_str) #=> Hash\n"
 
 #. type: Fenced code block (ruby)
-#: README.md:47
+#: README.md:49
 #, no-wrap
 msgid ""
 "kif = kif_converter.convert(jkf) #=> String\n"
@@ -164,13 +169,13 @@ msgstr ""
 "csa = csa_converter.convert(jkf) #=> String\n"
 
 #. type: Title ##
-#: README.md:53
+#: README.md:55
 #, no-wrap
 msgid "Contributing"
 msgstr "Contributing"
 
 #. type: Plain text
-#: README.md:57
+#: README.md:59
 msgid ""
 "バグレポートやプルリクエストはGithubでよろしくお願いします。 https://github."
 "com/iyuuya/jkf."
@@ -179,20 +184,20 @@ msgstr ""
 "com/iyuuya/jkf)."
 
 #. type: Plain text
-#: README.md:59
+#: README.md:61
 msgid ""
 "Guixで開発されている場合は`guix shell`で`rake test`によるテスト実行ができま"
 "す。"
 msgstr "If you work on Guix, run tests by `guix shell`."
 
 #. type: Title ##
-#: README.md:60
+#: README.md:62
 #, no-wrap
 msgid "License"
 msgstr "License"
 
 #. type: Plain text
-#: README.md:64
+#: README.md:66
 msgid ""
 "ライセンスはMITです。 [MIT License](http://opensource.org/licenses/MIT)."
 msgstr ""

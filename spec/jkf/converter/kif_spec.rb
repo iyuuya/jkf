@@ -1,15 +1,15 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe Jkf::Converter::Kif do
   subject { kif_parser.parse(kif_converter.convert(jkf)) }
 
-  let(:kif_converter) { Jkf::Converter::Kif.new }
+  let(:kif_converter) { described_class.new }
   let(:kif_parser) { Jkf::Parser::Kif.new }
 
   shared_examples('parse file') do |filename|
     let(:str) do
-      if File.extname(filename) == ".kif"
-        File.read(filename, encoding: "Shift_JIS").toutf8
+      if File.extname(filename) == '.kif'
+        File.read(filename, encoding: 'Shift_JIS').toutf8
       else
         File.read(filename).toutf8
       end
@@ -25,7 +25,7 @@ describe Jkf::Converter::Kif do
     it_behaves_like 'parse file', fixture
   end
 
-  describe "handicap" do
+  describe 'handicap' do
     subject {
       <<-KIF
 手合割：十枚落ち
@@ -37,13 +37,13 @@ describe Jkf::Converter::Kif do
 
     let(:handicap_hash) {
       {
-        "header"  => { "手合割" => "十枚落ち" },
-        "moves"   => [{}, { "special" => "TORYO" }],
-        "initial" => { "preset" => "10" }
+        'header' => { '手合割' => '十枚落ち' },
+        'moves' => [{}, { 'special' => 'TORYO' }],
+        'initial' => { 'preset' => '10' }
       }
     }
 
-    it "is convert" do
+    it 'is convert' do
       expect(subject).to eq kif_converter.convert(handicap_hash)
     end
   end

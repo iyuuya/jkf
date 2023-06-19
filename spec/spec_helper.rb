@@ -1,12 +1,12 @@
-require "simplecov"
+require 'simplecov'
 
 SimpleCov.start
 
-require "kconv"
-require "pry"
+require 'kconv'
+require 'pry'
 
-$LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
-require "jkf"
+$LOAD_PATH.unshift File.expand_path('../lib', __dir__)
+require 'jkf'
 
 module ExtendHelper
   def fixtures(type)
@@ -20,15 +20,15 @@ end
 
 module IncludeHelper
   def pos(x, y)
-    { "x" => x, "y" => y }
+    { 'x' => x, 'y' => y }
   end
 
   def hms(h, m, s)
-    { "h" => h, "m" => m, "s" => s }
+    { 'h' => h, 'm' => m, 's' => s }
   end
 
   def ms(m, s)
-    { "m" => m, "s" => s }
+    { 'm' => m, 's' => s }
   end
 
   def fixtures(type)

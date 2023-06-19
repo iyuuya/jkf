@@ -2,7 +2,61 @@ inherit_from: .rubocop_todo.yml
 
 AllCops:
   NewCops: enable
+  DisabledByDefault: true
 
 require:
   - rubocop-rake
   - rubocop-rspec
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  EnforcedStyle: never
+
+Layout/HashAlignment:
+  Enabled: true
+  EnforcedHashRocketStyle: key # キーが全角文字の場合が多いため
+
+Lint/AssignmentInCondition:
+  Enabled: true
+
+Lint/DuplicateBranch:
+  Enabled: false # FIXME
+
+Lint/UnderscorePrefixedVariableName:
+  Enabled: true
+
+Naming/AccessorMethodName:
+  Enabled: true
+
+RSpec/DescribedClass:
+  Enabled: true
+
+Style/ClassAndModuleChildren:
+  Enabled: true
+
+Style/Encoding:
+  Enabled: true
+
+Style/ExpandPathArguments:
+  Enabled: true
+
+Style/HashLikeCase:
+  Enabled: true
+
+Style/NegatedIf:
+  Enabled: true
+
+Style/RedundantAssignment:
+  Enabled: true
+
+Style/RedundantReturn:
+  Enabled: true
+
+Style/RescueStandardError:
+  Enabled: true
+
+Style/SafeNavigation:
+  Enabled: true
+
+Style/StringLiterals:
+  Enabled: true

@@ -6,9 +6,9 @@ module Jkf
   end
 end
 
-require "json"
-require "jkf/converter/base"
-require "jkf/converter/kifuable"
-require "jkf/converter/kif"
-require "jkf/converter/ki2"
-require "jkf/converter/csa"
+require 'json'
+require 'jkf/converter/base'
+require 'jkf/converter/kifuable'
+require 'jkf/converter/kif'
+require 'jkf/converter/ki2'
+require 'jkf/converter/csa'

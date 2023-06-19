@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: jkf gem\n"
-"POT-Creation-Date: 2023-06-18 16:19+0900\n"
-"PO-Revision-Date: 2023-06-18 16:21+0900\n"
+"POT-Creation-Date: 2023-06-19 22:27+0900\n"
+"PO-Revision-Date: 2023-06-19 22:27+0900\n"
 "Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
 "Language-Team: none\n"
 "Language: en\n"
@@ -26,17 +26,8 @@ msgid ""
 "jkf) [![Build Status](https://travis-ci.org/iyuuya/jkf.svg?branch=master)]"
 "(https://travis-ci.org/iyuuya/jkf) [![CI](https://github.com/iyuuya/jkf/"
 "actions/workflows/ci.yml/badge.svg)](https://github.com/iyuuya/jkf/actions/"
-"workflows/ci.yml) [![Inline docs](http://inch-ci.org/github/iyuuya/jkf.svg?"
-"branch=develop)](http://inch-ci.org/github/iyuuya/jkf)"
-msgstr ""
-"[![Gem Version](https://badge.fury.io/rb/jkf.svg)](https://badge.fury.io/rb/"
-"jkf)\n"
-"[![Build Status](https://travis-ci.org/iyuuya/jkf.svg?branch=master)]"
-"(https://travis-ci.org/iyuuya/jkf)\n"
-"[![CI](https://github.com/iyuuya/jkf/actions/workflows/ci.yml/badge.svg)]"
-"(https://github.com/iyuuya/jkf/actions/workflows/ci.yml)\n"
-"[![Inline docs](http://inch-ci.org/github/iyuuya/jkf.svg?branch=develop)]"
-"(http://inch-ci.org/github/iyuuya/jkf)"
+"workflows/ci.yml)"
+msgstr "[![Gem Version](https://badge.fury.io/rb/jkf.svg)](https://badge.fury.io/rb/jkf) [![Build Status](https://travis-ci.org/iyuuya/jkf.svg?branch=master)](https://travis-ci.org/iyuuya/jkf) [![CI](https://github.com/iyuuya/jkf/actions/workflows/ci.yml/badge.svg)](https://github.com/iyuuya/jkf/actions/workflows/ci.yml)"
 
 #. type: Plain text
 #: README.md:6
@@ -45,7 +36,8 @@ msgid ""
 "CSAをパースしJKFへ変換、JKFからKIF, KI2, CSAへの変換に対応しています。"
 msgstr ""
 "jkf is a Ruby port of [json-kifu-format][jkf].\n"
-"It supports both of the conversion from KIF, KI2, or CSA to jkf, and the one from jkf to KIF, KI2, or CSA."
+"It supports both of the conversion from KIF, KI2, or CSA to jkf, and the one "
+"from jkf to KIF, KI2, or CSA."
 
 # TODO: insert space after colon; temp po4a limitation
 #. type: Plain text
@@ -53,7 +45,9 @@ msgstr ""
 msgid ""
 "[jkf]: https://github.com/na2hiro/Kifu-for-JS/tree/master/packages/json-kifu-"
 "format"
-msgstr "[jkf]:https://github.com/na2hiro/Kifu-for-JS/tree/master/packages/json-kifu-format"
+msgstr ""
+"[jkf]:https://github.com/na2hiro/Kifu-for-JS/tree/master/packages/json-kifu-"
+"format"
 
 #. type: Title ##
 #: README.md:9

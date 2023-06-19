@@ -1,5 +1,5 @@
 # Jkf
-[![Gem Version](https://badge.fury.io/rb/jkf.svg)](https://badge.fury.io/rb/jkf) [![Build Status](https://travis-ci.org/iyuuya/jkf.svg?branch=master)](https://travis-ci.org/iyuuya/jkf) [![CI](https://github.com/iyuuya/jkf/actions/workflows/ci.yml/badge.svg)](https://github.com/iyuuya/jkf/actions/workflows/ci.yml) [![Inline docs](http://inch-ci.org/github/iyuuya/jkf.svg?branch=develop)](http://inch-ci.org/github/iyuuya/jkf)
+[![Gem Version](https://badge.fury.io/rb/jkf.svg)](https://badge.fury.io/rb/jkf) [![Build Status](https://travis-ci.org/iyuuya/jkf.svg?branch=master)](https://travis-ci.org/iyuuya/jkf) [![CI](https://github.com/iyuuya/jkf/actions/workflows/ci.yml/badge.svg)](https://github.com/iyuuya/jkf/actions/workflows/ci.yml)
 
 jkfは[JSON棋譜フォーマット (JKF)][jkf]をRubyに移植したものです。
 KIF, KI2, CSAをパースしJKFへ変換、JKFからKIF, KI2, CSAへの変換に対応しています。

@@ -6,20 +6,20 @@ module Jkf
 
       # initialboard : (" " nonls nl)? ("+" nonls nl)? ikkatsuline+ ("+" nonls nl)?
       def parse_initialboard
-        s0 = s1 = @current_pos
+        s0 = s1 = @scanner.pos
         if match_space == :failed
-          @current_pos = s1
+          @scanner.pos = s1
         else
           parse_nonls
           s2 = parse_nl
-          @current_pos = s1 if s2 == :failed
+          @scanner.pos = s1 if s2 == :failed
         end
-        s2 = @current_pos
+        s2 = @scanner.pos
         if match_str('+') == :failed
-          @current_pos = s2
+          @scanner.pos = s2
         else
           parse_nonls
-          @current_pos = s2 if parse_nl == :failed
+          @scanner.pos = s2 if parse_nl == :failed
         end
         s4 = parse_ikkatsuline
         if s4 == :failed
@@ -32,15 +32,15 @@ module Jkf
           end
         end
         if s3 == :failed
-          @current_pos = s0
+          @scanner.pos = s0
           :failed
         else
-          s4 = @current_pos
+          s4 = @scanner.pos
           if match_str('+') == :failed
-            @current_pos = s4
+            @scanner.pos = s4
           else
             parse_nonls
-            @current_pos = s4 if parse_nl == :failed
+            @scanner.pos = s4 if parse_nl == :failed
           end
           @reported_pos = s0
           transform_initialboard(s3)
@@ -49,9 +49,9 @@ module Jkf
 
       # ikkatsuline : "|" masu:masu+ "|" nonls! nl
       def parse_ikkatsuline
-        s0 = @current_pos
+        s0 = @scanner.pos
         if match_str('|') == :failed
-          @current_pos = s0
+          @scanner.pos = s0
           s0 = :failed
         else
           s3 = parse_masu
@@ -65,22 +65,22 @@ module Jkf
             end
           end
           if s2 == :failed
-            @current_pos = s0
+            @scanner.pos = s0
             s0 = :failed
           elsif match_str('|') != :failed
             s4 = parse_nonls!
             if s4 == :failed
-              @current_pos = s0
+              @scanner.pos = s0
               s0 = :failed
             elsif parse_nl != :failed
               @reported_pos = s0
               s0 = s2
             else
-              @current_pos = s0
+              @scanner.pos = s0
               s0 = :failed
             end
           else
-            @current_pos = s0
+            @scanner.pos = s0
             s0 = :failed
           end
         end
@@ -90,15 +90,15 @@ module Jkf
 
       # masu : teban piece | " ・"
       def parse_masu
-        s0 = @current_pos
+        s0 = @scanner.pos
         s1 = parse_teban
         if s1 == :failed
-          @current_pos = s0
+          @scanner.pos = s0
           s0 = :failed
         else
           s2 = parse_piece
           if s2 == :failed
-            @current_pos = s0
+            @scanner.pos = s0
             s0 = :failed
           else
             @reported_pos = s0
@@ -106,7 +106,7 @@ module Jkf
           end
         end
         if s0 == :failed
-          s0 = @current_pos
+          s0 = @scanner.pos
           s1 = match_str(' ・')
           if s1 != :failed
             @reported_pos = s0
@@ -120,7 +120,7 @@ module Jkf
 
       # teban : (" " | "+" | "^") | ("v" | "V")
       def parse_teban
-        s0 = @current_pos
+        s0 = @scanner.pos
         s1 = match_space
         if s1 == :failed
           s1 = match_str('+')
@@ -132,7 +132,7 @@ module Jkf
         end
         s0 = s1
         if s0 == :failed
-          s0 = @current_pos
+          s0 = @scanner.pos
           s1 = match_str('v')
           s1 = match_str('V') if s1 == :failed
           if s1 != :failed
@@ -146,16 +146,16 @@ module Jkf
 
       # pointer : "&" nonls nl
       def parse_pointer
-        s0 = @current_pos
+        s0 = @scanner.pos
         s1 = match_str('&')
         if s1 == :failed
-          @current_pos = s0
+          @scanner.pos = s0
           s0 = :failed
         else
           s2 = parse_nonls
           s3 = parse_nl
           if s3 == :failed
-            @current_pos = s0
+            @scanner.pos = s0
             s0 = :failed
           else
             s0 = [s1, s2, s3]
@@ -166,8 +166,8 @@ module Jkf
 
       # num : [１２３４５６７８９]
       def parse_num
-        s0 = @current_pos
-        s1 = match_regexp(/^[１２３４５６７８９]/)
+        s0 = @scanner.pos
+        s1 = match_regexp(/[１２３４５６７８９]/)
         if s1 != :failed
           @reported_pos = s0
           s1 = zen2n(s1)
@@ -177,8 +177,8 @@ module Jkf
 
       # numkan : [一二三四五六七八九]
       def parse_numkan
-        s0 = @current_pos
-        s1 = match_regexp(/^[一二三四五六七八九]/)
+        s0 = @scanner.pos
+        s1 = match_regexp(/[一二三四五六七八九]/)
         if s1 != :failed
           @reported_pos = s0
           s1 = kan2n(s1)
@@ -188,12 +188,12 @@ module Jkf
 
       # piece : "成"? [歩香桂銀金角飛王玉と杏圭全馬竜龍]
       def parse_piece
-        s0 = @current_pos
+        s0 = @scanner.pos
         s1 = match_str('成')
         s1 = '' if s1 == :failed
-        s2 = match_regexp(/^[歩香桂銀金角飛王玉と杏圭全馬竜龍]/)
+        s2 = match_regexp(/[歩香桂銀金角飛王玉と杏圭全馬竜龍]/)
         if s2 == :failed
-          @current_pos = s0
+          @scanner.pos = s0
           :failed
         else
           @reported_pos = s0
@@ -207,29 +207,29 @@ module Jkf
       #            result_sennichite | result_tsumi | result_fuzumi
       #          ) nl
       def parse_result
-        s0 = @current_pos
+        s0 = @scanner.pos
         if match_str('まで') == :failed
-          @current_pos = s0
+          @scanner.pos = s0
           :failed
         else
           s2 = match_digits!
           if s2 == :failed
-            @current_pos = s0
+            @scanner.pos = s0
             :failed
           elsif match_str('手') != :failed
-            s4 = @current_pos
+            s4 = @scanner.pos
             if match_str('で') == :failed
-              @current_pos = s4
+              @scanner.pos = s4
               s4 = :failed
             elsif parse_turn != :failed
               if match_str('手の') == :failed
-                @current_pos = s4
+                @scanner.pos = s4
                 s4 = :failed
               else
                 s8 = parse_result_toryo
                 s8 = parse_result_illegal if s8 == :failed
                 s4 = if s8 == :failed
-                       @current_pos = s4
+                       @scanner.pos = s4
                        :failed
                      else
                        @reported_pos = s4
@@ -237,7 +237,7 @@ module Jkf
                      end
               end
             else
-              @current_pos = s4
+              @scanner.pos = s4
               s4 = :failed
             end
             if s4 == :failed
@@ -257,17 +257,17 @@ module Jkf
               end
             end
             if s4 == :failed
-              @current_pos = s0
+              @scanner.pos = s0
               :failed
             elsif parse_nl != :failed || eos?
               @reported_pos = s0
               s4
             else
-              @current_pos = s0
+              @scanner.pos = s0
               :failed
             end
           else
-            @current_pos = s0
+            @scanner.pos = s0
             :failed
           end
         end
@@ -275,10 +275,10 @@ module Jkf
 
       # result_toryo : "勝ち"
       def parse_result_toryo
-        s0 = @current_pos
+        s0 = @scanner.pos
         s1 = match_str('勝ち')
         if s1 == :failed
-          @current_pos = s0
+          @scanner.pos = s0
           :failed
         else
           @reported_pos = s0
@@ -288,12 +288,12 @@ module Jkf
 
       # result_illegal : "反則" ("勝ち" | "負け")
       def parse_result_illegal
-        s0 = @current_pos
+        s0 = @scanner.pos
         if match_str('反則') == :failed
-          @current_pos = s0
+          @scanner.pos = s0
           :failed
         else
-          s10 = @current_pos
+          s10 = @scanner.pos
           s11 = match_str('勝ち')
           if s11 != :failed
             @reported_pos = s10
@@ -301,7 +301,7 @@ module Jkf
           end
           s10 = s11
           if s10 == :failed
-            s10 = @current_pos
+            s10 = @scanner.pos
             s11 = match_str('負け')
             if s11 != :failed
               @reported_pos = s10
@@ -310,7 +310,7 @@ module Jkf
             s10 = s11
           end
           if s10 == :failed
-            @current_pos = s0
+            @scanner.pos = s0
             :failed
           else
             @reported_pos = s0
@@ -321,22 +321,22 @@ module Jkf
 
       # result_timeup : "で時間切れにより" turn "手の勝ち"
       def parse_result_timeup
-        s0 = @current_pos
+        s0 = @scanner.pos
         if match_str('で時間切れにより') != :failed && parse_turn != :failed && match_str('手の勝ち') != :failed
           @reported_pos = s0
           'TIME_UP'
         else
-          @current_pos = s0
+          @scanner.pos = s0
           :failed
         end
       end
 
       # result_chudan : "で中断"
       def parse_result_chudan
-        s0 = @current_pos
+        s0 = @scanner.pos
         s1 = match_str('で中断')
         if s1 == :failed
-          @current_pos = s0
+          @scanner.pos = s0
           :failed
         else
           @reported_pos = s0
@@ -346,10 +346,10 @@ module Jkf
 
       # result_jishogi : "で持将棋"
       def parse_result_jishogi
-        s0 = @current_pos
+        s0 = @scanner.pos
         s1 = match_str('で持将棋')
         if s1 == :failed
-          @current_pos = s0
+          @scanner.pos = s0
           :failed
         else
           @reported_pos = s0
@@ -359,10 +359,10 @@ module Jkf
 
       # result_sennichite : "で千日手"
       def parse_result_sennichite
-        s0 = @current_pos
+        s0 = @scanner.pos
         s1 = match_str('で千日手')
         if s1 == :failed
-          @current_pos = s0
+          @scanner.pos = s0
           :failed
         else
           @reported_pos = s0
@@ -372,10 +372,10 @@ module Jkf
 
       # result_tsumi : "で"? "詰" "み"?
       def parse_result_tsumi
-        s0 = @current_pos
+        s0 = @scanner.pos
         match_str('で')
         if match_str('詰') == :failed
-          @current_pos = s0
+          @scanner.pos = s0
           :failed
         else
           match_str('み')
@@ -386,10 +386,10 @@ module Jkf
 
       # result_fuzumi : "で不詰"
       def parse_result_fuzumi
-        s0 = @current_pos
+        s0 = @scanner.pos
         s1 = match_str('で不詰')
         if s1 == :failed
-          @current_pos = s0
+          @scanner.pos = s0
           :failed
         else
           @reported_pos = s0
@@ -399,16 +399,16 @@ module Jkf
 
       # skipline : "#" nonls newline
       def parse_skipline
-        s0 = @current_pos
+        s0 = @scanner.pos
         s1 = match_str('#')
         if s1 == :failed
-          @current_pos = s0
+          @scanner.pos = s0
           s0 = :failed
         else
           s2 = parse_nonls
           s3 = parse_newline
           s0 = if s3 == :failed
-                 @current_pos = s0
+                 @scanner.pos = s0
                  :failed
                else
                  [s1, s2, s3]
@@ -419,12 +419,12 @@ module Jkf
 
       # whitespace : " " | "\t"
       def parse_whitespace
-        match_regexp(/^[ \t]/)
+        match_regexp(/[ \t]/)
       end
 
       # newline : whitespace* ("\n" | "\r" "\n"?)
       def parse_newline
-        s0 = @current_pos
+        s0 = @scanner.pos
         s1 = []
         s2 = parse_whitespace
         while s2 != :failed
@@ -433,10 +433,10 @@ module Jkf
         end
         s2 = match_str("\n")
         if s2 == :failed
-          s2 = @current_pos
+          s2 = @scanner.pos
           s3 = match_str("\r")
           s2 = if s3 == :failed
-                 @current_pos = s2
+                 @scanner.pos = s2
                  :failed
                else
                  s4 = match_str("\n")
@@ -445,7 +445,7 @@ module Jkf
                end
         end
         if s2 == :failed
-          @current_pos = s0
+          @scanner.pos = s0
           :failed
         else
           [s1, s2]
@@ -454,7 +454,7 @@ module Jkf
 
       # nl : newline+ skipline*
       def parse_nl
-        s0 = @current_pos
+        s0 = @scanner.pos
         s2 = parse_newline
         if s2 == :failed
           s1 = :failed
@@ -466,7 +466,7 @@ module Jkf
           end
         end
         if s1 == :failed
-          @current_pos = s0
+          @scanner.pos = s0
           :failed
         else
           s2 = []
@@ -481,7 +481,7 @@ module Jkf
 
       # nonl : 
       def parse_nonl
-        match_regexp(/^[^\r\n]/)
+        match_regexp(/[^\r\n]/)
       end
 
       # nonls : nonl*

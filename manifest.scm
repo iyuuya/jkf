@@ -139,4 +139,5 @@ different gem version combinations.")
                           ruby-rspec
                           ruby-guard-rspec
                           ruby-simplecov
+                          ruby-benchmark-ips
                           ruby))

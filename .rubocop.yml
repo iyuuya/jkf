@@ -60,3 +60,6 @@ Style/SafeNavigation:
 
 Style/StringLiterals:
   Enabled: true
+
+Style/GuardClause:
+  Enabled: true

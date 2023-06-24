@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Remove Inch CI link on readmes
 * Lint Ruby sources
 * Add benchmark script
+* Refactor parser with StringScanner.  This makes parser approx. 5x
+  faster.
 
 ## [0.5.0] - 2023-06-18
 

@@ -8,7 +8,7 @@ module Jkf
 
       # kifu : header* initialboard? header* moves fork*
       def parse_root
-        s0 = @current_pos
+        s0 = @scanner.pos
         s1 = []
         s2 = parse_header
         while s2 != :failed
@@ -16,7 +16,7 @@ module Jkf
           s2 = parse_header
         end
         if s1 == :failed
-          @current_pos = s0
+          @scanner.pos = s0
           s0 = :failed
         else
           s2 = parse_initialboard
@@ -29,7 +29,7 @@ module Jkf
           end
           s4 = parse_moves
           if s4 == :failed
-            @current_pos = s0
+            @scanner.pos = s0
             s0 = :failed
           else
             s5 = []
@@ -47,19 +47,19 @@ module Jkf
 
       # header : [^：\r\n]+ "：" nonls nl+ | header_teban
       def parse_header
-        s0 = @current_pos
-        s2 = match_regexp(/^[^*：\r\n]/)
+        s0 = @scanner.pos
+        s2 = match_regexp(/[^*：\r\n]/)
         if s2 == :failed
           s1 = :failed
         else
           s1 = []
           while s2 != :failed
             s1 << s2
-            s2 = match_regexp(/^[^：\r\n]/)
+            s2 = match_regexp(/[^：\r\n]/)
           end
         end
         if s1 == :failed
-          @current_pos = s0
+          @scanner.pos = s0
           s0 = :failed
         elsif match_str('：') != :failed
           s3 = parse_nonls
@@ -74,14 +74,14 @@ module Jkf
             end
           end
           if s4 == :failed
-            @current_pos = s0
+            @scanner.pos = s0
             s0 = :failed
           else
             @reported_pos = s0
             s0 = { 'k' => s1.join, 'v' => s3.join }
           end
         else
-          @current_pos = s0
+          @scanner.pos = s0
           s0 = :failed
         end
         s0 = parse_header_teban if s0 == :failed
@@ -90,20 +90,20 @@ module Jkf
 
       # header_teban : [先後上下] "手番" nl
       def parse_header_teban
-        s0 = @current_pos
+        s0 = @scanner.pos
         s1 = parse_turn
         if s1 == :failed
-          @current_pos = s0
+          @scanner.pos = s0
           :failed
         else
           s2 = match_str('手番')
           if s2 == :failed
-            @current_pos = s0
+            @scanner.pos = s0
             :failed
           else
             s3 = parse_nl
             if s3 == :failed
-              @current_pos = s0
+              @scanner.pos = s0
               :failed
             else
               @reported_pos = s0
@@ -115,10 +115,10 @@ module Jkf
 
       # moves : firstboard : move* result?
       def parse_moves
-        s0 = @current_pos
+        s0 = @scanner.pos
         s1 = parse_firstboard
         if s1 == :failed
-          @current_pos = s0
+          @scanner.pos = s0
           s0 = :failed
         else
           s2 = []
@@ -141,7 +141,7 @@ module Jkf
 
       # firstboard : comment* pointer?
       def parse_firstboard
-        s0 = @current_pos
+        s0 = @scanner.pos
         s1 = []
         s2 = parse_comment
         while s2 != :failed
@@ -155,10 +155,10 @@ module Jkf
 
       # move : line comment* pointer? (nl | " ")*
       def parse_move
-        s0 = @current_pos
+        s0 = @scanner.pos
         s1 = parse_line
         if s1 == :failed
-          @current_pos = s0
+          @scanner.pos = s0
           s0 = :failed
         else
           s2 = []
@@ -189,10 +189,10 @@ module Jkf
 
       # line : [▲△] fugou (nl / " ")*
       def parse_line
-        s0 = @current_pos
-        s1 = match_regexp(/^[▲△]/)
+        s0 = @scanner.pos
+        s1 = match_regexp(/[▲△]/)
         if s1 == :failed
-          @current_pos = s0
+          @scanner.pos = s0
           s0 = :failed
         else
           s1 = if s1 == '▲'
@@ -202,7 +202,7 @@ module Jkf
                end
           s2 = parse_fugou
           if s2 == :failed
-            @current_pos = s0
+            @scanner.pos = s0
             s0 = :failed
           else
             s3 = []
@@ -222,15 +222,15 @@ module Jkf
 
       # fugou : place piece soutai? dousa? ("成" | "不成")? "打"?
       def parse_fugou
-        s0 = @current_pos
+        s0 = @scanner.pos
         s1 = parse_place
         if s1 == :failed
-          @current_pos = s0
+          @scanner.pos = s0
           :failed
         else
           s2 = parse_piece
           if s2 == :failed
-            @current_pos = s0
+            @scanner.pos = s0
             :failed
           else
             s3 = parse_soutai
@@ -250,15 +250,15 @@ module Jkf
 
       # place : num numkan
       def parse_place
-        s0 = @current_pos
+        s0 = @scanner.pos
         s1 = parse_num
         if s1 == :failed
-          @current_pos = s0
+          @scanner.pos = s0
           s0 = :failed
         else
           s2 = parse_numkan
           if s2 == :failed
-            @current_pos = s0
+            @scanner.pos = s0
             s0 = :failed
           else
             @reported_pos = s0
@@ -266,9 +266,9 @@ module Jkf
           end
         end
         if s0 == :failed
-          s0 = @current_pos
+          s0 = @scanner.pos
           if match_regexp('同') == :failed
-            @current_pos = s0
+            @scanner.pos = s0
             s0 = :failed
           else
             match_str('　')
@@ -281,24 +281,24 @@ module Jkf
 
       # soutai : [左直右]
       def parse_soutai
-        match_regexp(/^[左直右]/)
+        match_regexp(/[左直右]/)
       end
 
       # dousa : [上寄引]
       def parse_dousa
-        match_regexp(/^[上寄引]/)
+        match_regexp(/[上寄引]/)
       end
 
       # "*" nonls nl
       def parse_comment
-        s0 = @current_pos
+        s0 = @scanner.pos
         if match_str('*') == :failed
-          @current_pos = s0
+          @scanner.pos = s0
           s0 = :failed
         else
           s2 = parse_nonls
           if parse_nl == :failed
-            @current_pos = s0
+            @scanner.pos = s0
             s0 = :failed
           else
             @reported_pos = s0
@@ -310,24 +310,24 @@ module Jkf
 
       # fork : "変化：" " "* [0-9]+ "手" nl moves
       def parse_fork
-        s0 = @current_pos
+        s0 = @scanner.pos
         if match_str('変化：') == :failed
-          @current_pos = s0
+          @scanner.pos = s0
           s0 = :failed
         else
           match_spaces
           s3 = match_digits!
           if s3 == :failed
-            @current_pos = s0
+            @scanner.pos = s0
             s0 = :failed
           elsif match_str('手') != :failed
             if parse_nl == :failed
-              @current_pos = s0
+              @scanner.pos = s0
               s0 = :failed
             else
               s6 = parse_moves
               if s6 == :failed
-                @current_pos = s0
+                @scanner.pos = s0
                 s0 = :failed
               else
                 @reported_pos = s0
@@ -335,7 +335,7 @@ module Jkf
               end
             end
           else
-            @current_pos = s0
+            @scanner.pos = s0
             s0 = :failed
           end
         end
@@ -344,7 +344,7 @@ module Jkf
 
       # turn : [先後上下]
       def parse_turn
-        match_regexp(/^[先後上下]/)
+        match_regexp(/[先後上下]/)
       end
 
       # transform to jkf
@@ -412,9 +412,8 @@ module Jkf
         ret
       end
 
-      # check eos
       def eos?
-        @input[@current_pos].nil?
+        @scanner.eos?
       end
     end
   end

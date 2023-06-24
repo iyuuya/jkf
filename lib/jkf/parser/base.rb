@@ -1,3 +1,5 @@
+require 'strscan'
+
 module Jkf
   module Parser
     # Base of Parser
@@ -8,22 +10,16 @@ module Jkf
       #
       # @return [Hash] JKF
       def parse(input)
-        @input = input.clone
-
-        @current_pos = 0
+        @scanner = StringScanner.new(input.dup)
         @reported_pos = 0
-        @cached_pos = 0
-        @cached_pos_details = { line: 1, column: 1, seenCR: false }
         @max_fail_pos = 0
-        @max_fail_expected = []
-        @silent_fails = 0
 
         @result = parse_root
 
-        if success? && @current_pos == @input.size
+        if success? && @scanner.eos?
           @result
         else
-          fail(type: 'end', description: 'end of input') if failed? && @current_pos < input.size
+          record_failure(type: 'end', description: 'end of input') if failed? && @scanner.pos < input.size
           raise ParseError
         end
       end
@@ -36,30 +32,22 @@ module Jkf
 
       def failed?; !success?; end
 
-      # match regexp
       def match_regexp(reg)
-        ret = nil
-        if (matched = reg.match(@input[@current_pos]))
-          ret = matched.to_s
-          @current_pos += ret.size
-        else
-          ret = :failed
-          fail(type: 'class', value: reg.inspect, description: reg.inspect) if @silent_fails == 0
+        matched = @scanner.scan(reg)
+        unless matched
+          record_failure(type: 'class', value: reg.inspect, description: reg.inspect)
+          return :failed
         end
-        ret
+        matched
       end
 
-      # match string
       def match_str(str)
-        ret = nil
-        if @input[@current_pos, str.size] == str
-          ret = str
-          @current_pos += str.size
-        else
-          ret = :failed
-          fail(type: 'literal', value: str, description: "\"#{str}\"") if @slient_fails == 0
+        matched = @scanner.scan(str)
+        unless matched
+          record_failure(type: 'literal', value: str, description: str.inspect)
+          return :failed
         end
-        ret
+        matched
       end
 
       # match space
@@ -80,7 +68,7 @@ module Jkf
 
       # match digit
       def match_digit
-        match_regexp(/^\d/)
+        match_regexp(/\d/)
       end
 
       # match digits
@@ -104,16 +92,12 @@ module Jkf
         end
       end
 
-      # record failure
-      def fail(expected)
-        return if @current_pos < @max_fail_pos
+      def record_failure(expected)
+        return if @scanner.pos < @max_fail_pos
 
-        if @current_pos > @max_fail_pos
-          @max_fail_pos = @current_pos
-          @max_fail_expected = []
-        end
+        return unless @scanner.pos > @max_fail_pos
 
-        @max_fail_expected << expected
+        @max_fail_pos = @scanner.pos
       end
     end
   end

@@ -7,18 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.1] - 2023-06-24
+
 ### Changed
 
-* Update required Ruby version to 3.0 (security fix only stable version)
+* Update required Ruby version to 3.0 (security fix only stable
+  version), although the library itself might works with older Ruby
+  versions.
 
 ### Others
 
+* Refactor parser with StringScanner.  This makes parser approx. 5x
+  faster.
 * Fixed link to json-kifu-format
 * Remove Inch CI link on readmes
 * Lint Ruby sources
 * Add benchmark script
-* Refactor parser with StringScanner.  This makes parser approx. 5x
-  faster.
 
 ## [0.5.0] - 2023-06-18
 

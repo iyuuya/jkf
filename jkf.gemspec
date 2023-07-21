@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.metadata = {
-    'rubygems_mfa_required' => true,
+    'rubygems_mfa_required' => 'true',
     'documentation_uri' => 'https://www.rubydoc.info/gems/jkf'
   }
 end

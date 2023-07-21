@@ -5,17 +5,18 @@ gemspec
 gem 'rake'
 
 group :development do
-  gem 'redcarpet', require: false
-  gem 'yard', require: false
+  gem 'redcarpet'
+  gem 'yard'
 
-  gem 'guard-rubocop', require: false
-  gem 'rubocop', '~> 1.32.0', require: false
-  gem 'rubocop-rake', '~> 0.6.0', require: false
-  gem 'rubocop-rspec', '~> 2.12', require: false
+  gem 'guard-rubocop'
+  gem 'rubocop', '~> 1.32.0'
+  gem 'rubocop-rake', '~> 0.6.0'
+  gem 'rubocop-rspec', '~> 2.12'
+  gem 'rubocop-performance'
 end
 
 group :test do
-  gem 'guard-rspec', require: false
-  gem 'rspec', '~> 3.0', require: false
-  gem 'simplecov', require: false
+  gem 'guard-rspec'
+  gem 'rspec', '~> 3.0'
+  gem 'simplecov'
 end

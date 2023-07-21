@@ -25,10 +25,10 @@ module Jkf
       end
 
       def convert_header(header, jkf)
-        header.map do |(key, value)|
+        header.filter_map do |(key, value)|
           result = "#{key}：#{value}\n"
-          if key =~ /\A[先後上下]手\Z/
-            if key =~ /[先下]/
+          if /\A[先後上下]手\Z/.match?(key)
+            if /[先下]/.match?(key)
               @header2.unshift result
             else
               @header2 << result
@@ -39,7 +39,7 @@ module Jkf
           else
             result
           end
-        end.compact.join
+        end.join
       end
 
       def convert_moves(moves, idx = 0)

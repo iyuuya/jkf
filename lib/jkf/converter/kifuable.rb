@@ -52,7 +52,7 @@ module Jkf
       end
 
       def convert_motigoma(pieces)
-        pieces.to_a.reverse.map do |(piece, num)|
+        pieces.to_a.reverse.filter_map do |(piece, num)|
           if num > 0
             str = csa2kind(piece)
             if num > 1
@@ -62,7 +62,7 @@ module Jkf
             end
             str
           end
-        end.compact.join('　') + "　\n"
+        end.join('　') + "　\n"
       end
 
       def convert_board_piece(piece)
@@ -81,7 +81,7 @@ module Jkf
       def convert_special(special, index)
         result = "まで#{index + 1}手"
 
-        if special == 'TORYO' || special =~ /ILLEGAL/
+        if special == 'TORYO' || special.include?('ILLEGAL')
           turn = @players[index % 2]
           result += "で#{turn}手の"
           result += { 'TORYO' => '勝ち',

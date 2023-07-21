@@ -49,34 +49,6 @@ RuboCop when files are modified.")
     (home-page "https://github.com/guard/guard-compat")
     (license license:expat)))
 
-(define-public ruby-ruby-dep
-  (package
-    (name "ruby-ruby-dep")
-    (version "1.5.0")
-    (source (origin
-             (method git-fetch)
-             (uri (git-reference
-                   (url "https://github.com/e2/ruby_dep")
-                   (commit "4e79416a55dff4b3ff50e73c8fbd0455de1e68b7")))
-             (file-name (git-file-name name version))
-             (sha256
-              (base32
-               "0vv2bm4lghh5pl8zi0ihp6hpbp7xlk8d5h888nhxr725in0ypy9x"))))
-    (build-system ruby-build-system)
-    (arguments
-     `(#:test-target "spec"
-       #:tests? #f ;FIXME: needs gem_isolator, but cyclic dependencies
-       ))
-    (native-inputs (list ruby-rspec))
-    (synopsis
-     "Creates a version constraint of supported Rubies, suitable for a
-gemspec file")
-    (description
-     "This package creates a version constraint of supported Rubies,
-suitable for a gemspec file.")
-    (home-page "https://github.com/e2/ruby_dep")
-    (license license:expat)))
-
 (define-public ruby-gem-isolator
   (package
     (name "ruby-gem-isolator")
@@ -96,7 +68,7 @@ suitable for a gemspec file.")
        #:tests? #f ;FIXME: uninitialized constant Pathname
        ))
     (native-inputs (list ruby-rspec ruby-nenv ruby-rubocop))
-    (propagated-inputs (list ruby-ruby-dep))
+    (propagated-inputs (list ruby-dep))
     (synopsis
      "Good for testing dependencies of a gem and/or different gem version
 combinations")
@@ -137,7 +109,7 @@ different gem version combinations.")
                           ruby-rubocop-rake
                           ruby-rubocop-rspec
                           ruby-rspec
-                          ruby-guard-rspec
                           ruby-simplecov
                           ruby-benchmark-ips
+                          ruby-rubocop-performance
                           ruby))

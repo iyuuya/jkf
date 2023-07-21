@@ -6,7 +6,7 @@ module Jkf
 
       # kifu : csa2 | csa1
       def parse_root
-        @scanner << "\n" unless @scanner.string[-1] =~ /\n|\r|,/ # FIXME
+        @scanner << "\n" unless /\n|\r|,/.match?(@scanner.string[-1]) # FIXME
         s0 = parse_csa2
         s0 = parse_csa1 if s0 == :failed
         s0

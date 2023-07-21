@@ -1,30 +1,31 @@
-# Jkf
+# jkf gem
+
 [![Gem Version](https://badge.fury.io/rb/jkf.svg)](https://badge.fury.io/rb/jkf) [![Build Status](https://travis-ci.org/iyuuya/jkf.svg?branch=master)](https://travis-ci.org/iyuuya/jkf) [![CI](https://github.com/iyuuya/jkf/actions/workflows/ci.yml/badge.svg)](https://github.com/iyuuya/jkf/actions/workflows/ci.yml)
 
-jkfは[JSON棋譜フォーマット (JKF)][jkf]をRubyに移植したものです。
-KIF, KI2, CSAをパースしJKFへ変換、JKFからKIF, KI2, CSAへの変換に対応しています。
+jkf gemは[JSON棋譜フォーマット (JKF)][jkf]をRubyに移植したものです。
+柿木形式（[棋譜ファイル KIF 形式][kakinoki]、KI2）、[CSA標準棋譜ファイル形式][csa]の構文解析とJKFへの変換、JKFからKIF, KI2, CSAへの変換に対応しています。
 
+[csa]: http://www2.computer-shogi.org/protocol/record_v22.html
 [jkf]: https://github.com/na2hiro/Kifu-for-JS/tree/master/packages/json-kifu-format
+[kakinoki]: http://kakinoki.o.oo7.jp/kif_format.html
 
-## Installation
+## インストール
 
-アプリケーションにインストールする場合(bundlerを使用する場合)、Gemfileに以下のように記述してください。
+アプリケーションにインストールする場合（[Bundler][bundler]を使用する場合）、`Gemfile`に以下のように記述してください。
+
+[bundler]: https://bundler.io/
 
 ```ruby
 gem 'jkf'
 ```
 
-さらにbundleコマンドを実行することでインストールできます。
+さらに`bundle`コマンドを実行することでインストールできます。
 
-    $ bundle
+または、`gem install`コマンドを使って直接インストールもできます。
 
-または、gem installコマンドを使って直接インストールすることもできます。
+## 使い方
 
-    $ gem install jkf
-
-## Usage
-
-KIF, KI2, CSAそれぞれParserとConverterが用意してあります。
+KIF, KI2, CSAそれぞれ構文解析器 {Jkf::Parser} と変換器 {Jkf::Converter} が用意してあります。
 
 ```ruby
 kif_parser = Jkf::Parser::Kif.new
@@ -38,7 +39,7 @@ ki2_converter = Jkf::Converter::Ki2.new
 csa_converter = Jkf::Converter::Csa.new
 ```
 
-`parser#parse(str)`でjkfへの変換、`#convert(jkf)`でjkfから各フォーマットへ変換できます。
+{Jkf::Parser::Base#parse} でJKFへの変換、 {Jkf::Converter::Base#convert} でJKFから各形式へ変換できます。
 
 ```ruby
 jkf = kif_parser.parse(kif_str) #=> Hash
@@ -52,15 +53,16 @@ ki2 = ki2_converter.convert(jkf) #=> String
 csa = csa_converter.convert(jkf) #=> String
 ```
 
-## Contributing
+## 貢献
 
-バグレポートやプルリクエストはGithubでよろしくお願いします。
-https://github.com/iyuuya/jkf.
+バグレポートやプルリクエストは[GitHubのリポジトリ][repo]でよろしくお願いします。
+
+[repo]: https://github.com/iyuuya/jkf
 
 Guixで開発されている場合は`guix shell`で`rake test`によるテスト実行ができます。
 
-## License
+## 利用許諾
 
-ライセンスはMITです。
-[MIT License](http://opensource.org/licenses/MIT).
+ライセンスは[MIT License][mit]です。
 
+[mit]: http://opensource.org/licenses/MIT

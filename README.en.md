@@ -1,37 +1,40 @@
-# Jkf
+# jkf gem
+
 [![Gem
 Version](https://badge.fury.io/rb/jkf.svg)](https://badge.fury.io/rb/jkf)
 [![Build
 Status](https://travis-ci.org/iyuuya/jkf.svg?branch=master)](https://travis-ci.org/iyuuya/jkf)
 [![CI](https://github.com/iyuuya/jkf/actions/workflows/ci.yml/badge.svg)](https://github.com/iyuuya/jkf/actions/workflows/ci.yml)
 
-jkf is a Ruby port of [json-kifu-format][jkf].
-It supports both of the conversion from KIF, KI2, or CSA to jkf, and the one
-from jkf to KIF, KI2, or CSA.
+The jkf gem is a Ruby port of [json-kifu-format (JKF)][jkf].
+It supports both of the conversion from KIF (see [棋譜ファイル KIF 形式][kakinoki]),
+KI2, or CSA (see [CSA標準棋譜ファイル形式][csa]) to JKF, and the one from JKF to KIF,
+KI2, or CSA.
 
-[jkf]:https://github.com/na2hiro/Kifu-for-JS/tree/master/packages/json-kifu-format
+[csa]: http://www2.computer-shogi.org/protocol/record_v22.html
+[jkf]:
+https://github.com/na2hiro/Kifu-for-JS/tree/master/packages/json-kifu-format
+[kakinoki]: http://kakinoki.o.oo7.jp/kif_format.html
 
 ## Installation
 
-If you install this gem to your application (with Bundler), add this to
-Gemfile.
+If you install this gem to your application (with [Bundler][bundler]), add
+this to `Gemfile`.
+
+[bundler]: https://bundler.io/
 
 ```ruby
 gem 'jkf'
 ```
 
-Then run bundle to install this gem.
+Then run `bundle` to install this gem.
 
-    $ bundle
-
-Or directly install with gem install command.
-
-    $ gem install jkf
+Or directly install with `gem install` command.
 
 ## Usage
 
-This gem has the Parser and the Converter for each formats: KIF, KI2, and
-CSA.
+This gem has the parser {Jkf::Parser} and the converter {Jkf::Converter} for
+each formats: KIF, KI2, and CSA.
 
 ```ruby
 kif_parser = Jkf::Parser::Kif.new
@@ -45,8 +48,8 @@ ki2_converter = Jkf::Converter::Ki2.new
 csa_converter = Jkf::Converter::Csa.new
 ```
 
-`parser#parse(str)` to convert into jkf.
-`#convert(jkf)` to convert into each formats from jkf.
+{Jkf::Parser::Base#parse} to convert into JKF.
+{Jkf::Converter::Base#convert} to convert into each formats from JKF.
 
 ```ruby
 jkf = kif_parser.parse(kif_str) #=> Hash
@@ -62,13 +65,15 @@ csa = csa_converter.convert(jkf) #=> String
 
 ## Contributing
 
-Feel free to report bugs or send pull requests at
-[GitHub](https://github.com/iyuuya/jkf).
+Feel free to report bugs or send pull requests at [the GitHub
+repository][repo].
+
+[repo]: https://github.com/iyuuya/jkf
 
 If you work on Guix, run tests by `guix shell`.
 
 ## License
 
-This gem is licensed under the [MIT
-License](http://opensource.org/licenses/MIT).
+This gem is provided under the [MIT License][mit].
 
+[mit]: http://opensource.org/licenses/MIT

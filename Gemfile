@@ -9,9 +9,9 @@ group :development do
   gem 'yard'
 
   gem 'guard-rubocop'
-  gem 'rubocop', '~> 1.32.0'
+  gem 'rubocop', '~> 1.63'
   gem 'rubocop-rake', '~> 0.6.0'
-  gem 'rubocop-rspec', '~> 2.12'
+  gem 'rubocop-rspec', '~> 2.29'
   gem 'rubocop-performance'
 end
 

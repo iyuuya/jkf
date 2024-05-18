@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Lint with RuboCop performance plugin
 * Update documentation
+* Update gem dependencies; RuboCop and RuboCop RSpec.
 
 ## [0.5.1] - 2023-06-24
 

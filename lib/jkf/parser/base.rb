@@ -92,7 +92,7 @@ module Jkf
         end
       end
 
-      def record_failure(expected)
+      def record_failure(_expected)
         return if @scanner.pos < @max_fail_pos
 
         return unless @scanner.pos > @max_fail_pos

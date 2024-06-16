@@ -1,6 +1,8 @@
-require 'simplecov'
-
-SimpleCov.start
+ENV["SKIP_SIMPLECOV"] or
+  begin
+    require 'simplecov'
+    SimpleCov.start
+  end
 
 require 'kconv'
 require 'pry'

@@ -61,6 +61,13 @@ csa = csa_converter.convert(jkf) #=> String
 
 Guixで開発されている場合は`guix shell`で`rake test`によるテスト実行ができます。
 
+翻訳はドキュメントとAPIの2種類があります。
+APIについてはRDocの国際化の機能を使います。
+POTファイルの生成には`rdoc --format pot`とします。
+これにより`doc/rdoc.pot`が生成されます。
+このPOTファイルから各言語のPOファイルを初期化できます。
+例えば`msginit -i doc/rdoc.pot -o po/en.rdoc.po --locale en_US.UTF-8`です。
+
 ## 利用許諾
 
 ライセンスは[MIT License][mit]です。

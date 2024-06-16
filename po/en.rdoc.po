@@ -1,0 +1,580 @@
+# English translations for PACKAGE package.
+# Copyright (C) 2024 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# gemmaro <gemmaro.dev@gmail.com>, 2024.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSEION\n"
+"Report-Msgid-Bugs-To:\n"
+"PO-Revision-Date: 2024-06-16 09:57+0900\n"
+"Last-Translator: gemmaro <gemmaro.dev@gmail.com>\n"
+"Language-Team: English\n"
+"Language:en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Jkf::Parser::Ki2#parse_comment
+msgid "\"*\" nonls nl"
+msgstr "\"*\" nonls nl"
+
+#. Jkf::Converter::Base#convert
+msgid ""
+"@param [String, Hash] jkf\n"
+"@return [String] kif or ki2 or csa text"
+msgstr ""
+"@param [String, Hash] jkf\n"
+"@return [String] kif or ki2 or csa text"
+
+#. Jkf::parse_file
+msgid "@param [String] filename"
+msgstr "@param [String] filename"
+
+#. Jkf::Parser::Base#parse
+msgid "@param [String] input"
+msgstr "@param [String] input"
+
+#. Jkf::parse
+msgid "@param [String] str"
+msgstr "@param [String] str"
+
+#. Jkf::Parser::Base#parse
+#. Jkf::parse
+msgid "@return [Hash] JKF"
+msgstr "@return [Hash] JKF"
+
+#. Jkf::parse_file
+msgid "@return [String] KIF, KI2, CSA, JKF(JSON)"
+msgstr "@return [String] KIF, KI2, CSA, JKF(JSON)"
+
+#. Jkf::Converter::Base
+msgid "Base of Converter"
+msgstr "Base of Converter"
+
+#. Jkf::Parser::Base
+msgid "Base of Parser"
+msgstr "Base of Parser"
+
+#. Jkf::Parser::Csa
+msgid "CSA Parser"
+msgstr "CSA Parser"
+
+#. Jkf::Converter::Csa
+msgid "CSA v2.2 Converter"
+msgstr "CSA v2.2 Converter"
+
+#. Jkf::Converter::Kifuable
+#. Jkf::Parser::Kifuable
+msgid "Intersection of KIF and KI2"
+msgstr "Intersection of KIF and KI2"
+
+#. Jkf
+msgid "JSON Kifu Format"
+msgstr "JSON Kifu Format"
+
+#. Jkf::Converter::Ki2
+msgid "KI2 Converter"
+msgstr "KI2 Converter"
+
+#. Jkf::Parser::Ki2
+msgid "KI2 Parser"
+msgstr "KI2 Parser"
+
+#. Jkf::Converter::Kif
+msgid "KIF Converter"
+msgstr "KIF Converter"
+
+#. Jkf::Parser::Kif
+msgid "KIF Parser"
+msgstr "KIF Parser"
+
+#. Jkf::Parser::Csa#parse_comment
+msgid "comment : \"'\" nonls nl"
+msgstr "comment : \"'\" nonls nl"
+
+#. Jkf::Parser::Kif#parse_comment
+msgid "comment : \"*\" nonls nl | \"&\" nonls nl"
+msgstr "comment : \"*\" nonls nl | \"&\" nonls nl"
+
+#. Jkf::Parser::Csa#parse_comments
+msgid "comments : comment*"
+msgstr "comments : comment*"
+
+#. Jkf::Parser::Csa#parse_csa1
+msgid "csa1 : players? initialboard? moves"
+msgstr "csa1 : players? initialboard? moves"
+
+#. Jkf::Parser::Csa#parse_csa2
+msgid "csa2 : version22 information? initialboard moves?"
+msgstr "csa2 : version22 information? initialboard moves?"
+
+#. Jkf::Parser::Ki2#parse_dousa
+msgid "dousa : [上寄引]"
+msgstr "dousa : [上寄引]"
+
+#. Jkf::Parser::Kif#reverse_color
+msgid "exchange sente gote"
+msgstr "exchange sente gote"
+
+#. Jkf::Parser::Csa#parse_firstboard
+msgid "firstboard : comment*"
+msgstr "firstboard : comment*"
+
+#. Jkf::Parser::Ki2#parse_firstboard
+#. Jkf::Parser::Kif#parse_firstboard
+msgid "firstboard : comment* pointer?"
+msgstr "firstboard : comment* pointer?"
+
+#. Jkf::Parser::Kif#parse_fork
+msgid "fork :  \"変化：\" \" \"* [0-9]+ \"手\" nl moves"
+msgstr "fork :  \"変化：\" \" \"* [0-9]+ \"手\" nl moves"
+
+#. Jkf::Parser::Ki2#parse_fork
+msgid "fork : \"変化：\" \" \"* [0-9]+ \"手\" nl moves"
+msgstr "fork : \"変化：\" \" \"* [0-9]+ \"手\" nl moves"
+
+#. Jkf::Parser::Kif#parse_from
+msgid "from : \"打\" | \"(\" [1-9] [1-9] \")\""
+msgstr "from : \"打\" | \"(\" [1-9] [1-9] \")\""
+
+#. Jkf::Parser::Kif#parse_fugou
+msgid "fugou : place piece \"成\"?"
+msgstr "fugou : place piece \"成\"?"
+
+#. Jkf::Parser::Ki2#parse_fugou
+msgid "fugou : place piece soutai? dousa? (\"成\" | \"不成\")? \"打\"?"
+msgstr "fugou : place piece soutai? dousa? (\"成\" | \"不成\")? \"打\"?"
+
+#. Jkf::Parser::Ki2#make_hand
+#. Jkf::Parser::Kif#make_hand
+msgid "generate motigoma"
+msgstr "generate motigoma"
+
+#. Jkf::Parser::Kif#parse_header
+msgid ""
+"header : [^：\\r\\n]+ \"：\" nonls nl\n"
+"       | turn \"手番\" nl\n"
+"       | \"盤面回転\" nl"
+msgstr ""
+"header : [^：\\r\\n]+ \"：\" nonls nl\n"
+"       | turn \"手番\" nl\n"
+"       | \"盤面回転\" nl"
+
+#. Jkf::Parser::Ki2#parse_header
+msgid "header : [^：\\r\\n]+ \"：\" nonls nl+ | header_teban"
+msgstr "header : [^：\\r\\n]+ \"：\" nonls nl+ | header_teban"
+
+#. Jkf::Parser::Csa#parse_header
+msgid "header : comment* \"$\" [^:]+ \":\" nonls nl"
+msgstr "header : comment* \"$\" [^:]+ \":\" nonls nl"
+
+#. Jkf::Parser::Ki2#parse_header_teban
+msgid "header_teban : [先後上下] \"手番\" nl"
+msgstr "header_teban : [先後上下] \"手番\" nl"
+
+#. Jkf::Parser::Csa#parse_headers
+msgid "headers : header*"
+msgstr "headers : header*"
+
+#. Jkf::Parser::Csa#parse_hirate
+msgid "hirate : \"PI\" xypiece* nl"
+msgstr "hirate : \"PI\" xypiece* nl"
+
+#. Jkf::Parser::Kif#parse_hms
+msgid "hms : [0-9]+ \":\" [0-9]+ \":\" [0-9]+"
+msgstr "hms : [0-9]+ \":\" [0-9]+ \":\" [0-9]+"
+
+#. Jkf::Parser::Csa#parse_ikkatsu
+msgid "ikkatsu : ikkatsuline+"
+msgstr "ikkatsu : ikkatsuline+"
+
+#. Jkf::Parser::Csa#parse_ikkatsu_line
+msgid "ikkatsuline : \"P\" [1-9] masu+ nl"
+msgstr "ikkatsuline : \"P\" [1-9] masu+ nl"
+
+#. Jkf::Parser::Kifuable#parse_ikkatsuline
+msgid "ikkatsuline : \"|\" masu:masu+ \"|\" nonls! nl"
+msgstr "ikkatsuline : \"|\" masu:masu+ \"|\" nonls! nl"
+
+#. Jkf::Parser::Csa#parse_information
+msgid "information : players? headers"
+msgstr "information : players? headers"
+
+#. Jkf::Parser::Kifuable#parse_initialboard
+msgid ""
+"initialboard : (\" \" nonls nl)? (\"+\" nonls nl)? ikkatsuline+ (\"+\" nonls "
+"nl)?"
+msgstr ""
+"initialboard : (\" \" nonls nl)? (\"+\" nonls nl)? ikkatsuline+ (\"+\" nonls "
+"nl)?"
+
+#. Jkf::Parser::Csa#parse_initial_board
+msgid ""
+"initialboard : comment* (hirate | ikkatsu | \"\") komabetsu comment* teban nl"
+msgstr ""
+"initialboard : comment* (hirate | ikkatsu | \"\") komabetsu comment* teban nl"
+
+#. Jkf::Parser::Kifuable#kan2n
+msgid "kanji number to number (1)"
+msgstr "kanji number to number (1)"
+
+#. Jkf::Parser::Kifuable#kan2n2
+msgid "kanji number to number (2)"
+msgstr "kanji number to number (2)"
+
+#. Jkf::Parser::Kifuable#kind2csa
+msgid "kanji piece-type to csa"
+msgstr "kanji piece-type to csa"
+
+#. Jkf::Parser::Csa#parse_root
+msgid "kifu : csa2 | csa1"
+msgstr "kifu : csa2 | csa1"
+
+#. Jkf::Parser::Ki2#parse_root
+msgid "kifu : header* initialboard? header* moves fork*"
+msgstr "kifu : header* initialboard? header* moves fork*"
+
+#. Jkf::Parser::Kif#parse_root
+msgid "kifu : skipline* header* initialboard? header* split? moves fork* nl?"
+msgstr "kifu : skipline* header* initialboard? header* split? moves fork* nl?"
+
+#. Jkf::Parser::Csa#parse_komabetsu
+msgid "komabetsu : komabetsuline*"
+msgstr "komabetsu : komabetsuline*"
+
+#. Jkf::Parser::Csa#parse_komabetsu_line
+msgid "komabetsuline : \"P\" teban xypiece+ nl"
+msgstr "komabetsuline : \"P\" teban xypiece+ nl"
+
+#. Jkf::Parser::Kif#parse_line
+msgid ""
+"line : \" \"* te \" \"* (fugou from | [^\\r\\n ]*) \" \"* time? \"+\"? nl"
+msgstr ""
+"line : \" \"* te \" \"* (fugou from | [^\\r\\n ]*) \" \"* time? \"+\"? nl"
+
+#. Jkf::Parser::Ki2#parse_line
+msgid "line : [▲△] fugou (nl / \" \")*"
+msgstr "line : [▲△] fugou (nl / \" \")*"
+
+#. Jkf::Parser::Csa#transform_komabetsu_lines
+msgid "lines to jkf"
+msgstr "lines to jkf"
+
+#. Jkf::Parser::Csa#parse_masu
+msgid "masu : teban piece | \" * \""
+msgstr "masu : teban piece | \" * \""
+
+#. Jkf::Parser::Kifuable#parse_masu
+msgid "masu : teban piece | \" ・\""
+msgstr "masu : teban piece | \" ・\""
+
+#. Jkf::Parser::Base#match_digit
+msgid "match digit"
+msgstr "match digit"
+
+#. Jkf::Parser::Base#match_digits!
+msgid "match digit one ore more"
+msgstr "match digit one ore more"
+
+#. Jkf::Parser::Base#match_digits
+msgid "match digits"
+msgstr "match digits"
+
+#. Jkf::Parser::Base#match_space
+msgid "match space"
+msgstr "match space"
+
+#. Jkf::Parser::Base#match_spaces
+msgid "match space one or more"
+msgstr "match space one or more"
+
+#. Jkf::Parser::Csa#parse_move
+msgid "move : (normalmove | specialmove) time? comment*"
+msgstr "move : (normalmove | specialmove) time? comment*"
+
+#. Jkf::Parser::Kif#parse_move
+msgid "move : line comment* pointer?"
+msgstr "move : line comment* pointer?"
+
+#. Jkf::Parser::Ki2#parse_move
+msgid "move : line comment* pointer? (nl | \" \")*"
+msgstr "move : line comment* pointer? (nl | \" \")*"
+
+#. Jkf::Parser::Ki2#dousa2relative
+msgid "movement string to jkf"
+msgstr "movement string to jkf"
+
+#. Jkf::Parser::Ki2#parse_moves
+msgid "moves : firstboard : move* result?"
+msgstr "moves : firstboard : move* result?"
+
+#. Jkf::Parser::Csa#parse_moves
+msgid "moves : firstboard move* comment*"
+msgstr "moves : firstboard move* comment*"
+
+#. Jkf::Parser::Kif#parse_moves
+msgid "moves : firstboard split? move* result?"
+msgstr "moves : firstboard split? move* result?"
+
+#. Jkf::Parser::Kif#parse_ms
+msgid "ms : [0-9]+ \":\" [0-9]+"
+msgstr "ms : [0-9]+ \":\" [0-9]+"
+
+#. Jkf::Parser::Kifuable#parse_newline
+msgid "newline : whitespace* (\"\\n\" | \"\\r\" \"\\n\"?)"
+msgstr "newline : whitespace* (\"\\n\" | \"\\r\" \"\\n\"?)"
+
+#. Jkf::Parser::Csa#parse_nl
+msgid "nl : (\"\\r\"? \"\\n\") | \" \"* \",\""
+msgstr "nl : (\"\\r\"? \"\\n\") | \" \"* \",\""
+
+#. Jkf::Parser::Kifuable#parse_nl
+msgid "nl : newline+ skipline*"
+msgstr "nl : newline+ skipline*"
+
+#. Jkf::Parser::Kifuable#parse_nonl
+msgid "nonl :"
+msgstr "nonl :"
+
+#. Jkf::Parser::Csa#parse_nonl
+msgid "nonl : [^\\r\\n]"
+msgstr "nonl : [^\\r\\n]"
+
+#. Jkf::Parser::Csa#parse_nonls
+#. Jkf::Parser::Kifuable#parse_nonls
+msgid "nonls : nonl*"
+msgstr "nonls : nonl*"
+
+#. Jkf::Parser::Kifuable#parse_nonls!
+msgid "nonls! : nonl+"
+msgstr "nonls! : nonl+"
+
+#. Jkf::Parser::Csa#normalize_header_key
+msgid "normalize header key"
+msgstr "normalize header key"
+
+#. Jkf::Parser::Csa#parse_normal_move
+msgid "normalmove : teban xy xy piece nl"
+msgstr "normalmove : teban xy xy piece nl"
+
+#. Jkf::Parser::Kifuable#parse_num
+msgid "num : [１２３４５６７８９]"
+msgstr "num : [１２３４５６７８９]"
+
+#. Jkf::Parser::Kifuable#parse_numkan
+msgid "numkan : [一二三四五六七八九]"
+msgstr "numkan : [一二三四五六七八九]"
+
+#. Jkf::Parser::Kifuable#parse_piece
+msgid "piece : \"成\"? [歩香桂銀金角飛王玉と杏圭全馬竜龍]"
+msgstr "piece : \"成\"? [歩香桂銀金角飛王玉と杏圭全馬竜龍]"
+
+#. Jkf::Parser::Csa#parse_piece
+msgid "piece : [A-Z] [A-Z]"
+msgstr "piece : [A-Z] [A-Z]"
+
+#. Jkf::Parser::Ki2#parse_place
+msgid "place : num numkan"
+msgstr "place : num numkan"
+
+#. Jkf::Parser::Kif#parse_place
+msgid "place : num numkan | \"同　\""
+msgstr "place : num numkan | \"同　\""
+
+#. Jkf::Parser::Csa#parse_players
+msgid "players : comment* (\"N+\" nonls nl)? comment* (\"N-\" nonls nl)?"
+msgstr "players : comment* (\"N+\" nonls nl)? comment* (\"N-\" nonls nl)?"
+
+#. Jkf::Parser::Kifuable#parse_pointer
+msgid "pointer : \"&\" nonls nl"
+msgstr "pointer : \"&\" nonls nl"
+
+#. Jkf::Parser::Kifuable#preset2str
+msgid "preset string to jkf"
+msgstr "preset string to jkf"
+
+#. Jkf::FileTypeError
+msgid "raise when unsupport file type"
+msgstr "raise when unsupport file type"
+
+#. Jkf::Parser::Ki2#soutai2relative
+msgid "relative string to jkf"
+msgstr "relative string to jkf"
+
+#. Jkf::Parser::Kifuable#parse_result
+msgid ""
+"result : \"まで\" [0-9]+ \"手\" (\n"
+"           \"で\" (turn \"手の\" (result_toryo | result_illegal)) |\n"
+"           result_timeup | result_chudan | result_jishogi |\n"
+"           result_sennichite | result_tsumi | result_fuzumi\n"
+"         ) nl"
+msgstr ""
+"result : \"まで\" [0-9]+ \"手\" (\n"
+"           \"で\" (turn \"手の\" (result_toryo | result_illegal)) |\n"
+"           result_timeup | result_chudan | result_jishogi |\n"
+"           result_sennichite | result_tsumi | result_fuzumi\n"
+"         ) nl"
+
+#. Jkf::Parser::Kifuable#parse_result_chudan
+msgid "result_chudan : \"で中断\""
+msgstr "result_chudan : \"で中断\""
+
+#. Jkf::Parser::Kifuable#parse_result_fuzumi
+msgid "result_fuzumi : \"で不詰\""
+msgstr "result_fuzumi : \"で不詰\""
+
+#. Jkf::Parser::Kifuable#parse_result_illegal
+msgid "result_illegal : \"反則\" (\"勝ち\" | \"負け\")"
+msgstr "result_illegal : \"反則\" (\"勝ち\" | \"負け\")"
+
+#. Jkf::Parser::Kifuable#parse_result_jishogi
+msgid "result_jishogi : \"で持将棋\""
+msgstr "result_jishogi : \"で持将棋\""
+
+#. Jkf::Parser::Kifuable#parse_result_sennichite
+msgid "result_sennichite : \"で千日手\""
+msgstr "result_sennichite : \"で千日手\""
+
+#. Jkf::Parser::Kifuable#parse_result_timeup
+msgid "result_timeup : \"で時間切れにより\" turn \"手の勝ち\""
+msgstr "result_timeup : \"で時間切れにより\" turn \"手の勝ち\""
+
+#. Jkf::Parser::Kifuable#parse_result_toryo
+msgid "result_toryo : \"勝ち\""
+msgstr "result_toryo : \"勝ち\""
+
+#. Jkf::Parser::Kifuable#parse_result_tsumi
+msgid "result_tsumi : \"で\"? \"詰\" \"み\"?"
+msgstr "result_tsumi : \"で\"? \"詰\" \"み\"?"
+
+#. Jkf::Parser::Csa#generate_empty_board
+msgid "return empty board jkf"
+msgstr "return empty board jkf"
+
+#. Jkf::Parser::Csa#hirate
+msgid "return hirate board jkf"
+msgstr "return hirate board jkf"
+
+#. Jkf::Parser::Csa#sec2time
+msgid "sec to time(m, s)"
+msgstr "sec to time(m, s)"
+
+#. Jkf::Parser::Kifuable#parse_skipline
+msgid "skipline : \"#\" nonls newline"
+msgstr "skipline : \"#\" nonls newline"
+
+#. Jkf::Parser::Ki2#parse_soutai
+msgid "soutai : [左直右]"
+msgstr "soutai : [左直右]"
+
+#. Jkf::Parser::Kif#special2csa
+msgid "special string to csa"
+msgstr "special string to csa"
+
+#. Jkf::Parser::Csa#parse_special_move
+msgid "specialmove : \"%\" [-+_A-Z]+ nl"
+msgstr "specialmove : \"%\" [-+_A-Z]+ nl"
+
+#. Jkf::Parser::Kif#parse_split
+msgid "split : \"手数----指手--\" \"-------消費時間--\"? nl"
+msgstr "split : \"手数----指手--\" \"-------消費時間--\"? nl"
+
+#. Jkf::Converter::Base#convert
+msgid "start convert"
+msgstr "start convert"
+
+#. Jkf::Parser::Base#parse
+msgid "start parse"
+msgstr "start parse"
+
+#. Jkf::Parser::Kif#parse_te
+msgid "te : [0-9]+"
+msgstr "te : [0-9]+"
+
+#. Jkf::Parser::Csa#parse_teban
+msgid "teban : \"+\" | \"-\""
+msgstr "teban : \"+\" | \"-\""
+
+#. Jkf::Parser::Kifuable#parse_teban
+msgid "teban : (\" \" | \"+\" | \"^\") | (\"v\" | \"V\")"
+msgstr "teban : (\" \" | \"+\" | \"^\") | (\"v\" | \"V\")"
+
+#. Jkf::Parser::Kif#teban2color
+msgid "teban to color"
+msgstr "teban to color"
+
+#. Jkf::Parser::Kif#parse_time
+msgid "time :  \"(\" \" \"* ms \" \"* \"/\" \" \"* (hms | ms) \" \"* \")\""
+msgstr "time :  \"(\" \" \"* ms \" \"* \"/\" \" \"* (hms | ms) \" \"* \")\""
+
+#. Jkf::Parser::Csa#parse_time
+msgid "time : \"T\" [0-9]* nl"
+msgstr "time : \"T\" [0-9]* nl"
+
+#. Jkf::Parser::Kifuable#transform_root_header_data
+msgid "transform header-data to jkf"
+msgstr "transform header-data to jkf"
+
+#. Jkf::Parser::Kifuable#transform_initialboard
+msgid "transform initialboard to jkf"
+msgstr "transform initialboard to jkf"
+
+#. Jkf::Parser::Kif#transform_move
+msgid "transform move to jkf"
+msgstr "transform move to jkf"
+
+#. Jkf::Parser::Kif#transform_teban_fugou_from
+msgid "transform teban-fugou-from to jkf"
+msgstr "transform teban-fugou-from to jkf"
+
+#. Jkf::Parser::Ki2#transform_root
+msgid "transform to jkf"
+msgstr "transform to jkf"
+
+#. Jkf::Parser::Kifuable#transform_root_forks
+msgid "transfrom forks to jkf"
+msgstr "transfrom forks to jkf"
+
+#. Jkf::Parser::Ki2#transform_fugou
+msgid "transfrom fugou to jkf"
+msgstr "transfrom fugou to jkf"
+
+#. Jkf::Parser::Kif#transform_root
+msgid "transfrom to jkf"
+msgstr "transfrom to jkf"
+
+#. Jkf::Parser::Ki2#parse_turn
+#. Jkf::Parser::Kif#parse_turn
+msgid "turn : [先後上下]"
+msgstr "turn : [先後上下]"
+
+#. Jkf::Parser::Csa#parse_version22
+msgid "version22 : comment* \"V2.2\" nl"
+msgstr "version22 : comment* \"V2.2\" nl"
+
+#. Jkf::Parser::Kifuable#parse_whitespace
+msgid "whitespace : \" \" | \"\\t\""
+msgstr "whitespace : \" \" | \"\\t\""
+
+#. Jkf::Parser::Csa#parse_xy
+msgid "xy : [0-9] [0-9]"
+msgstr "xy : [0-9] [0-9]"
+
+#. Jkf::Parser::Csa#parse_xy_piece
+msgid "xypiece : xy piece"
+msgstr "xypiece : xy piece"
+
+#. Jkf::Parser::Kifuable#zen2n
+msgid "zenkaku number to number"
+msgstr "zenkaku number to number"
+
+#. Jkf::parse_file
+msgid "ファイルからパースします。拡張子でフォーマットの判定をします。"
+msgstr "ファイルからパースします。拡張子でフォーマットの判定をします。"
+
+#. Jkf::parse
+msgid ""
+"文字列からパースします。各パーサでパースに試みて成功した場合結果を返します。"
+msgstr ""
+"文字列からパースします。各パーサでパースに試みて成功した場合結果を返します。"

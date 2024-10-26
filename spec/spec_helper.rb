@@ -1,4 +1,4 @@
-ENV["SKIP_SIMPLECOV"] or
+ENV['SKIP_SIMPLECOV'] or
   begin
     require 'simplecov'
     SimpleCov.start
